@@ -1,6 +1,9 @@
+import { ToastContextProvider } from "@/context/toast";
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Provider } from "@/provider";
+import ProviderWrapper from "@/provider/ProviderWrapper";
 
 const circularStd = localFont({
   variable: "--font-circularStd",
@@ -67,7 +70,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${circularStd.variable} ${abrilFatface.variable} font-circularStd text-tib-black`}>{children}</body>
+      <body className={`${circularStd.variable} ${abrilFatface.variable} font-circularStd text-tib-black`}>
+        <Provider>
+          {children}
+          <ProviderWrapper />
+        </Provider>
+      </body>
     </html>
   );
 }

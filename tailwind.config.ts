@@ -16,6 +16,7 @@ const config: Config = {
           purple: "#260060",
           "light-purple": "#F5EEFF",
           "light-yellow": "#FFF9ED",
+          primary: "#474444",
         },
       },
     },

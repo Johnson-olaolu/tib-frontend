@@ -1,3 +1,4 @@
+import ProviderWrapper from "@/provider/ProviderWrapper";
 import HomepageFooter from "./components/HomepageFooter";
 import HomepageHeader from "./components/HomepageHeader";
 import HomepageJumbotron from "./components/HomepageJumbotron";
@@ -8,14 +9,17 @@ import HomepageVault from "./components/HomepageVault";
 
 export default function Home() {
   return (
-    <main className="bg-tib-white">
-      <HomepageHeader />
-      <HomepageJumbotron />
-      <HomepageValueProposition />
-      <HomepageProcess />
-      <HomepageVault />
-      <HomepageTestimonials />
-      <HomepageFooter />
-    </main>
+    <>
+      <main className="bg-tib-white">
+        <HomepageHeader />
+        <HomepageJumbotron />
+        <HomepageValueProposition />
+        <HomepageProcess />
+        <HomepageVault />
+        <HomepageTestimonials />
+        <HomepageFooter />
+      </main>
+      <ProviderWrapper />
+    </>
   );
 }
