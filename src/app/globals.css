@@ -67,3 +67,18 @@ body {
   text-align: center;
   /* border-bottom: 5px solid rgba(38, 50, 56, 0.5); */
 }
+
+/*profile hover*/
+.profile-image-hover::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateX(-100%) translateY(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent #260060 transparent transparent;
+}
+.profile-image-button:hover .profile-image-hover {
+  display: block;
+}

@@ -11,7 +11,7 @@ const FormSubmit: React.FC<IFormSubmit> = (props) => {
     <button
       type="submit"
       {...props}
-      className="h-16 w-full bg-tib-blue rounded font-abrilFatface flex items-center justify-center text-white disabled:bg-tib-light-purple"
+      className="h-16 w-full bg-tib-blue rounded flex items-center justify-center text-white disabled:bg-tib-light-blue"
     >
       {!loading ? (
         text

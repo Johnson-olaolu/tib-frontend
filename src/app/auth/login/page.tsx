@@ -5,6 +5,8 @@ import FormTextInput from "@/components/form/FormTextInput";
 import useToast from "@/context/toast";
 import authService from "@/services/auth.service";
 import userService from "@/services/user.service";
+import { setCredentials } from "@/store/authSlice";
+import { saveUser } from "@/store/userSlice";
 import { isObjectEmpty } from "@/utils/misc";
 import { loginValidationSchema } from "@/utils/validation";
 import { useFormik } from "formik";
@@ -12,8 +14,10 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const { openToast } = useToast();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,8 +37,24 @@ const Login = () => {
             text: data.message,
             type: "success",
           });
-          Cookies.set("token", data.data!.accessToken, { expires: 7, secure: true });
-          // router.push("/auth/verify-email");
+          dispatch(
+            setCredentials({
+              token: data!.data!.accessToken,
+              user: data!.data!.user,
+            })
+          );
+          userService.getUserDetails().then((data2) => {
+            dispatch(
+              saveUser({
+                user: data2.data!,
+              })
+            );
+            if (data2.data?.profile?.firstName || data2.data?.profile?.lastName) {
+              router.push("/dashboard");
+            } else {
+              router.push("/onboarding/profile");
+            }
+          });
         })
         .catch((error) => {
           openToast({
@@ -46,16 +66,6 @@ const Login = () => {
         .finally(() => {
           setIsSubmitting(false);
         });
-      userService
-        .getUserDetails()
-        .then((data) => {
-          if (data.data?.profile?.firstName || data.data?.profile?.lastName) {
-            router.push("/dashboard");
-          } else {
-            router.push("/onboarding/profile");
-          }
-        })
-        .catch((error) => {});
     },
   });
   return (
@@ -84,7 +94,9 @@ const Login = () => {
             label="Password"
             error={loginFormik.errors.password && loginFormik.touched.password ? loginFormik.errors.password : undefined}
           />
-          <button className="text-sm font-bold text-tib-purple">Forgot Password</button>
+          <Link className="text-sm font-bold text-tib-purple" href={"/auth/forgot-password"}>
+            Forgot Password
+          </Link>
         </div>
         <FormSubmit loading={isSubmitting} text="Login" disabled={!isObjectEmpty(loginFormik.errors) || isObjectEmpty(loginFormik.touched)} />
       </form>

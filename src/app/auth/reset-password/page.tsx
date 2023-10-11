@@ -52,8 +52,8 @@ const ResetPassword = () => {
   return (
     <div className=" max-h-[712px] overflow-scroll">
       <div className="space-y-3">
-        <h2 className="text-2xl text-tib-purple font-bold">Get Started</h2>
-        <p className=" pr-10">Register to gain access to submit your new ideas</p>
+        <h2 className="text-2xl text-tib-purple font-bold">Change Password</h2>
+        <p className=" pr-10">Create a new password you can remember</p>
       </div>
       <form onSubmit={changePasswordFormik.handleSubmit} className="mt-9 ">
         <div className="space-y-5 mb-7">
@@ -82,7 +82,7 @@ const ResetPassword = () => {
         </div>
         <FormSubmit
           loading={isSubmitting}
-          text="Create"
+          text="Change Password"
           disabled={!isObjectEmpty(changePasswordFormik.errors) || isObjectEmpty(changePasswordFormik.touched)}
         />
       </form>

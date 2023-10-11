@@ -56,3 +56,23 @@ export const resetPasswordSchema = yup.object({
 export const forgotPasswordSchema = yup.object({
   email: yup.string().email().required(),
 });
+
+export const updateProfileSchema = yup.object({
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  phoneNumber: yup.string().required(),
+  bio: yup.string().min(150).required(),
+});
+
+export const fundWalletValidationSchema = yup.object({
+  amount: yup.number().min(100).required(),
+  password: yup
+    .string()
+    .password()
+    .min(8, "password must contain 8 or more characters with at least one of each: uppercase, lowercase, number and special")
+    .minLowercase(1, "password must contain at least 1 lower case letter")
+    .minUppercase(1, "password must contain at least 1 upper case letter")
+    .minNumbers(1, "password must contain at least 1 number")
+    .minSymbols(1, "password must contain at least 1 special character")
+    .required("field is mandatory"),
+});

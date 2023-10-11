@@ -2,7 +2,8 @@
 import axios from "axios";
 import QueryString from "query-string";
 import { IDelete, IGet, IPatch, IPost, IPut } from "./types";
-import Cookies from "js-cookie";
+import { store } from "@/store";
+import { RootState } from "@/store/appSlice";
 
 class HttpFacade {
   private http;
@@ -15,7 +16,7 @@ class HttpFacade {
 
     this.http.interceptors.request.use(
       (config) => {
-        const token = Cookies.get("token");
+        const token = (store.getState() as RootState).auth.token;
         if (token) config.headers!.Authorization = "Bearer " + token;
         return config;
       },
@@ -46,6 +47,13 @@ class HttpFacade {
 
   put = async ({ url, body }: IPut) => {
     const response = await this.http.put(url, body);
+    return response.data;
+  };
+
+  updateProfile = async ({ url, body }: IPatch) => {
+    const response = await this.http.patch(url, body, {
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+    });
     return response.data;
   };
 }

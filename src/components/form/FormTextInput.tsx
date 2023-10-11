@@ -9,9 +9,9 @@ export interface IFormText extends ComponentProps<"input"> {
 }
 
 const FormTextInput: React.FC<IFormText> = (props) => {
-  const { error, name, label, required, optional } = props;
+  const { error, name, label, required, optional, disabled } = props;
   return (
-    <div className="">
+    <div className={`${disabled && "opacity-50"}`}>
       <label htmlFor={name} className="text-xs mb-2 block">
         {label} {required && "(Required)"} {optional && "(Optional)"}
       </label>

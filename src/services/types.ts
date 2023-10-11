@@ -23,6 +23,7 @@ export interface IResetPasswordPayload {
 
 export interface ILoginResponse {
   accessToken: string;
+  user: IUser;
 }
 
 export interface IUser {
@@ -53,6 +54,24 @@ export interface IInterest {
   id: string;
 
   name: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+export interface IPaymentMethod {
+  id: string;
+
+  name: string;
+
+  image: string;
+
+  fields: string[];
+
+  disabled: boolean;
+
+  isDefault: boolean;
 
   createdAt: Date;
 

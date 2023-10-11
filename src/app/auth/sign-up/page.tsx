@@ -11,8 +11,11 @@ import useToast from "@/context/toast";
 import authService from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/store/authSlice";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const { openToast } = useToast();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,7 +37,12 @@ const SignUp = () => {
             text: data.message,
             type: "success",
           });
-          Cookies.set("token", data.data!.accessToken, { expires: 7, secure: true });
+          dispatch(
+            setCredentials({
+              token: data!.data!.accessToken,
+              user: data!.data!.user,
+            })
+          );
           router.push("/auth/verify-email");
         })
         .catch((error) => {

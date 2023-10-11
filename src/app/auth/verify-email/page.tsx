@@ -3,13 +3,18 @@ import PinInput from "@/components/extras/PinInput";
 import FormSubmit from "@/components/form/FormSubmit";
 import useToast from "@/context/toast";
 import authService from "@/services/auth.service";
+import { RootState } from "@/store/appSlice";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const VerifyEmail = () => {
+  const user = useSelector((state: RootState) => state.auth.user);
   const { openToast } = useToast();
   const [otp, setOtp] = useState("");
   const [seconds, setSeconds] = useState(60);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const onClickResend = () => {
     authService
@@ -20,6 +25,7 @@ const VerifyEmail = () => {
           text: data.message,
           type: "success",
         });
+        router.push("/onboarding/profile");
       })
       .catch((error) => {
         openToast({
@@ -73,7 +79,7 @@ const VerifyEmail = () => {
     <div className=" max-h-[712px] overflow-scroll">
       <div className="space-y-3">
         <h2 className="text-2xl text-tib-purple font-bold">Enter OTP</h2>
-        <p className=" pr-10">we’ve sent an OTP to emailneeded@gmail.com</p>
+        <p className=" pr-10">we’ve sent an OTP to {user?.email}</p>
       </div>
       <form onSubmit={onClickSendOtp} className="mt-9 ">
         <div className="space-y-5 mb-7">
@@ -82,7 +88,7 @@ const VerifyEmail = () => {
             {minutes}:{remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}
           </p>
         </div>
-        <FormSubmit loading={isLoading} disabled={otp.length !== 4} text="Send Otp" />
+        <FormSubmit loading={isLoading} disabled={otp.length !== 4} text="Verify Otp" />
       </form>
       <p className=" text-center mt-7 text-sm">
         Didn’t get an OTP?{" "}
