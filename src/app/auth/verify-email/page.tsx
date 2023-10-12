@@ -25,7 +25,6 @@ const VerifyEmail = () => {
           text: data.message,
           type: "success",
         });
-        router.push("/onboarding/profile");
       })
       .catch((error) => {
         openToast({
@@ -49,6 +48,7 @@ const VerifyEmail = () => {
           text: data.message,
           type: "success",
         });
+        router.push("/onboarding/profile");
       })
       .catch((error) => {
         openToast({

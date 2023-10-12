@@ -30,7 +30,7 @@ const HomepageHeader = () => {
           </li>
         </ul>
       </nav>
-      <Link href="#" className="py-3 px-4 rounded bg-tib-blue text-tib-white font-abrilFatface tracking-wide">
+      <Link href="/auth/login" className="py-3 px-4 rounded bg-tib-blue text-tib-white font-abrilFatface tracking-wide">
         Get Started
       </Link>
     </div>
