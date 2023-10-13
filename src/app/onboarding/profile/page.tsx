@@ -87,7 +87,7 @@ const Profile = () => {
                   <div />
                 </div>
               ) : (
-                <span className="text-5xl font-bold text-tib-purple">B</span>
+                <span className="text-5xl font-bold text-tib-purple uppercase">{user?.userName[0]}</span>
               )}
             </div>
           )}

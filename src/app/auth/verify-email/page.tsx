@@ -79,7 +79,9 @@ const VerifyEmail = () => {
     <div className=" max-h-[712px] overflow-scroll">
       <div className="space-y-3">
         <h2 className="text-2xl text-tib-purple font-bold">Enter OTP</h2>
-        <p className=" pr-10">we’ve sent an OTP to {user?.email}</p>
+        <p className=" pr-10">
+          we’ve sent an OTP to <strong>{user?.email}</strong>
+        </p>
       </div>
       <form onSubmit={onClickSendOtp} className="mt-9 ">
         <div className="space-y-5 mb-7">
