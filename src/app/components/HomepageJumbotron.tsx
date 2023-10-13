@@ -13,7 +13,7 @@ const HomepageJumbotron = () => {
             <p className=" text-3xl text-tib-black">Come let’s rub mind together</p>
           </div>
 
-          <Link href="/auth/login" className="px-14 py-5 bg-tib-blue rounded font-abrilFatface inline-block tracking-wide">
+          <Link href="/auth/login" className="px-14 py-5 bg-tib-blue rounded font-abrilFatface inline-block tracking-wide text-white">
             Get Started
           </Link>
         </div>

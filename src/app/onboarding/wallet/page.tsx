@@ -89,7 +89,7 @@ const Wallet = () => {
           </div>
           <div className="">{activePaymentMethod === "Card" ? <CardForm /> : activePaymentMethod === "Bank" ? <BankForm /> : null}</div>
           <div className=" flex justify-center mt-9">
-            <button onClick={() => router.push("/dashboard")} className="text-sm text-tib-blue">
+            <button onClick={() => router.push("/dashboard/home")} className="text-sm text-tib-blue">
               Maybe Later
             </button>
           </div>

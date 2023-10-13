@@ -94,7 +94,7 @@ const Login = () => {
             label="Password"
             error={loginFormik.errors.password && loginFormik.touched.password ? loginFormik.errors.password : undefined}
           />
-          <Link className="text-sm font-bold text-tib-purple" href={"/auth/forgot-password"}>
+          <Link className="text-sm font-bold text-tib-purple block" href={"/auth/forgot-password"}>
             Forgot Password
           </Link>
         </div>

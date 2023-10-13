@@ -4,6 +4,7 @@ import React from "react";
 const HomepageProcess = () => {
   return (
     <div
+      id="how-it-works"
       style={{ background: `url("/images/ProccessBg.png")`, backgroundSize: "100% 100%" }}
       className="px-20 h-[1312px] pt-80 transform -translate-y-[320px]"
     >

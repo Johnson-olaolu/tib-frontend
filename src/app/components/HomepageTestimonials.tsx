@@ -2,11 +2,11 @@ import React from "react";
 
 const HomepageTestimonials = () => {
   return (
-    <div className=" px-8 transform -translate-y-16 relative z-10">
+    <div id="client-testimonial" className=" px-8 transform -translate-y-16 relative z-10">
       <div className=" px-28 bg-tib-light-yellow rounded-[50px] py-32 ">
         <div className=" w-[872px] space-y-8 text-center mx-auto">
           <h4 className="text-tib-purple text-4xl ">
-            Access <strong>The Vault</strong>
+            Client <strong>Testimonials</strong>
           </h4>
           <p className=" text-tib-black">Our clients ar super proud of what we do. We’ve got a list of reviews</p>
         </div>
