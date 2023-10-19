@@ -202,6 +202,40 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tanstack/query-core@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.0.0.tgz#b37a50bb3a4f54336b6131db00b72cd29e79b480"
+  integrity sha512-Y1BpiA6BblJd/UlVqxEVeAG7IACn568YJuTTItAiecBI7En+33g780kg+/8lhgl+BzcUPN7o+NjBrSRGJoemyQ==
+
+"@tanstack/query-persist-client-core@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-5.0.0.tgz#4409e18ae713db81cbb3ed75a9e1f5ed6363a480"
+  integrity sha512-WXzvS37iriXMb4o1ES+SJvMou0Jw+Iko7f6/VmeFgSatKQfeidfIAUBYoBqRQ/sDwVRzLVWuf9e57SQPtqankQ==
+  dependencies:
+    "@tanstack/query-core" "5.0.0"
+
+"@tanstack/query-sync-storage-persister@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-sync-storage-persister/-/query-sync-storage-persister-5.0.0.tgz#75739390461f306a251a13a52deb845203f41958"
+  integrity sha512-5BgMqggDSJiOAPFuy6ZYL3Oursls1ZIecv0uY0xL6IQQk5PGdbcexd1n6j3sH0+nWtvhEiBCYsV5QnXMZ0QZbQ==
+  dependencies:
+    "@tanstack/query-core" "5.0.0"
+    "@tanstack/query-persist-client-core" "5.0.0"
+
+"@tanstack/react-query-persist-client@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-5.0.0.tgz#3b8b1e3d4d2a78bbdba4349304f4b07a97a3cae2"
+  integrity sha512-1d0fc6bPWFchiG+K8Wb9xAPVu962GuF6QhVt/MlexV15DY/TkbwH/PqrV+8SQGCYsg3CDCZ7Dn7fU5sCtcQelw==
+  dependencies:
+    "@tanstack/query-persist-client-core" "5.0.0"
+
+"@tanstack/react-query@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.0.0.tgz#707fecb71cf53ae098f682f45520d7b1640bcaa9"
+  integrity sha512-diQoC8FNBcO5Uf5yuaJlXthTtbO1xM8kzOX+pSBUMT9n/cqQ/u1wJGCtukvhDWA+6j07WmIj4bfqNbd2KOB6jQ==
+  dependencies:
+    "@tanstack/query-core" "5.0.0"
+
 "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#dc1e9ded53375d37603c479cc12c693b0878aa2a"
@@ -604,6 +638,11 @@ chokidar@^3.5.3:
   optionalDependencies:
     fsevents "~2.3.2"
 
+classnames@^2.3.1:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
+  integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
+
 client-only@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/client-only/-/client-only-0.0.1.tgz#38bba5d403c41ab150bff64a95c85013cf73bca1"
@@ -637,6 +676,11 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
+
+country-flag-icons@^1.5.4:
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/country-flag-icons/-/country-flag-icons-1.5.7.tgz#f1f2ddf14f3cbf01cba6746374aeba94db35d4b4"
+  integrity sha512-AdvXhMcmSp7nBSkpGfW4qR/luAdRUutJqya9PuwRbsBzuoknThfultbv7Ib6fWsHXC43Es/4QJ8gzQQdBNm75A==
 
 cross-spawn@^7.0.2:
   version "7.0.3"
@@ -1427,6 +1471,13 @@ inherits@2:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
+input-format@^0.3.8:
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/input-format/-/input-format-0.3.8.tgz#9445b0cab2f0457fbe36d77d607e942fd37345c5"
+  integrity sha512-tLR0XRig1xIcG1PtIpMd/uoltvkAI62CN9OIbtj4/tEJAkqTCQLNHUZ9N4M46w0dopny7Rlt/lRH5Xzp7e6F+g==
+  dependencies:
+    prop-types "^15.8.1"
+
 internal-slot@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/internal-slot/-/internal-slot-1.0.5.tgz#f2a2ee21f668f8627a4667f309dc0f4fb6674986"
@@ -1709,6 +1760,11 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
+libphonenumber-js@^1.10.48:
+  version "1.10.48"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.48.tgz#3c426b4aa21dfe3210bfbda47d208acffa3631bf"
+  integrity sha512-Vvcgt4+o8+puIBJZLdMshPYx9nRN3/kTT7HPtOyfYrSQuN9PGBF1KUv0g07fjNzt4E4GuA7FnsLb+WeAMzyRQg==
+
 lilconfig@^2.0.5, lilconfig@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.1.0.tgz#78e23ac89ebb7e1bfbf25b18043de756548e7f52"
@@ -1820,6 +1876,15 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
+
+next13-progressbar@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/next13-progressbar/-/next13-progressbar-1.0.4.tgz#77e2298bc1074cd21880c70a66f2fe6d458b11ef"
+  integrity sha512-N189VpWPZ5eMxcQeAF5SIe3f+UQ4YTNoMV+6f7p5luZ0rGcPzT4RnRpxuImzCxuMTEuQPItR8FtQubQDi4mHnQ==
+  dependencies:
+    "@types/nprogress" "^0.2.0"
+    nprogress "^0.2.0"
+    prop-types "^15.8.1"
 
 next@13.4.19:
   version "13.4.19"
@@ -2182,6 +2247,17 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-phone-number-input@^3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/react-phone-number-input/-/react-phone-number-input-3.3.7.tgz#2925340c0aa260df549d2bf9f91f0d0c67b421ee"
+  integrity sha512-/yusEJl2oJA5rTRtny59pf7T1gg/whmfhdZsgrZaL063KEx6FFnmwTskTJ9yR4lYgzj2GyUjXpnA3O9d+ZTHwA==
+  dependencies:
+    classnames "^2.3.1"
+    country-flag-icons "^1.5.4"
+    input-format "^0.3.8"
+    libphonenumber-js "^1.10.48"
+    prop-types "^15.8.1"
 
 react-redux@^8.1.3:
   version "8.1.3"

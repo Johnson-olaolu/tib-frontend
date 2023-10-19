@@ -4,7 +4,7 @@ import FormSubmit from "@/components/form/FormSubmit";
 import useToast from "@/context/toast";
 import authService from "@/services/auth.service";
 import { RootState } from "@/store/appSlice";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next13-progressbar";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 

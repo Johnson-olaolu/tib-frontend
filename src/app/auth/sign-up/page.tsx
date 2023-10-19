@@ -9,16 +9,41 @@ import { signUpValidationSchema } from "../../../utils/validation";
 import { isObjectEmpty } from "@/utils/misc";
 import useToast from "@/context/toast";
 import authService from "@/services/auth.service";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/store/authSlice";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next13-progressbar";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const { openToast } = useToast();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const signUpMutation = useMutation({
+    mutationFn: authService.register,
+    onSuccess: (res) => {
+      openToast({
+        title: "Account Created",
+        text: res.message,
+        type: "success",
+      });
+      dispatch(
+        setCredentials({
+          token: res!.data!.accessToken,
+          user: res!.data!.user,
+        })
+      );
+      router.push("/auth/verify-email");
+    },
+    onError: (error: any) => {
+      openToast({
+        title: "Register Unsuccessful",
+        text: error?.response?.data?.message,
+        type: "failure",
+      });
+    },
+  });
   const signUpFormik = useFormik({
     initialValues: {
       userName: "",
@@ -28,33 +53,7 @@ const SignUp = () => {
     },
     validationSchema: signUpValidationSchema,
     onSubmit: async (values) => {
-      setIsSubmitting(true);
-      authService
-        .register(values)
-        .then((data) => {
-          openToast({
-            title: "Account Created",
-            text: data.message,
-            type: "success",
-          });
-          dispatch(
-            setCredentials({
-              token: data!.data!.accessToken,
-              user: data!.data!.user,
-            })
-          );
-          router.push("/auth/verify-email");
-        })
-        .catch((error) => {
-          openToast({
-            title: "Register Unsuccessful",
-            text: error?.response?.data?.message,
-            type: "failure",
-          });
-        })
-        .finally(() => {
-          setIsSubmitting(false);
-        });
+      signUpMutation.mutate(values);
     },
   });
 
@@ -104,7 +103,11 @@ const SignUp = () => {
             error={signUpFormik.errors.confirmPassword && signUpFormik.touched.confirmPassword ? signUpFormik.errors.confirmPassword : undefined}
           />
         </div>
-        <FormSubmit loading={isSubmitting} text="Sign Up" disabled={!isObjectEmpty(signUpFormik.errors) || isObjectEmpty(signUpFormik.touched)} />
+        <FormSubmit
+          loading={signUpMutation.isPending}
+          text="Sign Up"
+          disabled={!isObjectEmpty(signUpFormik.errors) || isObjectEmpty(signUpFormik.touched)}
+        />
       </form>
       <p className=" text-center mt-7 text-sm">
         Already have an account?{" "}

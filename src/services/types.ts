@@ -1,4 +1,6 @@
-export interface IResponse<D> {
+import { IAmount } from "@/utils/types";
+
+export interface IResponse<D = null> {
   data?: D;
   status: boolean;
   message: string;
@@ -76,4 +78,79 @@ export interface IPaymentMethod {
   createdAt: Date;
 
   updatedAt: Date;
+}
+
+export interface IWallet {
+  id: string;
+
+  userId: string;
+
+  amount: number;
+
+  transactions: IWalletTransaction[];
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+export interface IWalletTransaction {
+  id: string;
+
+  action: string;
+
+  type: string;
+
+  amount: number;
+
+  currency: string;
+
+  description: string;
+
+  prevBalance: number;
+
+  currBalance: number;
+
+  wallet: string;
+
+  transactionReference: string;
+
+  transaction: ITransaction;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+export interface ITransaction {
+  id: string;
+
+  wallet?: IWallet;
+
+  amount: number;
+
+  currency: string;
+
+  paymentMethod: string;
+
+  type: string;
+
+  status: string;
+
+  progress: string;
+
+  reference: string;
+
+  paystackTransactionId: string;
+
+  paystackTransactionUrl: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+export interface ICreditWalletPayload {
+  amount: IAmount;
+  paymentMethod: string;
 }

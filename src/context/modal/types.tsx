@@ -1,17 +1,4 @@
-export type ModalTypes =
-  | 'Tier-Upgrade'
-  | 'Fund-Account'
-  | 'Send-Funds'
-  | 'Add-Card'
-  | 'Profile-UpdateNextOfKin'
-  | 'EarlyPay-Intro'
-  | 'EarlyPay-Access'
-  | 'EarlyPay-Request'
-  | 'PayBills-Electricity'
-  | 'PayBills-Airtime'
-  | 'PayBills-Internet-Data'
-  | 'PayBills-Tv-Plans'
-  | 'Transaction-Details';
+export type ModalTypes = "confirm-transaction";
 
 export interface IModalContext {
   openModal: (type: ModalTypes, payload?: any) => void;

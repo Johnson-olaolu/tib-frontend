@@ -1,3 +1,5 @@
+import { IUser } from "@/services/types";
+
 export const getUrlParams = (url: string) => {
   const params: string[] = [];
   const a = url.split("/:");
@@ -50,4 +52,22 @@ export function parseJwt(token: string) {
 
 export function copyText(text: string) {
   navigator.clipboard.writeText(text);
+}
+
+export function getInitials(user?: IUser) {
+  let initials = "";
+  if (user?.profile?.firstName || user?.profile?.lastName) {
+    initials = user.profile.firstName[0].toUpperCase() + user.profile.lastName[0].toUpperCase();
+    return initials;
+  }
+  initials = user?.userName[0].toUpperCase() || "T";
+  return initials;
+}
+
+export function formatAmount(amount: string | number) {
+  if (parseFloat(`${amount}`) > 0) {
+    return new Intl.NumberFormat().format(parseFloat(`${amount}`)) || "";
+  } else {
+    return "";
+  }
 }

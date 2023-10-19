@@ -2,6 +2,16 @@ import * as yup from "yup";
 import YupPassword from "yup-password";
 YupPassword(yup); // extend yup
 
+// used throughout the file
+const amountWithCurrencySchema = yup.object({
+  currency: yup.string().required("Please select a category"),
+  value: yup
+    .number()
+    .when("currency", { is: "NGN", then: (schema) => schema.min(1000).required() })
+    .when("currency", { is: "USD", then: (schema) => schema.min(10).required() })
+    .when("currency", { is: "EUR", then: (schema) => schema.min(10).required() }),
+});
+
 export const signUpValidationSchema = yup.object({
   userName: yup
     .string()
@@ -60,12 +70,15 @@ export const forgotPasswordSchema = yup.object({
 export const updateProfileSchema = yup.object({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
-  phoneNumber: yup.string().required(),
+  phoneNumber: yup
+    .string()
+    .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, "Must be a valid phone number")
+    .required(),
   bio: yup.string().min(150).required(),
 });
 
 export const fundWalletValidationSchema = yup.object({
-  amount: yup.number().min(100).required(),
+  amount: amountWithCurrencySchema,
   password: yup
     .string()
     .password()

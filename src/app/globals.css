@@ -82,3 +82,16 @@ body {
 .profile-image-button:hover .profile-image-hover {
   display: block;
 }
+
+.amount-select {
+  @apply w-[72px] bg-transparent  flex-shrink-0 border border-[#C2C2C2] rounded text-[#A3A3A3];
+  font-size: 1em;
+  padding: 0rem 1rem;
+  font-family: inherit;
+  /** for the dropdown indicator */
+  appearance: none;
+  background-image: url("data:image/svg+xml;base64,ICA8c3ZnIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNNC42NjY1IDYuNjY2NjNMNy45OTk4NCA5Ljk5OTk2TDExLjMzMzIgNi42NjY2M0g0LjY2NjVaIiBmaWxsPSJibGFjayIvPgo8L3N2Zz4=");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  background-size: 1.2rem;
+}

@@ -6,21 +6,50 @@ import useToast from "@/context/toast";
 import authService from "@/services/auth.service";
 import userService from "@/services/user.service";
 import { setCredentials } from "@/store/authSlice";
-import { saveUser } from "@/store/userSlice";
 import { isObjectEmpty } from "@/utils/misc";
 import { loginValidationSchema } from "@/utils/validation";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next13-progressbar";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const queryClient = useQueryClient();
+
   const dispatch = useDispatch();
   const { openToast } = useToast();
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const loginMutation = useMutation({
+    mutationFn: authService.login,
+    onSuccess: (data) => {
+      openToast({
+        title: "Login Successful",
+        text: data.message,
+        type: "success",
+      });
+      dispatch(
+        setCredentials({
+          token: data!.data!.accessToken,
+          user: data!.data!.user,
+        })
+      );
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
+    },
+    onError: (error: any) => {
+      console.log(error);
+      openToast({
+        title: "Login Unsuccessful",
+        text: error?.response?.data?.message,
+        type: "failure",
+      });
+    },
+  });
+
   const loginFormik = useFormik({
     initialValues: {
       emailOrUsername: "",
@@ -28,44 +57,22 @@ const Login = () => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: async (values) => {
-      setIsSubmitting(true);
-      authService
-        .login(values)
-        .then((data) => {
-          openToast({
-            title: "Login Successful",
-            text: data.message,
-            type: "success",
-          });
-          dispatch(
-            setCredentials({
-              token: data!.data!.accessToken,
-              user: data!.data!.user,
-            })
-          );
-          userService.getUserDetails().then((data2) => {
-            dispatch(
-              saveUser({
-                user: data2.data!,
-              })
-            );
-            if (data2.data?.profile?.firstName || data2.data?.profile?.lastName) {
-              router.push("/dashboard");
-            } else {
-              router.push("/onboarding/profile");
-            }
-          });
-        })
-        .catch((error) => {
-          openToast({
-            title: "Login Unsuccessful",
-            text: error?.response?.data?.message,
-            type: "failure",
-          });
-        })
-        .finally(() => {
-          setIsSubmitting(false);
-        });
+      loginMutation.mutate(values);
+      const user = await queryClient.ensureQueryData({
+        queryKey: ["user"],
+        queryFn: async () => {
+          const res = await userService.getUserDetails();
+          return res.data;
+        },
+      });
+      if (!user?.isEmailVerified) {
+        router.push("/auth/verify-email");
+      }
+      if (user?.profile?.firstName || user?.profile?.lastName) {
+        router.push("/dashboard/home");
+      } else {
+        router.push("/onboarding/profile");
+      }
     },
   });
   return (
@@ -98,7 +105,11 @@ const Login = () => {
             Forgot Password
           </Link>
         </div>
-        <FormSubmit loading={isSubmitting} text="Login" disabled={!isObjectEmpty(loginFormik.errors) || isObjectEmpty(loginFormik.touched)} />
+        <FormSubmit
+          loading={loginMutation.isPending}
+          text="Login"
+          disabled={!isObjectEmpty(loginFormik.errors) || isObjectEmpty(loginFormik.touched)}
+        />
       </form>
       <p className=" text-center mt-7 text-sm">
         Don&apos;t have an account?{" "}

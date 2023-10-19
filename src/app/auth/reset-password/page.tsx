@@ -7,7 +7,7 @@ import { isObjectEmpty } from "@/utils/misc";
 import { resetPasswordSchema } from "@/utils/validation";
 import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next13-progressbar";
 import React, { useState } from "react";
 
 const ResetPassword = () => {

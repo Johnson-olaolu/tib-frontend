@@ -1,8 +1,6 @@
 "use client";
 import FormPasswordInput from "@/components/form/FormPasswordInput";
-import FormTextInput from "@/components/form/FormTextInput";
 import useToast from "@/context/toast";
-import paymentMethodService from "@/services/payment-method.service";
 import { IPaymentMethod } from "@/services/types";
 import { fundWalletValidationSchema } from "@/utils/validation";
 import { useFormik } from "formik";
@@ -11,19 +9,30 @@ import PaymentMethodBadge from "./components/PaymentMethodBadge";
 import { useRouter } from "next/navigation";
 import CardForm from "./components/CardForm";
 import BankForm from "./components/BankForm";
+import FormAmountInput from "@/components/form/FormAmountInput";
+
+import { useQueryClient } from "@tanstack/react-query";
 
 const Wallet = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { openToast } = useToast();
-  const [paymentMethods, setPaymentMethods] = useState<IPaymentMethod[]>([]);
+
+  const paymentMethods = queryClient.getQueryData<IPaymentMethod[]>(["paymentMethod"]);
+  console.log(paymentMethods);
   const [activePaymentMethod, setActivePaymentMethod] = useState<string>();
   const [fundWalletData, setFundWalletData] = useState({
     amount: "",
     password: "",
   });
+
+  // const walletQuery = useQuery({ queryKey: ['todos', userId], queryFn: () => walletService.fetchUserWallet(userId) })
   const fundWalletFormik = useFormik({
     initialValues: {
-      amount: 0,
+      amount: {
+        currency: "NGN",
+        value: 0,
+      },
       password: "",
     },
     validationSchema: fundWalletValidationSchema,
@@ -32,34 +41,22 @@ const Wallet = () => {
     },
   });
 
-  useEffect(() => {
-    paymentMethodService
-      .getPaymentMethod()
-      .then((data) => {
-        data.data && setPaymentMethods(data.data);
-      })
-      .catch((error) => {
-        openToast({
-          text: error.response.data.messaage,
-          type: "failure",
-        });
-      });
-  }, []);
-
   return (
     <div className=" pb-10">
       <h2 className=" text-tib-purple font-bold text-4xl text-center">Fund Wallet</h2>
       <div className="mt-28">
         <div className="grid grid-cols-2 gap-x-4 gap-y-5">
-          <FormTextInput
-            onChange={fundWalletFormik.handleChange}
+          <FormAmountInput
+            onChangeValue={(value) => {
+              fundWalletFormik.setFieldValue("amount", { ...fundWalletFormik.values.amount, value });
+            }}
             onBlur={fundWalletFormik.handleBlur}
-            value={fundWalletFormik.values.amount == 0 ? undefined : fundWalletFormik.values.amount}
-            placeholder="E.g kastroud"
+            amount={fundWalletFormik.values.amount}
+            placeholder="E.g 10,000"
             type="number"
             name="amount"
             label="Enter Amount"
-            error={fundWalletFormik.errors.amount && fundWalletFormik.touched.amount ? fundWalletFormik.errors.amount : undefined}
+            error={fundWalletFormik.errors.amount?.value && fundWalletFormik.touched.amount?.value ? fundWalletFormik.errors.amount.value : undefined}
           />
           <FormPasswordInput
             onChange={fundWalletFormik.handleChange}
@@ -75,7 +72,7 @@ const Wallet = () => {
           <div className="mb-14">
             <p className=" text-xs">Choose Default Payment Method</p>
             <div className="grid grid-cols-4 gap-5 mt-2">
-              {paymentMethods.map((p) => (
+              {paymentMethods?.map((p) => (
                 <PaymentMethodBadge
                   paymentMethod={p}
                   active={activePaymentMethod == p.name}

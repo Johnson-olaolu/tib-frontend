@@ -30,7 +30,9 @@ export interface IDocument {
   updatedAt: string;
 }
 
-export type IdentificationTypes =
-  | 'national_identity_card'
-  | 'drivers_licence'
-  | 'voters_card';
+export type IdentificationTypes = "national_identity_card" | "drivers_licence" | "voters_card";
+
+export interface IAmount {
+  currency: string;
+  value: number;
+}

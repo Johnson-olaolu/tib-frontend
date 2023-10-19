@@ -6,20 +6,24 @@ import useToast from "@/context/toast";
 import userService from "@/services/user.service";
 import { RootState } from "@/store/appSlice";
 import { saveUser } from "@/store/userSlice";
-import { isObjectEmpty } from "@/utils/misc";
+import { getInitials, isObjectEmpty } from "@/utils/misc";
 import { updateProfileSchema } from "@/utils/validation";
 import { useFormik } from "formik";
 import React, { ChangeEvent, useState } from "react";
 import { LuPen } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import useOnboarding from "../context";
-import { useRouter } from "next/navigation";
+import FormPhoneNumberInput from "@/components/form/FormPhoneNumberInput";
+import { useRouter } from "next13-progressbar";
+import { useQueryClient } from "@tanstack/react-query";
+import { IUser } from "@/services/types";
 
 const Profile = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { setProfileData, onboardingData } = useOnboarding();
   const { openToast } = useToast();
-  const user = useSelector((state: RootState) => state.user.user);
+  const user: IUser | undefined = queryClient.getQueryData(["user"]);
   const dispatch = useDispatch();
   const [isChangingProfileImage, setIsChangingProfileImage] = useState(false);
   const [isSubmitting, setisSubmitting] = useState(false);
@@ -87,7 +91,7 @@ const Profile = () => {
                   <div />
                 </div>
               ) : (
-                <span className="text-5xl font-bold text-tib-purple uppercase">{user?.userName[0]}</span>
+                <span className="text-5xl font-bold text-tib-purple uppercase">{getInitials(user)}</span>
               )}
             </div>
           )}
@@ -127,8 +131,10 @@ const Profile = () => {
               error={updateProfileFormik.errors.lastName && updateProfileFormik.touched.lastName ? updateProfileFormik.errors.lastName : undefined}
             />
             <FormTextInput placeholder="E.g emailneeded@gmail.com" name="email" label="Email" disabled value={user?.email} />
-            <FormTextInput
-              onChange={updateProfileFormik.handleChange}
+            <FormPhoneNumberInput
+              handleChange={(e) => {
+                updateProfileFormik.setFieldValue("phoneNumber", e);
+              }}
               onBlur={updateProfileFormik.handleBlur}
               value={updateProfileFormik.values.phoneNumber}
               placeholder="E.g +23480 6453 3279"
