@@ -13,6 +13,7 @@ export const ModalContextProvider: React.FC<{
   const openModal = (type: ModalTypes, payload?: any) => {
     setShowModal(true);
     setActiveModal(type);
+    setData(payload);
   };
 
   const closeModal = () => {

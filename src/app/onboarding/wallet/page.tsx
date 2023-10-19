@@ -1,32 +1,66 @@
 "use client";
 import FormPasswordInput from "@/components/form/FormPasswordInput";
 import useToast from "@/context/toast";
-import { IPaymentMethod } from "@/services/types";
+import { IPaymentMethod, ITransaction, IUser } from "@/services/types";
 import { fundWalletValidationSchema } from "@/utils/validation";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import PaymentMethodBadge from "./components/PaymentMethodBadge";
-import { useRouter } from "next/navigation";
 import CardForm from "./components/CardForm";
 import BankForm from "./components/BankForm";
 import FormAmountInput from "@/components/form/FormAmountInput";
-
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import useModal from "@/context/modal";
+import walletService from "@/services/wallet.service";
+import { io } from "socket.io-client";
+import { useRouter } from "next13-progressbar";
+import { formatAmount } from "@/utils/misc";
 
 const Wallet = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { openToast } = useToast();
+  const { openModal, closeModal } = useModal();
+  const transactionSocket = io(`${process.env.NEXT_PUBLIC_BASE_URL}`);
 
+  const user = queryClient.getQueryData<IUser>(["user"]);
   const paymentMethods = queryClient.getQueryData<IPaymentMethod[]>(["paymentMethod"]);
-  console.log(paymentMethods);
-  const [activePaymentMethod, setActivePaymentMethod] = useState<string>();
-  const [fundWalletData, setFundWalletData] = useState({
-    amount: "",
-    password: "",
+  const walletQuery = useQuery({ queryKey: ["wallet"], queryFn: () => walletService.fetchUserWallet(user?.id || "") });
+
+  const creditWalletMutation = useMutation({
+    mutationFn: walletService.creditWallet,
+    onSuccess: (data) => {
+      openModal("confirm-transaction", data.data?.paystackTransactionUrl);
+      if (data.data) {
+        transactionSocket.on(data.data.id, (data: ITransaction) => {
+          if (data.status === "success") {
+            closeModal();
+            openToast({
+              title: "Transaction Successful",
+              text: `₦${formatAmount(data.amount)} has been credited to your wallet`,
+              type: "success",
+            });
+            queryClient.invalidateQueries({
+              queryKey: ["wallet"],
+            });
+            router.push("/dashboard/home");
+          } else {
+            openToast({
+              text: "Transaction Unsuccessful",
+              type: "failure",
+            });
+          }
+        });
+      }
+    },
+    onError: (error: any) => {
+      openToast({
+        text: error?.response?.data?.message,
+        type: "failure",
+      });
+    },
   });
 
-  // const walletQuery = useQuery({ queryKey: ['todos', userId], queryFn: () => walletService.fetchUserWallet(userId) })
   const fundWalletFormik = useFormik({
     initialValues: {
       amount: {
@@ -34,10 +68,17 @@ const Wallet = () => {
         value: 0,
       },
       password: "",
+      paymentMethod: "",
     },
     validationSchema: fundWalletValidationSchema,
     onSubmit: async (values) => {
       // setIsSubmitting(true);
+      // console.log(values);
+      // openModal("confirm-transaction", "")
+      creditWalletMutation.mutate({
+        walletId: walletQuery.data?.data?.id || "",
+        body: values,
+      });
     },
   });
 
@@ -75,16 +116,19 @@ const Wallet = () => {
               {paymentMethods?.map((p) => (
                 <PaymentMethodBadge
                   paymentMethod={p}
-                  active={activePaymentMethod == p.name}
+                  active={fundWalletFormik.values.paymentMethod == p.name}
                   onClick={(name) => {
-                    setActivePaymentMethod(name);
+                    fundWalletFormik.setFieldValue("paymentMethod", name);
+                    fundWalletFormik.submitForm();
                   }}
                   key={p.id}
                 />
               ))}
             </div>
           </div>
-          <div className="">{activePaymentMethod === "Card" ? <CardForm /> : activePaymentMethod === "Bank" ? <BankForm /> : null}</div>
+          <div className="">
+            {fundWalletFormik.values.paymentMethod === "Card" ? <CardForm /> : fundWalletFormik.values.paymentMethod === "Bank" ? <BankForm /> : null}
+          </div>
           <div className=" flex justify-center mt-9">
             <button onClick={() => router.push("/dashboard/home")} className="text-sm text-tib-blue">
               Maybe Later

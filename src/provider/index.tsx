@@ -19,15 +19,15 @@ const queryClient = new QueryClient({
     },
   },
 });
-// if (typeof window === "undefined") {
-//   return;
-// }
-// const localStoragePersister =  typeof window !== "undefined" ?: ;
-const localStoragePersister = createSyncStoragePersister({ storage: window.localStorage });
-persistQueryClient({
-  queryClient,
-  persister: localStoragePersister,
-});
+
+let localStoragePersister: any;
+if (typeof window !== "undefined") {
+  localStoragePersister = createSyncStoragePersister({ storage: window.localStorage });
+  persistQueryClient({
+    queryClient,
+    persister: localStoragePersister,
+  });
+}
 export function Provider({ children }: { children: React.ReactNode }) {
   // const sessionStoragePersister = createSyncStoragePersister({ storage: window.sessionStorage })
 
@@ -38,7 +38,7 @@ export function Provider({ children }: { children: React.ReactNode }) {
           <PersistGate persistor={persistor}>
             <ModalContextProvider>
               <ToastContextProvider>
-                <Next13ProgressBar height={3} color="#2299DD" options={{ showSpinner: true, easing: "ease" }} showOnShallow startPosition={0.08} />
+                <Next13ProgressBar height={3} options={{ showSpinner: true, easing: "ease" }} showOnShallow startPosition={0.08} />
                 {children}
               </ToastContextProvider>
             </ModalContextProvider>

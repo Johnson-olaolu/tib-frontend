@@ -13,7 +13,7 @@ const fetchUserWallet = async (userId: string): Promise<IResponse<IWallet>> => {
   });
 };
 
-const creditWallet = async (walletId: string, body: ICreditWalletPayload): Promise<IResponse<ITransaction>> => {
+const creditWallet = async ({ walletId, body }: { walletId: string; body: ICreditWalletPayload }): Promise<IResponse<ITransaction>> => {
   return await https.post({
     url: `/wallet/${walletId}/creditWallet`,
     body,

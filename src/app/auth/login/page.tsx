@@ -10,7 +10,6 @@ import { isObjectEmpty } from "@/utils/misc";
 import { loginValidationSchema } from "@/utils/validation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next13-progressbar";
 import React, { useState } from "react";

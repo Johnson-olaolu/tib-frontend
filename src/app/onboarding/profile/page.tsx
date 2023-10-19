@@ -15,15 +15,20 @@ import { useDispatch, useSelector } from "react-redux";
 import useOnboarding from "../context";
 import FormPhoneNumberInput from "@/components/form/FormPhoneNumberInput";
 import { useRouter } from "next13-progressbar";
-import { useQueryClient } from "@tanstack/react-query";
-import { IUser } from "@/services/types";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 
 const Profile = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { setProfileData, onboardingData } = useOnboarding();
   const { openToast } = useToast();
-  const user: IUser | undefined = queryClient.getQueryData(["user"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
   const dispatch = useDispatch();
   const [isChangingProfileImage, setIsChangingProfileImage] = useState(false);
   const [isSubmitting, setisSubmitting] = useState(false);
