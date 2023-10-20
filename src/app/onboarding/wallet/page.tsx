@@ -61,6 +61,12 @@ const Wallet = () => {
     },
   });
 
+  useEffect(() => {
+    return () => {
+      transactionSocket.disconnect();
+    };
+  }, []);
+
   const fundWalletFormik = useFormik({
     initialValues: {
       amount: {
