@@ -155,3 +155,35 @@ export interface ICreditWalletPayload {
   amount: IAmount;
   paymentMethod: string;
 }
+
+export interface IPlan {
+  active: boolean;
+
+  id: string;
+
+  name: string;
+
+  description: string;
+
+  type: string;
+
+  planPermissions: IPlanPermission[];
+
+  price: number;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+export interface IPlanPermission {
+  id: string;
+
+  name: string;
+
+  description: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
