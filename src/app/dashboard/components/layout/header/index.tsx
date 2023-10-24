@@ -16,7 +16,7 @@ const DashbaordHeader = () => {
         </div>
         <div className=" flex items-center gap-8">
           <div className="flex gap-3">
-            <Link href={"#"} className=" py-3 px-4 rounded border border-tib-blue text-tib-blue bg-white">
+            <Link href={"/dashboard/idea/create"} className=" py-3 px-4 rounded border border-tib-blue text-tib-blue bg-white">
               Share Idea
             </Link>
             <Link href={"#"} className=" py-3 px-4 rounded border bg-tib-blue text-white">

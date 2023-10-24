@@ -33,7 +33,6 @@ export interface IUser {
   userName: string;
   email: string;
   isEmailVerified: boolean;
-  password: string;
   profile?: IProfile;
   roleName: string;
   planName: string;
@@ -187,3 +186,78 @@ export interface IPlanPermission {
 
   updatedAt: Date;
 }
+
+export interface IIdea {
+  id: string;
+
+  userId: string;
+
+  title: string;
+
+  description: string;
+
+  categories: string[];
+
+  media: string[];
+
+  collaborators: string[];
+
+  ideaType: IdeaTypeEnum;
+
+  ideaNeed: IdeaNeedEnum;
+
+  location: string;
+
+  website: string;
+
+  role: string;
+
+  competitors: string[];
+
+  additionalAttachment: string[];
+
+  ideaCost: IAmount;
+
+  sellingReason: string;
+
+  valuation: IAmount;
+
+  estimationCost: IAmount;
+
+  ROITimeline: string;
+
+  projectedRevenue: IAmount;
+
+  fundingStage: string;
+
+  totalMoneyRaised: IAmount;
+
+  executionCost: IAmount;
+
+  seeking: string;
+
+  sharesRating: number;
+
+  comments: IComment[];
+
+  likes: ILike[];
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+export enum IdeaTypeEnum {
+  SHARED = "SHARED",
+  VAULT = "VAULT",
+}
+
+export enum IdeaNeedEnum {
+  FUNDING = "FUNDING",
+  SALE = "SALE",
+  NEW_CONCEPT = "NEW_CONCEPT",
+}
+
+export interface ILike {}
+export interface IComment {}
+export interface IShare {}

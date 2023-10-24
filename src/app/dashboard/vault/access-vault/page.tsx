@@ -6,6 +6,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import planService from "@/services/plan.service";
 import { useRouter } from "next13-progressbar";
+import BackButton from "@/components/extras/BackButton";
 
 const DashboardVaultAccessVault = () => {
   const queryClient = useQueryClient();
@@ -16,11 +17,8 @@ const DashboardVaultAccessVault = () => {
   });
   const router = useRouter();
   return (
-    <div className="">
-      <button onClick={() => router.push("/dashboard/home")} className="flex items-center gap-2">
-        <BiArrowBack />
-        <span className="">Back</span>
-      </button>
+    <main className="">
+      <BackButton />
       <div className="mt-36 flex justify-between">
         <div className=" max-w-[472px]">
           <Image src={"/images/rafiki.svg"} height={200} width={268} alt="access vault" />
@@ -74,7 +72,7 @@ const DashboardVaultAccessVault = () => {
               ))}
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

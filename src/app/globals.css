@@ -95,3 +95,20 @@ body {
   background-position: right 0.7rem center;
   background-size: 1.2rem;
 }
+
+/* React quill */
+.ql-toolbar.ql-snow {
+  @apply rounded-t;
+}
+
+.ql-container.ql-snow {
+  @apply rounded-b;
+}
+
+.hide-toolbar div.ql-toolbar {
+  display: none;
+}
+.hide-toolbar div.ql-container {
+  @apply rounded-t h-32;
+  border: 1px solid #ccc !important;
+}

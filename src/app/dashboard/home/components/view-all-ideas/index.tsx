@@ -1,7 +1,10 @@
 "use client";
+import DashboardIdeaCard from "@/app/dashboard/components/idea/card";
 import SortFilter from "@/app/dashboard/components/idea/filter/SortFilter";
 import ViewTypeFilter from "@/app/dashboard/components/idea/filter/ViewTypeFilter";
 import React, { useState } from "react";
+import { DashboardViewIdeaContextProvider } from "./context";
+import DashboardIdeaGrid from "@/app/dashboard/components/idea/grid";
 
 const viewIdeaMenu = ["Spotlight", "Arts", "Technology", "Entertainment", "Finance", "Business", "Music", "More"];
 
@@ -24,10 +27,15 @@ const ViewAllIdeas = () => {
         </ul>
       </div>
       <div className=" my-10">
-        <div className=" flex justify-end gap-4">
-          <ViewTypeFilter />
-          <SortFilter />
-        </div>
+        <DashboardViewIdeaContextProvider>
+          <>
+            <div className=" flex justify-end gap-4 mb-8">
+              <ViewTypeFilter />
+              <SortFilter />
+            </div>
+            <DashboardIdeaGrid />
+          </>
+        </DashboardViewIdeaContextProvider>
       </div>
     </div>
   );

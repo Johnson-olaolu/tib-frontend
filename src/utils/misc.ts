@@ -71,3 +71,10 @@ export function formatAmount(amount: string | number) {
     return "";
   }
 }
+
+export const byteValueNumberFormatter = Intl.NumberFormat("en", {
+  notation: "compact",
+  style: "unit",
+  unit: "byte",
+  unitDisplay: "narrow",
+});

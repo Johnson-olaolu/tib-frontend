@@ -64,6 +64,7 @@ const Login = () => {
           return res.data;
         },
       });
+      console.log(user);
       if (!user?.isEmailVerified) {
         router.push("/auth/verify-email");
       }
