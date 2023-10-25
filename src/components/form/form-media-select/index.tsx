@@ -18,8 +18,14 @@ const FormMediaSelect: React.FC<IFormText> = (props) => {
   const dragDropLayer = useRef<HTMLDivElement>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [dragOver, setDragOver] = useState(false);
+  const [_document, set_document] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    set_document(document);
+  }, []);
+
   const selectFile = () => {
-    const fileInput = document.createElement("input");
+    const fileInput = _document?.createElement("input");
     fileInput.type = "file";
     fileInput.multiple = allowMultiple;
     fileInput.accept = ".".concat(validExtensions.join(", ."));

@@ -34,7 +34,7 @@ const Profile = () => {
   const [isSubmitting, setisSubmitting] = useState(false);
   const selectImage = () => {
     setIsChangingProfileImage(true);
-    const fileInput = document.createElement("input");
+    const fileInput = document?.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*";
     fileInput.addEventListener("change", (e: any) => {

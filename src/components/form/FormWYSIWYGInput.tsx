@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { IFormTextArea } from "./FormTextArea";
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(import("react-quill"), { ssr: false });
 
 interface IFormWYSIWYGInput {
   name: string;
