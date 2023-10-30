@@ -18,7 +18,7 @@ COPY . .
 # COPY tsconfig.json .
 
 # Environment variables must be present at build time
-ENV NEXT_PUBLIC_BASE_URL="http://localhost:5001"
+ENV NEXT_PUBLIC_BASE_URL="http://137.184.208.185:5001"
 
 # Uncomment the following line to disable telemetry at build time
 RUN yarn build
