@@ -21,30 +21,30 @@ RUN yarn build
 # Step 2. Production image, copy all the files and run next
 FROM node:alpine AS runner
 
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# # Don't run production as root
+# RUN addgroup --system --gid 1001 nodejs
+# RUN adduser --system --uid 1001 nextjs
+# USER nextjs
 
-COPY --from=builder /usr/src/app/public ./public
-COPY --from=builder /usr/src/app/next.config.js .
-COPY --from=builder /usr/src/app/package.json .
-
-# Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next/static ./.next/static
-
-
-CMD node server.js
-
-# WORKDIR /app
-# # copy from build image
-# COPY --from=builder /usr/src/app/package.json ./package.json
-# COPY --from=builder /usr/src/app/node_modules ./node_modules
-# COPY --from=builder /usr/src/app/.next ./.next
 # COPY --from=builder /usr/src/app/public ./public
+# COPY --from=builder /usr/src/app/next.config.js .
+# COPY --from=builder /usr/src/app/package.json .
 
-# EXPOSE 3000
-# CMD ["yarn", "start"]
+# # Automatically leverage output traces to reduce image size
+# COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next/standalone ./
+# COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next/static ./.next/static
+
+
+# CMD node server.js
+
+WORKDIR /app
+# copy from build image
+COPY --from=builder /usr/src/app/package.json ./package.json
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/.next ./.next
+COPY --from=builder /usr/src/app/public ./public
+
+EXPOSE 3000
+CMD ["yarn", "start"]
