@@ -1,12 +1,12 @@
 # Step 1. Rebuild the source code only when needed
-FROM node:alpine AS builder
+FROM node:18-alpine AS builder
 
 WORKDIR /usr/src/app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock*  ./
 # Omit --production flag for TypeScript devDependencies
-RUN npm i -g node-gyp; 
+# RUN npm i -g node-gyp; 
 RUN yarn --frozen-lockfile; 
 
 COPY . .
@@ -19,7 +19,7 @@ ENV NEXT_PUBLIC_BASE_URL="http://67.205.168.95:6001"
 RUN yarn build
 
 # Step 2. Production image, copy all the files and run next
-FROM node:alpine AS runner
+FROM node:18-alpine AS runner
 
 # WORKDIR /usr/src/app
 
