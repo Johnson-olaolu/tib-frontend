@@ -1,10 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 // const ReactQuill = dynamic(import("react-quill"), { ssr: false });
-import ReactQuill from "react-quill";
-
+import type ReactQuill from "react-quill";
+const QuillWrapper = dynamic(
+  async () => {
+    const { default: RQ } = await import("react-quill");
+    // eslint-disable-next-line react/display-name
+    return ({ ...props }) => <RQ {...props} />;
+  },
+  {
+    ssr: false,
+  }
+) as typeof ReactQuill;
 interface IFormWYSIWYGInput {
   name: string;
   label: string;
@@ -20,6 +29,11 @@ interface IFormWYSIWYGInput {
 const FormWYSIWYGInput: React.FC<IFormWYSIWYGInput> = (props) => {
   const { error, name, label, required, optional, min, value, setValue } = props;
   const [isFocused, setisFocused] = useState(false);
+
+  useEffect(() => {
+    console.log(QuillWrapper);
+  }, []);
+
   return (
     <div className="">
       <div className="justify-between flex mb-2">
@@ -34,7 +48,7 @@ const FormWYSIWYGInput: React.FC<IFormWYSIWYGInput> = (props) => {
       </div>
       {/* <div className={!isFocused ? "h-32" : "h-[268px]"}> */}
       <div className={!isFocused ? "h-32" : "h-[268px]"}>
-        <ReactQuill
+        <QuillWrapper
           theme="snow"
           value={value}
           onChange={(value) => setValue(value)}
