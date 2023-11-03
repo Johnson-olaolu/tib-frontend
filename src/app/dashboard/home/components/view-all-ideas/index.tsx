@@ -9,7 +9,7 @@ import DashboardIdeaGrid from "@/app/dashboard/components/idea/grid";
 const viewIdeaMenu = ["Spotlight", "Arts", "Technology", "Entertainment", "Finance", "Business", "Music", "More"];
 
 const ViewAllIdeas = () => {
-  const [activeMenu, setActiveMenu] = useState("");
+  const [activeMenu, setActiveMenu] = useState("Spotlight");
   return (
     <div className="">
       <div className="">

@@ -12,7 +12,14 @@ interface IPaymentMethodBadge {
 const PaymentMethodBadge: React.FC<IPaymentMethodBadge> = (props) => {
   const { paymentMethod, active, onClick } = props;
   return (
-    <button className=" disabled:opacity-50" disabled={paymentMethod.disabled} onClick={() => onClick(paymentMethod.name)}>
+    <button
+      className=" disabled:opacity-50"
+      disabled={paymentMethod.disabled}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(paymentMethod.name);
+      }}
+    >
       <div className="h-32 w-full rounded-lg border border-[#C2C2C2] flex items-center justify-center relative">
         {active && <BsFillCheckCircleFill className="text-green-600 absolute top-3 right-3" size={20} />}
         <div className="gap-3 text-center flex flex-col items-center">

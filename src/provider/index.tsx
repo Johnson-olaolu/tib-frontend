@@ -38,8 +38,8 @@ export function Provider({ children }: { children: React.ReactNode }) {
           <PersistGate persistor={persistor}>
             <ModalContextProvider>
               <ToastContextProvider>
-                <Next13ProgressBar height={3} options={{ showSpinner: true, easing: "ease" }} showOnShallow startPosition={0.08} />
                 {children}
+                <Next13ProgressBar height="4px" color="#2299DD" options={{ showSpinner: true, easing: "ease" }} showOnShallow />
               </ToastContextProvider>
             </ModalContextProvider>
           </PersistGate>

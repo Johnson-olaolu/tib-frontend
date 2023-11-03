@@ -5,7 +5,6 @@ import localFont from "next/font/local";
 import { Provider } from "@/provider";
 import ProviderWrapper from "@/provider/ProviderWrapper";
 import NextTopLoader from "nextjs-toploader";
-
 const circularStd = localFont({
   variable: "--font-circularStd",
   src: [

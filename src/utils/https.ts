@@ -50,8 +50,15 @@ class HttpFacade {
     return response.data;
   };
 
-  updateProfile = async ({ url, body }: IPatch) => {
+  patchForm = async ({ url, body }: IPatch) => {
     const response = await this.http.patch(url, body, {
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+    });
+    return response.data;
+  };
+
+  postForm = async ({ url, body }: IPatch) => {
+    const response = await this.http.post(url, body, {
       headers: { "content-type": "application/x-www-form-urlencoded" },
     });
     return response.data;

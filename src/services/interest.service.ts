@@ -7,7 +7,15 @@ const getInterests = async (): Promise<IResponse<IInterest[]>> => {
   });
 };
 
+const queryInterests = async ({ name }: { name?: string }): Promise<IResponse<IInterest[]>> => {
+  return await https.get({
+    url: "/interest/query",
+    query: { name },
+  });
+};
+
 const interestService = {
   getInterests,
+  queryInterests,
 };
 export default interestService;

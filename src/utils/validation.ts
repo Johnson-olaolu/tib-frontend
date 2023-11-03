@@ -4,13 +4,15 @@ YupPassword(yup); // extend yup
 
 // used throughout the file
 const amountWithCurrencySchema = yup.object({
-  currency: yup.string().required("Please select a category"),
+  currency: yup.string().required("Please select a currency"),
   value: yup
     .number()
     .when("currency", { is: "NGN", then: (schema) => schema.min(1000).required() })
     .when("currency", { is: "USD", then: (schema) => schema.min(10).required() })
     .when("currency", { is: "EUR", then: (schema) => schema.min(10).required() }),
 });
+
+const MediaValidationSchema = yup.object().shape({});
 
 export const signUpValidationSchema = yup.object({
   userName: yup
@@ -88,4 +90,11 @@ export const fundWalletValidationSchema = yup.object({
     .minNumbers(1, "password must contain at least 1 number")
     .minSymbols(1, "password must contain at least 1 special character")
     .required("field is mandatory"),
+});
+
+export const createIdeaSimpleValidationSchema = yup.object({
+  title: yup.string().required(),
+  description: yup.string().min(150).required(),
+  category: yup.array().of(yup.string()),
+  collaborators: yup.array().of(yup.string()),
 });

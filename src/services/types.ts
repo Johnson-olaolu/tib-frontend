@@ -85,7 +85,7 @@ export interface IWallet {
 
   userId: string;
 
-  amount: number;
+  balance: number;
 
   transactions: IWalletTransaction[];
 

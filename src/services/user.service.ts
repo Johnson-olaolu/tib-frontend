@@ -8,10 +8,24 @@ const getUserDetails = async (): Promise<IResponse<IUser>> => {
   });
 };
 
+const queryUsers = async (query: {
+  role?: string;
+  plan?: string;
+  userName?: string;
+  email?: string;
+  name?: string;
+  phoneNumber?: string;
+}): Promise<IResponse<IUser[]>> => {
+  return await https.get({
+    url: "/user/query",
+    query: query,
+  });
+};
+
 const updateProfilePicture = async (userId: string, file: File): Promise<IResponse<IProfile>> => {
   var formData = new FormData();
   formData.append("file", file);
-  return await https.updateProfile({
+  return await https.patchForm({
     url: `/user/${userId}/profilePicture`,
     body: formData,
   });
@@ -37,6 +51,7 @@ const userService = {
   getUserDetails,
   updateProfilePicture,
   updateProfile,
+  queryUsers,
 };
 
 export default userService;

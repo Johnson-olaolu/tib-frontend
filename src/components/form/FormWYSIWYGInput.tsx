@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(import("react-quill"), { ssr: false });
+// const ReactQuill = dynamic(import("react-quill"), { ssr: false });
+import ReactQuill from "react-quill";
 
 interface IFormWYSIWYGInput {
   name: string;
@@ -31,8 +32,8 @@ const FormWYSIWYGInput: React.FC<IFormWYSIWYGInput> = (props) => {
           </span>
         )}
       </div>
+      {/* <div className={!isFocused ? "h-32" : "h-[268px]"}> */}
       <div className={!isFocused ? "h-32" : "h-[268px]"}>
-        {/* <iframe srcDoc="<div className='text-sm' dangerouslySetInnerHTML={{ __html: value }}></div>" height={200}></iframe> */}
         <ReactQuill
           theme="snow"
           value={value}

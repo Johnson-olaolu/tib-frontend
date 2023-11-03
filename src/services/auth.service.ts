@@ -17,20 +17,20 @@ const login = async (payload: ILoginPayLoad): Promise<IResponse<ILoginResponse>>
 
 const verifyEmail = async (payload: { token: string }): Promise<IResponse<ILoginResponse>> => {
   return await https.post({
-    url: "/auth/confirmEmail",
+    url: "/auth/confirm-email",
     body: JSON.stringify(payload),
   });
 };
 
 const createVerifyEmailOtp = async (): Promise<IResponse<null>> => {
   return await https.get({
-    url: "/auth/confirmEmail",
+    url: "/auth/confirm-email",
   });
 };
 
 const createForgetPasswordUrl = async (email: string): Promise<IResponse<null>> => {
   return await https.get({
-    url: "/auth/changePassword",
+    url: "/auth/change-password",
     query: {
       email,
     },
@@ -39,7 +39,7 @@ const createForgetPasswordUrl = async (email: string): Promise<IResponse<null>> 
 
 const resetPassword = async (payload: IResetPasswordPayload): Promise<IResponse<ILoginResponse>> => {
   return await https.post({
-    url: "/auth/changePassword",
+    url: "/auth/change-password",
     body: JSON.stringify(payload),
   });
 };

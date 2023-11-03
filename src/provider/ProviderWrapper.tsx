@@ -12,6 +12,7 @@ const ProviderWrapper = () => {
   const { getModal } = useModal();
 
   //Fetch Site Wide Data
+
   useQuery({
     queryKey: ["user"],
     queryFn: async () => {

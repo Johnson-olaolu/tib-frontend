@@ -11,21 +11,17 @@ export interface IFormText extends ComponentProps<"input"> {
   error?: string;
   optional?: boolean;
   allowMultiple?: boolean;
+  values?: File[];
+  onChangeFiles: (files: File[]) => void;
 }
 
 const FormMediaSelect: React.FC<IFormText> = (props) => {
-  const { error, name, label, required, optional, disabled, allowMultiple = false } = props;
+  const { error, name, label, required, optional, disabled, allowMultiple = false, onChangeFiles, values } = props;
   const dragDropLayer = useRef<HTMLDivElement>(null);
-  const [files, setFiles] = useState<File[]>([]);
   const [dragOver, setDragOver] = useState(false);
-  const [_document, set_document] = React.useState<any>(null);
-
-  React.useEffect(() => {
-    set_document(document);
-  }, []);
 
   const selectFile = () => {
-    const fileInput = _document?.createElement("input");
+    const fileInput = document?.createElement("input");
     fileInput.type = "file";
     fileInput.multiple = allowMultiple;
     fileInput.accept = ".".concat(validExtensions.join(", ."));
@@ -33,20 +29,20 @@ const FormMediaSelect: React.FC<IFormText> = (props) => {
     // fileInput.accept = "image/*";
     fileInput.addEventListener("change", (e: Event) => {
       let input = e?.target as HTMLInputElement;
-      let newFiles = files;
+      let newFiles = values;
       for (const file of Array.from(input?.files || [])) {
-        if (!files.includes(file)) {
-          newFiles.push(file);
+        if (!values?.includes(file)) {
+          newFiles?.push(file);
         }
       }
-      setFiles([...newFiles]);
+      onChangeFiles([...newFiles!]);
     });
     fileInput.click();
   };
 
   const removeFile = (file: File) => {
-    const newFiles = files.filter((f) => f.name !== file.name);
-    setFiles([...newFiles]);
+    const newFiles = values?.filter((f) => f.name !== file.name);
+    onChangeFiles([...(newFiles || [])]);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -62,14 +58,14 @@ const FormMediaSelect: React.FC<IFormText> = (props) => {
   const handleDragDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     //   console.log(e.dataTransfer?.files);
-    const newFiles = files;
+    const newFiles = values;
     for (const file of Array.from(e.dataTransfer?.files || [])) {
-      if (files.every((f) => f.name !== file.name)) {
-        newFiles.push(file);
+      if (values?.every((f) => f.name !== file.name)) {
+        newFiles?.push(file);
       }
     }
-    console.log({ e: e.dataTransfer?.files, files });
-    setFiles([...newFiles]);
+    // console.log({ e: e.dataTransfer?.files, files });
+    onChangeFiles([...(newFiles || [])]);
     setDragOver(false);
   };
 
@@ -80,7 +76,7 @@ const FormMediaSelect: React.FC<IFormText> = (props) => {
       </label>
       <div className="">
         <div className="flex gap-[10px] pb-4 flex-wrap">
-          {files.map((file) => (
+          {values?.map((file) => (
             <ViewMediaBadge removeFile={removeFile} key={file.name} file={file} />
           ))}
         </div>
