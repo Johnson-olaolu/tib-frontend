@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { IToastContext, IToastData, IToastPayload } from "./types";
 import Toast from "../../components/toast";
+import { generateString } from "@/utils/misc";
 
 const ToastContext = createContext({});
 
@@ -11,7 +12,7 @@ export const ToastContextProvider: React.FC<{
   const [toastData, setToastData] = useState<IToastData[]>([]);
 
   const openToast = (data: IToastPayload) => {
-    const uuid = crypto.randomUUID();
+    const uuid = generateString(10);
     setToastData((toastData) => {
       return [...toastData, { ...data, id: uuid }];
     });
