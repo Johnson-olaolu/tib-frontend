@@ -23,10 +23,10 @@ FROM node:alpine AS runner
 
 # WORKDIR /usr/src/app
 
-# # Don't run production as root
-# RUN addgroup --system --gid 1001 nodejs
-# RUN adduser --system --uid 1001 nextjs
-# USER nextjs
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+USER nextjs
 
 # COPY --from=builder /usr/src/app/public ./public
 # COPY --from=builder /usr/src/app/next.config.js .
