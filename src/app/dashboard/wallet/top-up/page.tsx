@@ -31,7 +31,13 @@ const WalletTopUp = () => {
 
   const user = queryClient.getQueryData<IUser>(["user"]);
   const paymentMethods = queryClient.getQueryData<IPaymentMethod[]>(["paymentMethod"]);
-  const walletQuery = useQuery({ queryKey: ["wallet"], queryFn: () => walletService.fetchUserWallet(user?.id || "") });
+  const { data: wallet } = useQuery({
+    queryKey: ["wallet"],
+    queryFn: async () => {
+      const data = await walletService.fetchUserWallet(user?.id || "");
+      return data.data;
+    },
+  });
 
   const creditWalletMutation = useMutation({
     mutationFn: walletService.creditWallet,
@@ -88,7 +94,7 @@ const WalletTopUp = () => {
       // console.log(values);
       // openModal("confirm-transaction", "")
       creditWalletMutation.mutate({
-        walletId: walletQuery.data?.data?.id || "",
+        walletId: wallet?.id || "",
         body: values,
       });
     },
@@ -102,7 +108,7 @@ const WalletTopUp = () => {
         </div>
         <div className=" mt-16">
           <p className=" text-tib-primary text-xl">Wallet Balance:</p>
-          <p className=" text-tib-purple font-bold text-3xl">NGN 3000</p>
+          <p className=" text-tib-purple font-bold text-3xl">NGN {wallet?.balance}</p>
         </div>
         <div className=" mt-8 flex gap-4">
           <WalletCreditCard />

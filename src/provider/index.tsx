@@ -25,10 +25,11 @@ export function Provider({ children }: { children: React.ReactNode }) {
   let localStoragePersister: any;
   if (typeof window !== "undefined") {
     localStoragePersister = createSyncStoragePersister({ storage: window.localStorage });
-    // persistQueryClient({
-    //   queryClient,
-    //   persister: localStoragePersister,
-    // });
+    // remember to take this out when deploying finally
+    persistQueryClient({
+      queryClient,
+      persister: localStoragePersister,
+    });
   }
   return (
     <>

@@ -24,7 +24,7 @@ const WalletCreditCard = () => {
       </div>
       <CreditCardChipIcon className="absolute left-5 top-14" />
       <p className="absolute left-5 top-20 text-lg font-semibold">xxxx xxxx xxxx xxxx</p>
-      <div className=" absolute left-5 bottom-10 flex items-center gap-1">
+      <div className=" absolute left-5 bottom-10 flex items-center gap-2">
         <span className="block w-[16px] text-[6px] font-semibold uppercase">Valid thru</span>
         <span className=" text-[12px] font-semibold">12/24</span>
       </div>

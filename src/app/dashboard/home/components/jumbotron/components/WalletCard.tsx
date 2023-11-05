@@ -30,7 +30,7 @@ const WalletCard = () => {
       <p className=" text-xl font-bold text-tib-purple text-center">My Ideas</p>
       <div className="text-center text-tib-purple space-y-3">
         <p className="text-sm font-abrilFatface">Your Account Balance </p>
-        <p className=" font-bold text-3xl">{`₦${formatAmount(wallet?.balance || 0)}`}</p>
+        <p className=" font-bold text-3xl">{`₦${formatAmount(wallet?.balance || 0) || 0}`}</p>
       </div>
       <div className="flex justify-between gap-2">
         <Link
