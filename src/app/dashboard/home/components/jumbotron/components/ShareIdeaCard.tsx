@@ -41,7 +41,7 @@ const ShareIdeaCard = () => {
         />
       </svg>
 
-      <Link href={"#"} className=" py-[10px] px-4 bg-tib-white text-tib-blue rounded text-sm">
+      <Link href={"/dashboard/idea/create"} className=" py-[10px] px-4 bg-tib-white text-tib-blue rounded text-sm">
         Share Idea
       </Link>
     </div>

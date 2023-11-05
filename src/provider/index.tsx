@@ -11,26 +11,25 @@ import { PersistQueryClientProvider, persistQueryClient } from "@tanstack/react-
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { Next13ProgressBar } from "next13-progressbar";
 
-const persistor = persistStore(store);
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      gcTime: 1000 * 60 * 60 * 24 * 30, // 1 month
-    },
-  },
-});
-
-let localStoragePersister: any;
-if (typeof window !== "undefined") {
-  localStoragePersister = createSyncStoragePersister({ storage: window.localStorage });
-  persistQueryClient({
-    queryClient,
-    persister: localStoragePersister,
-  });
-}
 export function Provider({ children }: { children: React.ReactNode }) {
   // const sessionStoragePersister = createSyncStoragePersister({ storage: window.sessionStorage })
+  const persistor = persistStore(store);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        gcTime: Infinity, // 1 month
+      },
+    },
+  });
 
+  let localStoragePersister: any;
+  if (typeof window !== "undefined") {
+    localStoragePersister = createSyncStoragePersister({ storage: window.localStorage });
+    // persistQueryClient({
+    //   queryClient,
+    //   persister: localStoragePersister,
+    // });
+  }
   return (
     <>
       <PersistQueryClientProvider persistOptions={{ persister: localStoragePersister }} client={queryClient}>

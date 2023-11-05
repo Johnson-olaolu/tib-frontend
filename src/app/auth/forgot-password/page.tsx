@@ -6,6 +6,7 @@ import authService from "@/services/auth.service";
 import { isObjectEmpty } from "@/utils/misc";
 import { forgotPasswordSchema } from "@/utils/validation";
 import { useFormik } from "formik";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const ForgotPassword = () => {
@@ -48,7 +49,7 @@ const ForgotPassword = () => {
         <div className="space-y-5 mb-7">
           <FormTextInput
             onChange={forgotPasswordFormik.handleChange}
-            onBlur={forgotPasswordFormik.handleBlur}
+            onFocus={forgotPasswordFormik.handleBlur}
             value={forgotPasswordFormik.values.email}
             placeholder="E.g emailneeded@gmail.com"
             name="email"
@@ -62,12 +63,11 @@ const ForgotPassword = () => {
           disabled={!isObjectEmpty(forgotPasswordFormik.errors) || isObjectEmpty(forgotPasswordFormik.touched)}
         />
       </form>
-      {/* <p className=" text-center mt-7 text-sm">
-        Don&apos;t have an account?{" "}
-        <Link className="text-tib-purple" href={"/auth/sign-up"}>
-          Register
+      <p className=" text-center mt-7 text-sm">
+        <Link className="text-tib-purple" href={"/auth/login"}>
+          Return to login
         </Link>
-      </p> */}
+      </p>
     </div>
   );
 };

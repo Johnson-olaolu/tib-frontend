@@ -23,7 +23,7 @@ const Login = () => {
   const router = useRouter();
   const loginMutation = useMutation({
     mutationFn: authService.login,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       openToast({
         title: "Login Successful",
         text: data.message,
@@ -38,6 +38,21 @@ const Login = () => {
       queryClient.invalidateQueries({
         queryKey: ["user"],
       });
+      const user = await queryClient.ensureQueryData({
+        queryKey: ["user"],
+        queryFn: async () => {
+          const res = await userService.getUserDetails();
+          return res.data;
+        },
+      });
+      if (!user?.isEmailVerified) {
+        router.push("/auth/verify-email");
+      }
+      if (user?.profile?.firstName || user?.profile?.lastName) {
+        router.push("/dashboard/home");
+      } else {
+        router.push("/onboarding/profile");
+      }
     },
     onError: (error: any) => {
       console.log(error);
@@ -57,22 +72,6 @@ const Login = () => {
     validationSchema: loginValidationSchema,
     onSubmit: async (values) => {
       loginMutation.mutate(values);
-      const user = await queryClient.ensureQueryData({
-        queryKey: ["user"],
-        queryFn: async () => {
-          const res = await userService.getUserDetails();
-          return res.data;
-        },
-      });
-      console.log(user);
-      if (!user?.isEmailVerified) {
-        router.push("/auth/verify-email");
-      }
-      if (user?.profile?.firstName || user?.profile?.lastName) {
-        router.push("/dashboard/home");
-      } else {
-        router.push("/onboarding/profile");
-      }
     },
   });
   return (

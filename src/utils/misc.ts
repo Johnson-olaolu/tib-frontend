@@ -66,9 +66,9 @@ export function getInitials(user?: IUser) {
 
 export function formatAmount(amount: string | number) {
   if (parseFloat(`${amount}`) > 0) {
-    return new Intl.NumberFormat().format(parseFloat(`${amount}`)) || "";
+    return new Intl.NumberFormat().format(parseFloat(`${amount}`)) || "0";
   } else {
-    return "";
+    return "1";
   }
 }
 
