@@ -2,6 +2,7 @@ import { AnyAction, combineReducers, createSlice, PayloadAction, Reducer } from 
 import storage from "redux-persist/es/storage";
 import authSlice from "./authSlice";
 import userSlice from "./userSlice";
+import notificationSlice from "./notificationSlice";
 
 const appSlice = createSlice({
   name: "app",
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   app: appSlice.reducer,
   auth: authSlice,
   user: userSlice,
+  notification: notificationSlice,
 });
 
 export const combinedMiddleware = [];

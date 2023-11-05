@@ -17,9 +17,6 @@ const WalletCard = () => {
     },
   });
 
-  useEffect(() => {
-    console.log({ wallet });
-  }, [wallet]);
   return (
     <div
       className=" h-60 w-[262px] rounded p-6 flex flex-col justify-between items-stretch bg-tib-white"

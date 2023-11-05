@@ -30,10 +30,6 @@ const FormWYSIWYGInput: React.FC<IFormWYSIWYGInput> = (props) => {
   const { error, name, label, required, optional, min, value, setValue } = props;
   const [isFocused, setisFocused] = useState(false);
 
-  useEffect(() => {
-    console.log(QuillWrapper);
-  }, []);
-
   return (
     <div className="">
       <div className="justify-between flex mb-2">

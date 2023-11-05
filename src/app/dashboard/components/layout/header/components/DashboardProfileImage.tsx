@@ -28,9 +28,6 @@ const DashboardProfileImage = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log({ didUserChange: user });
-  }, [user]);
   return (
     <div ref={containerRef} className="relative">
       <div className="" role="button" onClick={() => setShowProfile(!showProfile)}>

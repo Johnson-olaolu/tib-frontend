@@ -78,9 +78,6 @@ const Wallet = () => {
     },
     validationSchema: fundWalletValidationSchema,
     onSubmit: async (values) => {
-      // setIsSubmitting(true);
-      // console.log(values);
-      // openModal("confirm-transaction", "")
       creditWalletMutation.mutate({
         walletId: walletQuery.data?.data?.id || "",
         body: values,

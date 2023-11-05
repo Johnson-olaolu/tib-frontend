@@ -90,9 +90,6 @@ const WalletTopUp = () => {
     },
     validationSchema: fundWalletValidationSchema,
     onSubmit: async (values) => {
-      // setIsSubmitting(true);
-      // console.log(values);
-      // openModal("confirm-transaction", "")
       creditWalletMutation.mutate({
         walletId: wallet?.id || "",
         body: values,

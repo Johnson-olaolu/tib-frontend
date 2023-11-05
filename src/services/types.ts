@@ -261,3 +261,20 @@ export enum IdeaNeedEnum {
 export interface ILike {}
 export interface IComment {}
 export interface IShare {}
+
+export type NotificationEventTypes = "";
+export interface INotification {
+  id: string;
+
+  eventType: NotificationEventTypes;
+
+  userId: string;
+
+  seen: boolean;
+
+  data: any;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}

@@ -51,7 +51,6 @@ const Page = () => {
     },
     validationSchema: createIdeaSimpleValidationSchema,
     onSubmit: (values) => {
-      console.log(values.media);
       createIdeaSimpleMutation.mutate({ ...values, userId: user!.id });
       createIdeaSimpleFormik.resetForm();
     },
@@ -93,7 +92,6 @@ const Page = () => {
                 if (!newValues.includes(value)) {
                   newValues.push(value);
                 }
-                console.log(newValues);
                 createIdeaSimpleFormik.setFieldValue("categories", newValues);
               }}
               handleRemove={(value) => {

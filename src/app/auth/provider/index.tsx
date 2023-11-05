@@ -4,15 +4,15 @@ import { useRouter } from "next13-progressbar";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const DashboardAuthProvider = ({ children }: { children: React.ReactNode }) => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const token = useSelector((state: RootState) => state.auth.token);
   const router = useRouter();
   useEffect(() => {
-    if (!token) {
-      router.replace(`/auth/login`);
+    if (token) {
+      router.replace(`/dashboard/home`);
     }
   }, [token]);
-  return <>{children}</>;
+  return <> {children}</>;
 };
 
-export default DashboardAuthProvider;
+export default AuthProvider;

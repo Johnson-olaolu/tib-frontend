@@ -57,14 +57,12 @@ const FormMediaSelect: React.FC<IFormText> = (props) => {
 
   const handleDragDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    //   console.log(e.dataTransfer?.files);
     const newFiles = values;
     for (const file of Array.from(e.dataTransfer?.files || [])) {
       if (values?.every((f) => f.name !== file.name)) {
         newFiles?.push(file);
       }
     }
-    // console.log({ e: e.dataTransfer?.files, files });
     onChangeFiles([...(newFiles || [])]);
     setDragOver(false);
   };
