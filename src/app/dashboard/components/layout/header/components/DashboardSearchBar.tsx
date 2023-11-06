@@ -20,7 +20,7 @@ const DashboardSearchBar = () => {
           className="w-full focus-visible:outline-none flex-grow placeholder:text-[#C2C2C2]"
           placeholder="Search all categories, users, ideas, interest and more"
         />
-        {search !== "" && <BiSolidXCircle size={20} className="text-black" role="button" />}
+        {search !== "" && <BiSolidXCircle size={20} className="text-black" role="button" onClick={() => setSearch("")} />}
       </div>
       {search !== "" && (
         <div className="absolute w-full -bottom-1 transform translate-y-full h-80 bg-white border border-[#C2C2C2] rounded-lg p-6">

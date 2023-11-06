@@ -11,7 +11,10 @@ const DashbaordHeader = () => {
     <header className="  py-7 px-12 bg-white">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-32">
-          <Image src="/images/logo.png" height={54} width={200} alt="TIB Logo" />
+          <Link href={"/dashboard/home"}>
+            <Image src="/images/logo.png" height={54} width={200} alt="TIB Logo" />
+          </Link>
+
           <DashboardSearchBar />
         </div>
         <div className=" flex items-center gap-8">

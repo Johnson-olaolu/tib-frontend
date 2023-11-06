@@ -42,7 +42,6 @@ const FormWYSIWYGInput: React.FC<IFormWYSIWYGInput> = (props) => {
           </span>
         )}
       </div>
-      {/* <div className={!isFocused ? "h-32" : "h-[268px]"}> */}
       <div className={!isFocused ? "h-32" : "h-[268px]"}>
         <QuillWrapper
           theme="snow"

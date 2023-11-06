@@ -36,7 +36,7 @@ const DashboardProfileImage = () => {
       {showProfile && (
         <div className="absolute -bottom-3 -right-7 w-[292px] transform translate-y-full rounded overflow-hidden">
           <div className=" h-[72px] bg-[#DAF2FF] relative ">
-            <PiPencilSimpleLight size={24} className=" right-6 bottom-4 absolute" onClick={() => router.push(`/dashboard/profile`)} />
+            <PiPencilSimpleLight size={24} className=" right-6 bottom-4 absolute" role="button" onClick={() => router.push(`/dashboard/profile`)} />
             <div className=" absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
               <Avatar user={user} size="lg" />
             </div>
@@ -50,7 +50,7 @@ const DashboardProfileImage = () => {
               <p className=" text-[#9F9EA1] text-sm">{user?.userName}</p>
             </div>
 
-            <Link href={"/dashboard/profile"} className="mt-6 text-tib-blue font-bold text-center mx-auto inline-block mb-5">
+            <Link href={`/${user?.userName}`} className="mt-6 text-tib-blue font-bold text-center mx-auto inline-block mb-5">
               View Profile
             </Link>
             <div className=" h-px w-full bg-[#403E3E]"></div>

@@ -6,7 +6,6 @@ const DashboardHomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="">
       <DashbaordHeader />
-      <DashboardHomeJumbotron />
       {children}
     </main>
   );

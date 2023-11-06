@@ -31,12 +31,20 @@ const DashboardNotificationNotification = () => {
         </span>
       </div>
       {showNotifications && (
-        <div className=" absolute -bottom-7 translate-y-full w-[458px] rounded -right-12 bg-white shadow">
-          <div className=" pt-7 px-6">Notification</div>
-          <div className=""></div>
-          <Link href={"#"} className="py-8 text-center block text-tib-blue">
-            See All
-          </Link>
+        <div className=" absolute -bottom-7 translate-y-full w-[458px] h-[458px] flex flex-col rounded -right-12 bg-white shadow-xl">
+          <div className=" pt-7 px-6 flex-shrink-0">Notification</div>
+          {true ? (
+            <div className=" flex-grow flex flex-col">
+              <div className="flex-grow"></div>
+              <Link href={"/dashboard/notification"} className="py-8 text-center block text-tib-blue">
+                See All
+              </Link>
+            </div>
+          ) : (
+            <div className=" flex justify-center items-center flex-grow">
+              <p className=" text-sm  text-tib-primary w-36 text-center">No Nottification at the moment</p>
+            </div>
+          )}
         </div>
       )}
     </div>
