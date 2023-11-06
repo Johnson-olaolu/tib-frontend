@@ -1,5 +1,5 @@
 import https from "@/utils/https";
-import { IInterest, IPlan, IResponse } from "./types";
+import { ICategory, IPlan, IResponse } from "./types";
 
 const getPlans = async (): Promise<IResponse<IPlan[]>> => {
   return await https.get({

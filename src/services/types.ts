@@ -46,13 +46,13 @@ export interface IProfile {
   lastName: string;
   profilePicture: string;
   phoneNumber: string;
-  interests: IInterest[];
+  interests: ICategory[];
   bio: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface IInterest {
+export interface ICategory {
   id: string;
 
   name: string;

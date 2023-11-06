@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { FiPlus, FiX } from "react-icons/fi";
 import InterestSelectorModal from "./components/InterestSelectorModal";
-import { IInterest } from "@/services/types";
+import { ICategory } from "@/services/types";
 
 interface IInterestSelector {
-  interests: IInterest[];
+  interests: ICategory[];
   values: string[];
   onChange: (values: string[]) => void;
   label: string;

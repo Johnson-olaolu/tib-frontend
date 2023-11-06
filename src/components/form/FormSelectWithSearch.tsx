@@ -4,8 +4,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaCaretDown } from "react-icons/fa6";
 import { FiX } from "react-icons/fi";
-import interestService from "@/services/interest.service";
-import { IInterest, IUser } from "@/services/types";
+import categoryService from "@/services/category.service";
+import { ICategory, IUser } from "@/services/types";
 import userService from "@/services/user.service";
 import Avatar from "../extras/Avatar";
 
@@ -30,12 +30,12 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
 
-  let queriedData: IInterest[] | IUser[] | undefined = [];
+  let queriedData: ICategory[] | IUser[] | undefined = [];
   if (type === "interest") {
     const { data } = useQuery({
       queryKey: ["interest", searchTerm],
       queryFn: async () => {
-        const res = await interestService.queryInterests({ name: searchTerm });
+        const res = await categoryService.queryCategories({ name: searchTerm });
         return res.data;
       },
     });
@@ -51,7 +51,7 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
     queriedData = data;
   }
 
-  const addItemInterest = (item: IInterest) => {
+  const addItemInterest = (item: ICategory) => {
     if (!values.includes(item.id)) {
       setData([...data, item]);
       handleClick(item.name);
@@ -135,7 +135,7 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
             {type === "interest" ? (
               queriedData && queriedData?.length > 0 ? (
                 <div className=" space-y-1">
-                  {(queriedData as unknown as IInterest[]).map((res) => (
+                  {(queriedData as unknown as ICategory[]).map((res) => (
                     <div
                       className={`px-4 flex hover:bg-gray-100 border-l-2 hover:border-gray-600 border-transparent ${
                         values.includes(res.name) && "bg-gray-100 border-l-2 border-gray-600"

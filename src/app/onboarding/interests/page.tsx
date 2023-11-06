@@ -1,6 +1,6 @@
 "use client";
-import interestService from "@/services/interest.service";
-import { IInterest, IUser } from "@/services/types";
+import categoryService from "@/services/category.service";
+import { ICategory, IUser } from "@/services/types";
 import React, { useEffect, useState } from "react";
 import InterestBadge from "./components/InterestBadge";
 import FormSubmit from "@/components/form/FormSubmit";
@@ -14,7 +14,7 @@ const Interest = () => {
   const { openToast } = useToast();
   const router = useRouter();
   const { setInterests: setOnboardingInterests, completeOnboarding, onboardingData } = useOnboarding();
-  const interests = queryClient.getQueryData<IInterest[]>(["interest"]);
+  const interests = queryClient.getQueryData<ICategory[]>(["interest"]);
   const user = queryClient.getQueryData<IUser>(["user"]);
 
   const updateProfileMutation = useMutation({

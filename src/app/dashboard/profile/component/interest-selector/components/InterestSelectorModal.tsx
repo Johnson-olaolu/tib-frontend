@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import InterestBadge2 from "./InterestBadge2";
-import { IInterest } from "@/services/types";
+import { ICategory } from "@/services/types";
 import { FiX } from "react-icons/fi";
 
 interface IInterestSelectorModal {
-  interests: IInterest[];
+  interests: ICategory[];
   values: string[];
   handleInterestBadgeClick: (name: string) => void;
   closeModal: () => void;

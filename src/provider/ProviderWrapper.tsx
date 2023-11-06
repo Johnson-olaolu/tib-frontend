@@ -4,7 +4,7 @@ import useToast from "@/context/toast";
 import React from "react";
 import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import userService from "@/services/user.service";
-import interestService from "@/services/interest.service";
+import categoryService from "@/services/category.service";
 import walletService from "@/services/wallet.service";
 
 const ProviderWrapper = () => {
@@ -23,9 +23,9 @@ const ProviderWrapper = () => {
   });
 
   useQuery({
-    queryKey: ["interest"],
+    queryKey: ["category"],
     queryFn: async () => {
-      const res = await interestService.getInterests();
+      const res = await categoryService.getCategories();
       return res.data;
     },
   });
