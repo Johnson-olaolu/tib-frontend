@@ -2,9 +2,12 @@
 import BackButton from "@/components/extras/BackButton";
 import React, { useState } from "react";
 import { Notification } from "../components/notification";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/appSlice";
 
 const DashboardNotification = () => {
   const [view, setView] = useState<"All" | "Follow Requests">("All");
+  const notifications = useSelector((state: RootState) => state.notification.notifications);
   return (
     <main className="">
       <BackButton />
@@ -39,8 +42,17 @@ const DashboardNotification = () => {
             </li>
           </ul>
         </nav>
-        <div className=" mt-8"></div>
-        <Notification />
+        <div className=" mt-8">
+          {view == "All" ? (
+            <div className="space-y-1">
+              {notifications?.map((not) => (
+                <Notification key={not.id} notification={not} />
+              ))}
+            </div>
+          ) : (
+            <div className=""></div>
+          )}
+        </div>
       </div>
     </main>
   );

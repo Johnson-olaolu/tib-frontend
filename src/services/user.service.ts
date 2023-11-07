@@ -1,6 +1,6 @@
 import https from "@/utils/https";
 import qs from "qs";
-import { IProfile, IResponse, IUser } from "./types";
+import { IFollow, IProfile, IResponse, IUser } from "./types";
 
 const getUserDetails = async (): Promise<IResponse<IUser>> => {
   return await https.get({
@@ -47,11 +47,34 @@ const updateProfile = async (
   });
 };
 
+const checkIsFollowing = async (userId: string, followerId: string): Promise<IResponse<false | IFollow>> => {
+  return await https.get({
+    url: `/user/${followerId}/follow/check`,
+    query: { userId },
+  });
+};
+
+const followUser = async ({ userId, followerId }: { userId: string; followerId: string }): Promise<IResponse<IFollow>> => {
+  return await https.post({
+    url: `/user/${followerId}/follow`,
+    body: { userId },
+  });
+};
+const unFollowUser = async ({ userId, followerId }: { userId: string; followerId: string }): Promise<IResponse<IFollow>> => {
+  return await https.post({
+    url: `/user/${followerId}/unfollow`,
+    body: { userId },
+  });
+};
+
 const userService = {
   getUserDetails,
   updateProfilePicture,
   updateProfile,
   queryUsers,
+  checkIsFollowing,
+  followUser,
+  unFollowUser,
 };
 
 export default userService;

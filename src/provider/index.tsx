@@ -24,7 +24,7 @@ export function Provider({ children }: { children: React.ReactNode }) {
 
   let localStoragePersister: any;
   if (typeof window !== "undefined") {
-    localStoragePersister = createSyncStoragePersister({ storage: window.localStorage });
+    localStoragePersister = createSyncStoragePersister({ storage: window.localStorage, key: "TIB_STORAGE" });
     // remember to take this out when deploying finally
     persistQueryClient({
       queryClient,

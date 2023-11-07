@@ -1,11 +1,14 @@
 "use client";
+import { RootState } from "@/store/appSlice";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { BiBell, BiMessageAltDetail } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 const DashboardNotificationNotification = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const notifications = useSelector((state: RootState) => state.notification.notifications);
   useEffect(() => {
     const clickOutsideSelectSearch = (e: MouseEvent) => {
       if (e.target !== containerRef.current && containerRef.current?.contains(e.target as Node) === false) {
@@ -35,7 +38,13 @@ const DashboardNotificationNotification = () => {
           <div className=" pt-7 px-6 flex-shrink-0">Notification</div>
           {true ? (
             <div className=" flex-grow flex flex-col">
-              <div className="flex-grow"></div>
+              <div className="flex-grow">
+                {notifications?.map((n) => (
+                  <p className="" key={n.id}>
+                    {n.eventType}
+                  </p>
+                ))}
+              </div>
               <Link href={"/dashboard/notification"} className="py-8 text-center block text-tib-blue">
                 See All
               </Link>

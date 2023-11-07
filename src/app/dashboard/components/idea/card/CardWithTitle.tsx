@@ -9,6 +9,7 @@ import moment from "moment";
 import Avatar from "@/components/extras/Avatar";
 import { getInnertext } from "@/utils/misc";
 import Link from "next/link";
+import FollowButton from "../../user/FollowButton";
 
 const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
   const { viewType } = useDashboardViewIdeas();
@@ -26,7 +27,7 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
             <span className=" text-sm text-tib-primary w-40">{idea.categories.map((c) => c.name).join(", ")}</span>
           </div>
         </div>
-        <button className=" text-tib-blue">follow</button>
+        <FollowButton externalUser={idea.user} />
       </div>
       <div className=" mt-8 flex-grow  overflow-hidden">
         <span className=" text-sm text-tib-primary opacity-70 capitalize">{moment(idea.createdAt).fromNow()}</span>

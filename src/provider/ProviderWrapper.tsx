@@ -17,7 +17,6 @@ const ProviderWrapper = () => {
     queryKey: ["user"],
     queryFn: async () => {
       const res = await userService.getUserDetails();
-      console.log(res.data);
       return res.data;
     },
   });

@@ -8,8 +8,11 @@ import Link from "next/link";
 import { BiLogOutCircle } from "react-icons/bi";
 import Avatar from "@/components/extras/Avatar";
 import { useRouter } from "next13-progressbar";
+import { useDispatch } from "react-redux";
+import { clearStore } from "@/store/appSlice";
 const DashboardProfileImage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData<IUser>(["user"]);
   const [showProfile, setShowProfile] = useState(false);
@@ -27,6 +30,13 @@ const DashboardProfileImage = () => {
       document?.querySelector("body")?.removeEventListener("click", clickOutsideAvatar);
     };
   }, []);
+
+  const onClickLogout = () => {
+    dispatch(clearStore());
+    queryClient.clear();
+    localStorage.removeItem("TIB_STORAGE");
+    router.replace("/");
+  };
 
   return (
     <div ref={containerRef} className="relative">
@@ -55,7 +65,7 @@ const DashboardProfileImage = () => {
             </Link>
             <div className=" h-px w-full bg-[#403E3E]"></div>
             <div className="mt-6 text-center ">
-              <button className=" space-x-3 inline-flex items-center">
+              <button onClick={() => onClickLogout()} className=" space-x-3 inline-flex items-center">
                 <BiLogOutCircle size={24} />
                 <span>Log Out</span>
               </button>

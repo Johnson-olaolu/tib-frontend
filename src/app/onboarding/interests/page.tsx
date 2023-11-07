@@ -14,7 +14,7 @@ const Interest = () => {
   const { openToast } = useToast();
   const router = useRouter();
   const { setInterests: setOnboardingInterests, completeOnboarding, onboardingData } = useOnboarding();
-  const interests = queryClient.getQueryData<ICategory[]>(["interest"]);
+  const interests = queryClient.getQueryData<ICategory[]>(["category"]);
   const user = queryClient.getQueryData<IUser>(["user"]);
 
   const updateProfileMutation = useMutation({
@@ -65,7 +65,12 @@ const Interest = () => {
           ))}
         </div>
       </div>
-      <FormSubmit loading={updateProfileMutation.isPending} onClick={() => updateProfileMutation.mutate(user!.id)} text="Continue" />
+      <FormSubmit
+        disabled={onboardingData.interests.length < 1}
+        loading={updateProfileMutation.isPending}
+        onClick={() => updateProfileMutation.mutate(user!.id)}
+        text="Continue"
+      />
     </div>
   );
 };

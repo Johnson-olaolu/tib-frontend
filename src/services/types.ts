@@ -264,7 +264,7 @@ export interface ILike {}
 export interface IComment {}
 export interface IShare {}
 
-export type NotificationEventTypes = "";
+export type NotificationEventTypes = "follow-request";
 export interface INotification {
   id: string;
 
@@ -279,4 +279,24 @@ export interface INotification {
   createdAt: Date;
 
   updatedAt: Date;
+}
+
+export interface IFollow {
+  id: string;
+
+  user: IUser;
+
+  follower: IUser;
+
+  status: FollowStatusEnum;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+export enum FollowStatusEnum {
+  PENDING = "PENDING",
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
 }
