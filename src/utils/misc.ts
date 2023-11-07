@@ -88,3 +88,9 @@ export function generateString(length: number) {
   }
   return result;
 }
+
+export const getInnertext = (text: string) => {
+  const element = document.createElement("div");
+  element.innerHTML = text;
+  return element.innerText;
+};

@@ -27,7 +27,7 @@ const ViewAllIdeas = () => {
         </ul>
       </div>
       <div className=" my-10">
-        <DashboardViewIdeaContextProvider>
+        <DashboardViewIdeaContextProvider menu={activeMenu}>
           <>
             <div className=" flex justify-end gap-4 mb-8">
               <ViewTypeFilter />

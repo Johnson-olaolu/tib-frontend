@@ -13,9 +13,11 @@ import { createIdeaSimpleValidationSchema } from "@/utils/validation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useFormik } from "formik";
+import { useRouter } from "next13-progressbar";
 import React from "react";
 
 const Page = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { openToast } = useToast();
   const user = queryClient.getQueryData<IUser>(["user"]);
@@ -30,6 +32,8 @@ const Page = () => {
       queryClient.invalidateQueries({
         queryKey: ["idea"],
       });
+      //Should change this to send to user profile page
+      router.push(`/dashboard/home`);
     },
     onError: (error: any) => {
       console.log(error);

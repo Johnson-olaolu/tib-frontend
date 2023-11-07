@@ -27,7 +27,7 @@ const DashboardProfile = () => {
       return res.data;
     },
   });
-  const interests = queryClient.getQueryData<ICategory[]>(["interest"]);
+  const interests = queryClient.getQueryData<ICategory[]>(["category"]);
   // const dispatch = useDispatch();
   const [isChangingProfileImage, setIsChangingProfileImage] = useState(false);
   const selectImage = () => {
@@ -79,7 +79,7 @@ const DashboardProfile = () => {
       lastName: user?.profile?.lastName,
       phoneNumber: user?.profile?.phoneNumber,
       bio: user?.profile?.bio || "",
-      interests: user?.profile?.interests?.map((i) => i.name),
+      interests: user?.profile?.interests,
     },
     validationSchema: updateProfileSchema,
     onSubmit: async (values) => {

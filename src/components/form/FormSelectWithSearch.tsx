@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FaCaretDown } from "react-icons/fa6";
 import { FiX } from "react-icons/fi";
 import categoryService from "@/services/category.service";
@@ -30,10 +30,12 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
 
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData<IUser>(["user"]);
   let queriedData: ICategory[] | IUser[] | undefined = [];
   if (type === "interest") {
     const { data } = useQuery({
-      queryKey: ["interest", searchTerm],
+      queryKey: ["category", searchTerm],
       queryFn: async () => {
         const res = await categoryService.queryCategories({ name: searchTerm });
         return res.data;
@@ -48,7 +50,7 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
         return res.data;
       },
     });
-    queriedData = data;
+    queriedData = data?.filter((d) => d.id !== user?.id);
   }
 
   const addItemInterest = (item: ICategory) => {
@@ -168,8 +170,9 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
                       role="button"
                     >
                       <Avatar user={res} size="xs" />
-                      <p className="">
-                        {res.profile?.firstName} {res.profile?.lastName}
+                      <p className=" flex items-center gap-2">
+                        {res.profile?.firstName ? `${res.profile?.firstName} ${res.profile?.lastName}` : res.userName}
+                        <span className=" text-xs">({res.userName})</span>
                       </p>
                     </div>
                   ))}

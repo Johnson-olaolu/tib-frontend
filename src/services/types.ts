@@ -46,7 +46,7 @@ export interface IProfile {
   lastName: string;
   profilePicture: string;
   phoneNumber: string;
-  interests: ICategory[];
+  interests: string[];
   bio: string;
   createdAt: Date;
   updatedAt: Date;
@@ -192,11 +192,13 @@ export interface IIdea {
 
   userId: string;
 
+  user: IUser;
+
   title: string;
 
   description: string;
 
-  categories: string[];
+  categories: ICategory[];
 
   media: string[];
 

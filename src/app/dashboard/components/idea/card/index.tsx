@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useMemo } from "react";
 import BasicCard from "./BasicCard";
+import { IIdea } from "@/services/types";
+import CardWithTitle from "./CardWithTitle";
 
-interface IDashboardIdeaCard {
-  type: "basic";
+export interface IDashboardIdeaCard {
+  idea: IIdea;
 }
 
 const DashboardIdeaCard: React.FC<IDashboardIdeaCard> = (props) => {
-  const { type } = props;
+  const { idea } = props;
+
+  const type: "basic" | "cardWithTitle" = useMemo(() => {
+    if (idea.title) {
+      return "cardWithTitle";
+    }
+    return "basic";
+  }, [idea]);
 
   switch (type) {
+    case "cardWithTitle":
+      return <CardWithTitle idea={idea} />;
     case "basic":
       return <BasicCard />;
     default:
-      return <></>;
+      return <BasicCard />;
   }
 };
 
