@@ -8,9 +8,9 @@ const HomepageJumbotron = () => {
         <div className="text-center max-w-max mx-auto transform -translate-y-28">
           <div className=" mb-14">
             <h2 className="text-[56px] text-tib-purple">
-              We Share <strong className="font-bold">Creative Ideas</strong>
+              Leverage the <strong className="font-bold">Power of All</strong>
             </h2>
-            <p className=" text-3xl text-tib-black">Come let’s rub mind together</p>
+            <p className=" text-3xl text-tib-black">To Bring All Our Ideas to Life</p>
           </div>
 
           <Link href="/auth/login" className="px-14 py-5 bg-tib-blue rounded font-abrilFatface inline-block tracking-wide text-white">

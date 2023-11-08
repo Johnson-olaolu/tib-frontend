@@ -10,8 +10,7 @@ const HomepageVault = () => {
             Access <strong>The Vault</strong>
           </h4>
           <p className=" text-tib-black">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing egestas cras sed imperdiet cras in nisl volutpat. Diam venenatis
-            malesuada semper etiam pellentesque in etiam ultrices a. Vitae mattis.
+            Explore the true power of the Idea Bank. The TIB Vault gives you access to premium and enterprise-grade ideas, features, and services.
           </p>
           <Link href="#" className="py-3 px-4 rounded bg-tib-blue text-tib-white font-abrilFatface tracking-wide inline-block">
             Subscribe

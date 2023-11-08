@@ -50,7 +50,13 @@ const DashboardNotification = () => {
               ))}
             </div>
           ) : (
-            <div className=""></div>
+            <div className="space-y-1">
+              {notifications
+                ?.filter((n) => n.eventType == "follow-request")
+                .map((notification) => (
+                  <Notification key={notification.id} notification={notification} />
+                ))}
+            </div>
           )}
         </div>
       </div>
