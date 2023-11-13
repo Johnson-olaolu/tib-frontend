@@ -15,6 +15,7 @@ import FormPhoneNumberInput from "@/components/form/FormPhoneNumberInput";
 import FormTextInput from "@/components/form/FormTextInput";
 import InterestSelector from "./component/interest-selector";
 import { ICategory } from "@/services/types";
+import categoryService from "@/services/category.service";
 
 const DashboardProfile = () => {
   const router = useRouter();
@@ -27,7 +28,13 @@ const DashboardProfile = () => {
       return res.data;
     },
   });
-  const interests = queryClient.getQueryData<ICategory[]>(["category"]);
+  const { data: interests } = useQuery({
+    queryKey: ["category"],
+    queryFn: async () => {
+      const res = await categoryService.getCategories();
+      return res.data;
+    },
+  });
   // const dispatch = useDispatch();
   const [isChangingProfileImage, setIsChangingProfileImage] = useState(false);
   const selectImage = () => {

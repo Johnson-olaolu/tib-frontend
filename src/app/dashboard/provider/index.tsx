@@ -7,7 +7,13 @@ import React, { useEffect } from "react";
 
 const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<IUser>(["user"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
   useEffect(() => {
     const tornOffNotification = listenForUserNotifications(user?.id || "");
     return () => {

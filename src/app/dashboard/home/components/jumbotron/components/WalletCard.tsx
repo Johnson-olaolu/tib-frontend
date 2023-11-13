@@ -5,10 +5,18 @@ import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider
 import walletService from "@/services/wallet.service";
 import { IUser } from "@/services/types";
 import { formatAmount } from "@/utils/misc";
+import userService from "@/services/user.service";
 
 const WalletCard = () => {
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<IUser>(["user"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
+
   const { data: wallet } = useQuery({
     queryKey: ["wallet"],
     queryFn: async () => {

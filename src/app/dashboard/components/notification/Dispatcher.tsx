@@ -7,14 +7,15 @@ import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import FollowRequestNotification from "./follow-request-notification";
 
 interface INotificationDispatcher {
-  notification?: INotification;
+  notification?: INotification<any>;
+  isModal?: boolean;
 }
 const NotificationDispatcher: React.FC<INotificationDispatcher> = (props) => {
-  const { notification } = props;
+  const { notification, isModal } = props;
 
   switch (notification?.eventType) {
     case "follow-request":
-      return <FollowRequestNotification notification={notification} />;
+      return <FollowRequestNotification notification={notification} isModal={isModal} />;
     default:
       break;
   }

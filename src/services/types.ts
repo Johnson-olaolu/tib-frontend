@@ -265,7 +265,7 @@ export interface IComment {}
 export interface IShare {}
 
 export type NotificationEventTypes = "follow-request";
-export interface INotification {
+export interface INotification<T> {
   id: string;
 
   eventType: NotificationEventTypes;
@@ -274,7 +274,7 @@ export interface INotification {
 
   seen: boolean;
 
-  data: any;
+  data: T;
 
   createdAt: Date;
 

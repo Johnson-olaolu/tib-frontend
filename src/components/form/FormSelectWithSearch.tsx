@@ -31,7 +31,15 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
   const [showOptions, setShowOptions] = useState(false);
 
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<IUser>(["user"]);
+
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
+
   let queriedData: ICategory[] | IUser[] | undefined = [];
   if (type === "interest") {
     const { data } = useQuery({

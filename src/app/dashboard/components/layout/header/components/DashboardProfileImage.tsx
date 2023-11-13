@@ -10,11 +10,18 @@ import Avatar from "@/components/extras/Avatar";
 import { useRouter } from "next13-progressbar";
 import { useDispatch } from "react-redux";
 import { clearStore } from "@/store/appSlice";
+import userService from "@/services/user.service";
 const DashboardProfileImage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<IUser>(["user"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
   const [showProfile, setShowProfile] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +51,7 @@ const DashboardProfileImage = () => {
         <Avatar user={user} />
       </div>
       {showProfile && (
-        <div className="absolute -bottom-3 -right-7 w-[292px] transform translate-y-full rounded overflow-hidden">
+        <div className="absolute -bottom-3 -right-7 w-[292px] transform translate-y-full rounded overflow-hidden z-20">
           <div className=" h-[72px] bg-[#DAF2FF] relative ">
             <PiPencilSimpleLight size={24} className=" right-6 bottom-4 absolute" role="button" onClick={() => router.push(`/dashboard/profile`)} />
             <div className=" absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">

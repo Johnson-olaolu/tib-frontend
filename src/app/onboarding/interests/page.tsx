@@ -7,15 +7,29 @@ import FormSubmit from "@/components/form/FormSubmit";
 import useOnboarding from "../context";
 import useToast from "@/context/toast";
 import { useRouter } from "next13-progressbar";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import userService from "@/services/user.service";
 
 const Interest = () => {
   const queryClient = useQueryClient();
   const { openToast } = useToast();
   const router = useRouter();
   const { setInterests: setOnboardingInterests, completeOnboarding, onboardingData } = useOnboarding();
-  const interests = queryClient.getQueryData<ICategory[]>(["category"]);
-  const user = queryClient.getQueryData<IUser>(["user"]);
+  const { data: interests } = useQuery({
+    queryKey: ["category"],
+    queryFn: async () => {
+      const data = await categoryService.getCategories();
+      return data.data;
+    },
+  });
+
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const data = await userService.getUserDetails();
+      return data.data;
+    },
+  });
 
   const updateProfileMutation = useMutation({
     mutationFn: completeOnboarding,

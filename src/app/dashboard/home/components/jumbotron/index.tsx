@@ -4,12 +4,19 @@ import ShareIdeaCard from "./components/ShareIdeaCard";
 import IdeaEngagementCard from "./components/IdeaEngagementCard";
 import WalletCard from "./components/WalletCard";
 import AccessVaultCard from "./components/AccessVaultCard";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { IUser } from "@/services/types";
+import userService from "@/services/user.service";
 
 const DashboardHomeJumbotron = () => {
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<IUser>(["user"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
 
   useEffect(() => {}, []);
   return (

@@ -13,7 +13,13 @@ const FollowButton: React.FC<IFollowButton> = (props) => {
   const { openToast } = useToast();
   const { externalUser } = props;
   const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<IUser>(["user"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
 
   const { data: isFollowing, isFetching } = useQuery({
     queryKey: ["follow", externalUser.id],

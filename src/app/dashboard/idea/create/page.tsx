@@ -8,9 +8,10 @@ import FormMediaSelect from "@/components/form/form-media-select";
 import useToast from "@/context/toast";
 import ideaService from "@/services/idea.service";
 import { IUser } from "@/services/types";
+import userService from "@/services/user.service";
 import { isObjectEmpty } from "@/utils/misc";
 import { createIdeaSimpleValidationSchema } from "@/utils/validation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { useFormik } from "formik";
 import { useRouter } from "next13-progressbar";
@@ -20,7 +21,13 @@ const Page = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { openToast } = useToast();
-  const user = queryClient.getQueryData<IUser>(["user"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
   const createIdeaSimpleMutation = useMutation({
     mutationFn: ideaService.createIdeaSimple,
     onSuccess: (data) => {

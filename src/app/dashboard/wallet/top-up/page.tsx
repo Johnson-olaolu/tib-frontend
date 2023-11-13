@@ -18,6 +18,7 @@ import FormAmountInput from "@/components/form/FormAmountInput";
 import FormPasswordInput from "@/components/form/FormPasswordInput";
 import PaymentMethodBadge from "@/app/onboarding/wallet/components/PaymentMethodBadge";
 import FormSubmit from "@/components/form/FormSubmit";
+import userService from "@/services/user.service";
 
 // If loading a variable font, you don't need to specify the font weight
 const mulish = Mulish({ subsets: ["latin"] });
@@ -29,8 +30,21 @@ const WalletTopUp = () => {
   const { openModal, closeModal } = useModal();
   const transactionSocket = io(`${process.env.NEXT_PUBLIC_BASE_URL}`);
 
-  const user = queryClient.getQueryData<IUser>(["user"]);
-  const paymentMethods = queryClient.getQueryData<IPaymentMethod[]>(["paymentMethod"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
+
+  const { data: paymentMethods } = useQuery({
+    queryKey: ["paymentMethod"],
+    queryFn: async () => {
+      const res = await walletService.getPaymentMethods();
+      return res.data;
+    },
+  });
   const { data: wallet } = useQuery({
     queryKey: ["wallet"],
     queryFn: async () => {

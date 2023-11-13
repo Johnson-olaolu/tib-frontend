@@ -244,6 +244,11 @@
     "@tanstack/query-core" "5.0.0"
     "@tanstack/query-persist-client-core" "5.0.0"
 
+"@tanstack/react-query-next-experimental@^5.8.1":
+  version "5.8.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-next-experimental/-/react-query-next-experimental-5.8.1.tgz#ad517e6fd45db4d6a8992e03c7cb58c820bc33a2"
+  integrity sha512-qk1VnkGl17Ypmj1ydyWSVDipoQV4UK+8HXsllIVLus+eLEmg0kzpV4xNzuzKKIAtto5V+0S6BjFy1o+q0BWe4w==
+
 "@tanstack/react-query-persist-client@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-5.0.0.tgz#3b8b1e3d4d2a78bbdba4349304f4b07a97a3cae2"

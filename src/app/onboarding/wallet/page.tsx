@@ -15,6 +15,7 @@ import walletService from "@/services/wallet.service";
 import { io } from "socket.io-client";
 import { useRouter } from "next13-progressbar";
 import { formatAmount } from "@/utils/misc";
+import userService from "@/services/user.service";
 
 const Wallet = () => {
   const queryClient = useQueryClient();
@@ -23,8 +24,20 @@ const Wallet = () => {
   const { openModal, closeModal } = useModal();
   const transactionSocket = io(`${process.env.NEXT_PUBLIC_BASE_URL}`);
 
-  const user = queryClient.getQueryData<IUser>(["user"]);
-  const paymentMethods = queryClient.getQueryData<IPaymentMethod[]>(["paymentMethod"]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
+  const { data: paymentMethods } = useQuery({
+    queryKey: ["paymentMethod"],
+    queryFn: async () => {
+      const res = await walletService.getPaymentMethods();
+      return res.data;
+    },
+  });
   const walletQuery = useQuery({ queryKey: ["wallet"], queryFn: () => walletService.fetchUserWallet(user?.id || "") });
 
   const creditWalletMutation = useMutation({
