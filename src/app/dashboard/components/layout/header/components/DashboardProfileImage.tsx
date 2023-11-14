@@ -51,7 +51,7 @@ const DashboardProfileImage = () => {
         <Avatar user={user} />
       </div>
       {showProfile && (
-        <div className="absolute -bottom-3 -right-7 w-[292px] transform translate-y-full rounded overflow-hidden z-20">
+        <div className="absolute -bottom-3 -right-7 w-[292px] transform translate-y-full rounded overflow-hidden z-20  border border-gray-50 shadow-lg">
           <div className=" h-[72px] bg-[#DAF2FF] relative ">
             <PiPencilSimpleLight size={24} className=" right-6 bottom-4 absolute" role="button" onClick={() => router.push(`/dashboard/profile`)} />
             <div className=" absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">

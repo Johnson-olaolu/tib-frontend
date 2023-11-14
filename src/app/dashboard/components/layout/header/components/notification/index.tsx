@@ -37,7 +37,7 @@ const DashboardNotificationNotification = () => {
         )}
       </div>
       {showNotifications && (
-        <div className=" absolute -bottom-7 translate-y-full w-[458px] rounded -right-12 bg-white shadow-xl border border-[#C2C2C2]">
+        <div className=" absolute -bottom-7 translate-y-full w-[458px] rounded -right-12 bg-white shadow-lg border border-gray-50 z-20">
           <div className=" pt-7 pb-3 px-6 flex-shrink-0">Notification</div>
           {notifications && notifications.length > 0 ? (
             <div className=" flex-grow flex flex-col h-[458px]">
@@ -52,7 +52,7 @@ const DashboardNotificationNotification = () => {
             </div>
           ) : (
             <div className=" flex justify-center items-center h-[458px] ">
-              <p className=" text-sm  text-tib-primary w-36 text-center">No Nottification at the moment</p>
+              <p className=" text-sm  text-tib-primary w-36 text-center">No Notification at the moment</p>
             </div>
           )}
         </div>

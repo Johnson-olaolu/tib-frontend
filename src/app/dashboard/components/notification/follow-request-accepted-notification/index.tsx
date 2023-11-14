@@ -6,7 +6,8 @@ import { FollowStatusEnum, IFollow, INotification } from "@/services/types";
 import userService from "@/services/user.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
-import React, { useState } from "react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { FiTrash } from "react-icons/fi";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 
@@ -14,7 +15,7 @@ interface INotificationDispatcher {
   notification?: INotification<IFollow>;
   isModal?: boolean;
 }
-const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => {
+const FollowRequestAcceptedNotification: React.FC<INotificationDispatcher> = (props) => {
   const { openToast } = useToast();
   const queryClient = useQueryClient();
   const { notification, isModal = false } = props;
@@ -38,37 +39,14 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
     setShowExtraMenu(false);
   };
 
-  // const handleUserFollowRequest = (status: FollowStatusEnum) => {
-
-  // };
-  const handleFollowMutation = useMutation({
-    mutationFn: (status: FollowStatusEnum) =>
-      userService.handleFollowRequest({ userId: user?.id || "", followRequestId: notification?.data.id || "", status }),
-    onSuccess: (data) => {
-      if (data.data?.status === FollowStatusEnum.ACCEPTED) {
-        console.log(data);
-        openToast({
-          text: `${notification?.data.follower.profile?.firstName} ${notification?.data.follower.profile?.lastName} is now a follower`,
-          title: "Follow Request accepted",
-          type: "success",
-        });
-      } else {
-        openToast({
-          text: `${notification?.data.follower.profile?.firstName} ${notification?.data.follower.profile?.firstName} request rejected`,
-          title: "Follow Request rejected",
-          type: "success",
-        });
-      }
-
-      queryClient.invalidateQueries({
-        queryKey: ["follow", user?.id],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["follow", notification?.data.follower?.id],
-      });
-      notificationService.deleteNotification(notification?.id || "");
-    },
-  });
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ["follow", notification?.data.user.id],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ["follow", notification?.data.follower.id],
+    });
+  }, [notification, queryClient]);
 
   if (isModal) {
     return (
@@ -87,34 +65,22 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
           <div className=" flex  items-start justify-between">
             <div className="">
               <div className="flex items-center gap-2">
-                <Avatar user={notification?.data.user} size="xs" />
+                <Link href={`/${notification?.data.user.userName}`}>
+                  <Avatar user={notification?.data.user} size="xs" />
+                </Link>
                 <div className=" space-y-1">
-                  <p className=" text-lg font-bold text-tib-purple">
+                  <Link href={`/${notification?.data.user.userName}`} className=" text-lg font-bold text-tib-purple">
                     {(notification?.data as IFollow).user.profile?.firstName
                       ? `${(notification?.data as IFollow).user.profile?.firstName} ${(notification?.data as IFollow).user.profile?.lastName}`
                       : `${(notification?.data as IFollow).user.userName}`}
-                  </p>
-                  <p className=" font-bold text-tib-primary2">{(notification?.data as IFollow).user.profile?.interests.join(", ")}</p>
+                  </Link>
+                  <p className=" font-bold text-tib-primary2 text-xs">{(notification?.data as IFollow).user.profile?.interests.join(", ")}</p>
                 </div>
               </div>
               <div className="mt-1 pl-10">
-                <p className=" text-tib-primary text-sm">Wants to follow you</p>
+                <p className=" text-tib-primary text-sm">Accepted Your Follow Request</p>
                 <span className=" capitalize mt-3 inline-block text-[10px] text-tib-primary2">{moment(notification?.createdAt).fromNow()}</span>
               </div>
-            </div>
-            <div className=" flex gap-3  pt-8">
-              <button
-                onClick={() => handleFollowMutation.mutate(FollowStatusEnum.ACCEPTED)}
-                className=" py-2 px-3 rounded border bg-tib-blue text-white text-sm"
-              >
-                Accept
-              </button>
-              <button
-                onClick={() => handleFollowMutation.mutate(FollowStatusEnum.REJECTED)}
-                className=" py-2 px-3 rounded border border-tib-blue text-tib-blue text-sm"
-              >
-                Ignore
-              </button>
             </div>
           </div>
           {isHovered && (
@@ -122,11 +88,17 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
               <MenuVerticalIcon className="" role="button" onClick={() => setShowExtraMenu(!showExtraMenu)} />
               {showExtraMenu && (
                 <div className=" absolute -bottom-4 right-0 transform translate-y-full bg-white rounded-sm shadow-md  min-w-max p-4 space-y-4">
-                  <button className="flex items-center text-tib-red gap-3">
+                  <button
+                    onClick={() => notificationService.deleteNotification(notification?.id || "")}
+                    className="flex items-center text-tib-red gap-3"
+                  >
                     <FiTrash />
                     <span className="text-sm">Delete Notification</span>
                   </button>
-                  <button className="flex items-center text-tib-primary gap-3">
+                  <button
+                    onClick={() => notificationService.deleteNotification(notification?.id || "")}
+                    className="flex items-center text-tib-primary gap-3"
+                  >
                     <MdOutlineReportGmailerrorred />
                     <span className="text-sm">Report Notification</span>
                   </button>
@@ -165,25 +137,9 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
               </div>
             </div>
             <div className="mt-3 pl-14">
-              <p className=" text-tib-primary text-sm">Wants to follow you</p>
+              <p className=" text-tib-primary text-sm">Accepted Your follow Request</p>
               <span className=" capitalize mt-3 inline-block text-[10px] text-tib-primary2">{moment(notification?.createdAt).fromNow()}</span>
             </div>
-          </div>
-          <div className=" flex gap-3  pt-4">
-            <button
-              onClick={() => handleFollowMutation.mutate(FollowStatusEnum.ACCEPTED)}
-              disabled={handleFollowMutation.isPending}
-              className=" py-3 px-4 rounded border bg-tib-blue text-white disabled:opacity-50"
-            >
-              Accept
-            </button>
-            <button
-              onClick={() => handleFollowMutation.mutate(FollowStatusEnum.REJECTED)}
-              disabled={handleFollowMutation.isPending}
-              className=" py-3 px-4 rounded border border-tib-blue text-tib-blue  disabled:opacity-50"
-            >
-              Ignore
-            </button>
           </div>
         </div>
         {isHovered && (
@@ -214,4 +170,4 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
   );
 };
 
-export default FollowRequestNotification;
+export default FollowRequestAcceptedNotification;

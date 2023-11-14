@@ -7,10 +7,12 @@ const DashboardHome = () => {
     <>
       <DashboardHomeJumbotron />
       <div
-        className=" px-20 py-32 "
+        className="py-32 "
         style={{ background: `url("/images/DashboardPageBg.png") #ffffff`, backgroundSize: "cover", backgroundRepeat: "space" }}
       >
-        <ViewAllIdeas />
+        <div className="max-w-7xl mx-auto">
+          <ViewAllIdeas />
+        </div>
       </div>
     </>
   );

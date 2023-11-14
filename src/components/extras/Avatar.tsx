@@ -4,9 +4,9 @@ import React from "react";
 
 const Avatar: React.FC<{ user?: IUser; size?: "xs" | "sm" | "md" | "lg" | "xl" }> = (props) => {
   const { user, size = "md" } = props;
-  const height = size == "xs" ? "32px" : "sm" ? "48px" : size == "lg" ? "62px" : "52px";
-  const width = size == "xs" ? "32px" : "sm" ? "48px" : size == "lg" ? "62px" : "52px";
-  const fontSize = size == "xs" ? "14px" : "sm" ? "16px" : size == "lg" ? "20px" : "18px";
+  const height = size == "xs" ? "32px" : size == "sm" ? "48px" : size == "lg" ? "62px" : size == "xl" ? "100px" : "52px";
+  const width = size == "xs" ? "32px" : size == "sm" ? "48px" : size == "lg" ? "62px" : size == "xl" ? "100px" : "52px";
+  const fontSize = size == "xs" ? "14px" : size == "sm" ? "16px" : size == "lg" ? "20px" : size == "xl" ? "24px" : "18px";
   return (
     <>
       {user?.profile?.profilePicture ? (

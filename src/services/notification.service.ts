@@ -11,7 +11,7 @@ export const listenForUserNotifications = (userId: string) => {
     },
   });
   notificationSocket.on("connect", () => {
-    notificationSocket.on(userId, (data: INotification[]) => {
+    notificationSocket.on(userId, (data: INotification<any>[]) => {
       store.dispatch(saveNotification({ notifications: data }));
     });
   });
@@ -20,3 +20,18 @@ export const listenForUserNotifications = (userId: string) => {
     notificationSocket.off();
   };
 };
+
+const updateSeenNotification = (notificationId: string) => {
+  const notificationSocket = connect(`${baseURL}/notification`);
+  notificationSocket.emit("notificationSeen", notificationId);
+};
+const deleteNotification = (notificationId: string) => {
+  const notificationSocket = connect(`${baseURL}/notification`);
+  notificationSocket.emit("notificationDelete", notificationId);
+};
+
+const notificationService = {
+  updateSeenNotification,
+  deleteNotification,
+};
+export default notificationService;

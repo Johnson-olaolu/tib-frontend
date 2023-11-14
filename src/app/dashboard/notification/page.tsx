@@ -34,7 +34,7 @@ const DashboardNotification = () => {
               }`}
             >
               Follow Request
-              {view !== "Follow Requests" && (
+              {view !== "Follow Requests" && notifications && notifications.filter((n) => n.eventType == "follow-request" && !n.seen).length > 0 && (
                 <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="3.22844" cy="4.00005" r="3.22844" fill="#406EFF" />
                 </svg>

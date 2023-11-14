@@ -3,27 +3,33 @@ import React from "react";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { SlLike } from "react-icons/sl";
 import { FaComment, FaRegComment } from "react-icons/fa6";
-import useDashboardViewIdeas from "@/app/dashboard/home/components/view-all-ideas/context";
 import { IDashboardIdeaCard } from ".";
 import moment from "moment";
 import Avatar from "@/components/extras/Avatar";
 import { getInnertext } from "@/utils/misc";
 import Link from "next/link";
 import FollowButton from "../../user/FollowButton";
+import useDashboardViewIdeas from "../context";
 
 const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
   const { viewType } = useDashboardViewIdeas();
   const { idea } = props;
 
   return viewType === "grid" ? (
-    <Link href={`#`} className=" p-6 rounded-lg border border-[#E8E5E5] bg-tib-white flex flex-col h-[400px]">
+    <Link
+      href={`/${idea.user.userName}/${encodeURIComponent(idea.title)}`}
+      className=" p-6 rounded-lg border border-[#E8E5E5] bg-tib-white flex flex-col h-[400px]"
+    >
       <div className=" flex items-center justify-between shrink-0">
         <div className=" flex items-center gap-2">
-          <Avatar size="sm" user={idea.user} />
+          <Link href={`/${idea.user.userName}`}>
+            <Avatar size="sm" user={idea.user} />
+          </Link>
+
           <div className=" flex flex-col">
-            <p className=" font-bold text-tib-purple capitalize ">
+            <Link href={`/${idea.user.userName}`} className=" font-bold text-tib-purple capitalize ">
               {idea.user.profile?.firstName ? `${idea.user.profile?.firstName} ${idea.user.profile?.lastName}` : `${idea.user.userName}`}
-            </p>
+            </Link>
             <span className=" text-sm text-tib-primary w-40">{idea.categories.map((c) => c.name).join(", ")}</span>
           </div>
         </div>

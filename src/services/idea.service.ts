@@ -1,5 +1,5 @@
 import https from "@/utils/https";
-import { IIdea, IResponse } from "./types";
+import { IIdea, IIdeaQuery, IResponse } from "./types";
 
 const createIdeaSimple = async (data: {
   userId: string;
@@ -29,13 +29,7 @@ const createIdeaSimple = async (data: {
   });
 };
 
-const queryIdeaSimple = async (query: {
-  title?: string;
-  spotlight?: boolean;
-  category?: string;
-  categories?: string[];
-  user?: string;
-}): Promise<IResponse<IIdea[]>> => {
+const queryIdeaSimple = async (query: IIdeaQuery): Promise<IResponse<IIdea[]>> => {
   return await https.get({
     url: "/idea/simple/query",
     query: query,

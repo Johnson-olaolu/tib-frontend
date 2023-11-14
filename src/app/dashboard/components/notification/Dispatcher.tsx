@@ -5,6 +5,7 @@ import MenuVerticalIcon from "@/app/assets/icons/MenuVerticalIcon";
 import { FiTrash } from "react-icons/fi";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import FollowRequestNotification from "./follow-request-notification";
+import FollowRequestAcceptedNotification from "./follow-request-accepted-notification";
 
 interface INotificationDispatcher {
   notification?: INotification<any>;
@@ -16,6 +17,8 @@ const NotificationDispatcher: React.FC<INotificationDispatcher> = (props) => {
   switch (notification?.eventType) {
     case "follow-request":
       return <FollowRequestNotification notification={notification} isModal={isModal} />;
+    case "follow-request-accepted":
+      return <FollowRequestAcceptedNotification notification={notification} isModal={isModal} />;
     default:
       break;
   }

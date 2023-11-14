@@ -6,12 +6,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 
 interface IFollowButton {
-  externalUser: IUser;
+  externalUser?: IUser;
+  variant?: "text" | "button";
 }
 
 const FollowButton: React.FC<IFollowButton> = (props) => {
   const { openToast } = useToast();
-  const { externalUser } = props;
+  const { externalUser, variant = "text" } = props;
   const queryClient = useQueryClient();
   const { data: user } = useQuery({
     queryKey: ["user"],
@@ -22,9 +23,9 @@ const FollowButton: React.FC<IFollowButton> = (props) => {
   });
 
   const { data: isFollowing, isFetching } = useQuery({
-    queryKey: ["follow", externalUser.id],
+    queryKey: ["follow", externalUser?.id, user?.id],
     queryFn: async () => {
-      const res = await userService.checkIsFollowing(externalUser.id, user?.id || "");
+      const res = await userService.checkIsFollowing(externalUser?.id || "", user?.id || "");
       return res.data;
     },
   });
@@ -37,7 +38,7 @@ const FollowButton: React.FC<IFollowButton> = (props) => {
         text: data.message,
         type: "success",
       });
-      queryClient.invalidateQueries({ queryKey: ["follow", externalUser.id] });
+      queryClient.invalidateQueries({ queryKey: ["follow", externalUser?.id] });
     },
   });
 
@@ -46,38 +47,58 @@ const FollowButton: React.FC<IFollowButton> = (props) => {
     onSuccess: (data) => {
       openToast({
         title: "UnFollowed User",
-        text: data.message,
+        text: "User Unfollowed successfully",
         type: "success",
       });
-      queryClient.invalidateQueries({ queryKey: ["follow", externalUser.id] });
+      queryClient.invalidateQueries({ queryKey: ["follow", externalUser?.id] });
     },
   });
 
-  if (externalUser.id === user?.id || isFetching) {
+  if (externalUser?.id === user?.id || isFetching) {
     return <></>;
   }
   if (isFollowing) {
     return (isFollowing as unknown as IFollow).status == FollowStatusEnum.PENDING ? (
       <span className=" text-tib-blue">Pending</span>
-    ) : (
+    ) : variant == "text" ? (
       <button
         className=" text-tib-blue"
         onClick={(e) => {
           e.preventDefault();
-          unfollowUserMutation.mutate({ followerId: user?.id || "", userId: externalUser.id });
+          unfollowUserMutation.mutate({ followerId: user?.id || "", userId: externalUser?.id || "" });
         }}
       >
         UnFollow
       </button>
+    ) : (
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          unfollowUserMutation.mutate({ followerId: user?.id || "", userId: externalUser?.id || "" });
+        }}
+        className=" px-4 py-3 rounded border border-tib-blue text-tib-blue"
+      >
+        Unfollow
+      </button>
     );
   } else {
-    return (
+    return variant == "text" ? (
       <button
         className=" text-tib-blue"
         onClick={(e) => {
           e.preventDefault();
-          followUserMutation.mutate({ followerId: user?.id || "", userId: externalUser.id });
+          followUserMutation.mutate({ followerId: user?.id || "", userId: externalUser?.id || "" });
         }}
+      >
+        Follow
+      </button>
+    ) : (
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          followUserMutation.mutate({ followerId: user?.id || "", userId: externalUser?.id || "" });
+        }}
+        className="px-4 py-3 rounded bg-tib-blue text-tib-white"
       >
         Follow
       </button>

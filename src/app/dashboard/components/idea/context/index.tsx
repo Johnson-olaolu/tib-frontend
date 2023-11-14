@@ -14,23 +14,21 @@ const DashboardViewIdeasContext = createContext({});
 
 export const DashboardViewIdeaContextProvider: React.FC<{
   children: React.ReactNode;
-  menu: "Spotlight" | "More" | string;
-}> = ({ children, menu }) => {
+  query?: {
+    title?: string;
+    spotlight?: boolean;
+    category?: string;
+    categories?: string[];
+    user?: string;
+  };
+  count?: number;
+}> = ({ children, query = {}, count = 9 }) => {
   const [viewType, setViewType] = useState<"list" | "grid">("grid");
 
   const { data: ideas, isFetching } = useQuery({
-    queryKey: ["Idea", menu],
+    queryKey: ["Idea", query],
     queryFn: async () => {
-      let res;
-      if (menu == "Spotlight") {
-        res = await ideaService.queryIdeaSimple({
-          spotlight: true,
-        });
-      } else if (menu == "More") {
-        res = await ideaService.queryIdeaSimple({});
-      } else {
-        res = await ideaService.queryIdeaSimple({ category: menu });
-      }
+      const res = await ideaService.queryIdeaSimple(query);
       return res.data;
     },
   });
@@ -42,7 +40,7 @@ export const DashboardViewIdeaContextProvider: React.FC<{
       ideas,
       isFetching,
     }),
-    [viewType, menu, ideas, isFetching]
+    [viewType, ideas, isFetching]
   );
   return <DashboardViewIdeasContext.Provider value={value}>{children}</DashboardViewIdeasContext.Provider>;
 };

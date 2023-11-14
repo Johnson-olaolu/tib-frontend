@@ -1,6 +1,6 @@
 "use client";
-import useDashboardViewIdeas from "@/app/dashboard/home/components/view-all-ideas/context";
 import React, { useState } from "react";
+import useDashboardViewIdeas from "../context";
 
 const ViewTypeFilter = () => {
   const { viewType, setViewType } = useDashboardViewIdeas();

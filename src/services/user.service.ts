@@ -61,6 +61,23 @@ const followUser = async ({ userId, followerId }: { userId: string; followerId: 
   });
 };
 
+const getUserFollows = async ({
+  userId,
+  status,
+}: {
+  userId: string;
+  status: FollowStatusEnum;
+}): Promise<
+  IResponse<{
+    followers: IFollow[];
+    following: IFollow[];
+  }>
+> => {
+  return await https.get({
+    url: `/user/${userId}/follow`,
+    query: { status },
+  });
+};
 const unFollowUser = async ({ userId, followerId }: { userId: string; followerId: string }): Promise<IResponse<IFollow>> => {
   return await https.post({
     url: `/user/${followerId}/unfollow`,
@@ -90,6 +107,7 @@ const userService = {
   queryUsers,
   checkIsFollowing,
   followUser,
+  getUserFollows,
   unFollowUser,
   handleFollowRequest,
 };

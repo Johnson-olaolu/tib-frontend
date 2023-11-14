@@ -4,7 +4,7 @@ import React from "react";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { SlLike } from "react-icons/sl";
 import { FaComment, FaRegComment } from "react-icons/fa6";
-import useDashboardViewIdeas from "@/app/dashboard/home/components/view-all-ideas/context";
+import useDashboardViewIdeas from "../context";
 
 const BasicCard = () => {
   const { viewType } = useDashboardViewIdeas();
