@@ -21,7 +21,7 @@ const ViewAllIdeas = () => {
 
   return (
     <div className="">
-      <div className="">
+      <nav className="">
         <ul className=" px-7 flex items-center gap-11 pb-5 border-b border-[#E8E3E3] max-w-max mx-auto">
           {viewIdeaMenu.map((menu) => (
             <li
@@ -34,7 +34,7 @@ const ViewAllIdeas = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </nav>
       <div className=" my-10">
         <ViewIdeas query={query} />
       </div>

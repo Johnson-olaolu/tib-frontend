@@ -5,7 +5,7 @@ import { saveNotification } from "@/store/notificationSlice";
 
 const baseURL = process.env.NEXT_PUBLIC_NOTIFICATION_URL;
 export const listenForUserNotifications = (userId: string) => {
-  const notificationSocket = io(`${baseURL}/notification`, { transports: ["websocket"] });
+  // const notificationSocket = io(`${baseURL}/notification`, { transports: ["websocket"] });
   // const notificationSocket = connect(`${baseURL}/notification`, {
   //   query: {
   //     userId,
@@ -19,7 +19,7 @@ export const listenForUserNotifications = (userId: string) => {
   // });
 
   return () => {
-    notificationSocket.off();
+    // notificationSocket.off();
   };
 };
 
