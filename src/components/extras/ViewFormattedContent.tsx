@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useLayoutEffect } from "react";
 
 interface IViewFormattedContent {
@@ -17,6 +18,7 @@ const ViewFormattedContent: React.FC<IViewFormattedContent> = (props) => {
   }, [content]);
   return (
     <div className="">
+      <Image src={"http://67.205.168.95:6100/public/profile/kastroud_profile_pic.jpeg"} alt="" height={40} width={40} />
       <iframe src="" className=""></iframe>
     </div>
   );
