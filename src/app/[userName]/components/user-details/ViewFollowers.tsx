@@ -21,31 +21,36 @@ const ViewFollowers: React.FC<IViewFollowers> = (props) => {
       return res.data;
     },
   });
-  console.log(followData);
   return (
     <div className=" mt-20">
-      <div className="flex gap-12">
-        {followData?.followers.map((follow) => (
-          <Link href={`/${follow.follower.userName}`} className=" flex flex-col items-center gap-3" key={follow.follower.id}>
-            <Avatar size="xl" user={follow.follower} />
-            <div className=" text-center">
-              <p className=" text-sm text-tib-purple">
-                {follow.follower.profile?.firstName} {follow.follower.profile?.lastName}
-              </p>
-              <p className=" text-xs text-tib-primary2 w-24 text-center">
-                {follow.follower.profile?.interests.map((interest, idx) => (
-                  <>
-                    {idx !== 0 && ", "}
-                    <Link href={"#"} className="">
-                      {interest}
-                    </Link>
-                  </>
-                ))}
-              </p>
-            </div>
-          </Link>
-        ))}
-      </div>
+      {followData && followData.followers.length > 0 ? (
+        <div className="flex gap-12">
+          {followData.followers.map((follow) => (
+            <Link href={`/${follow.follower.userName}`} className=" flex flex-col items-center gap-3" key={follow.follower.id}>
+              <Avatar size="xl" user={follow.follower} />
+              <div className=" text-center">
+                <p className=" text-sm text-tib-purple">
+                  {follow.follower.profile?.firstName} {follow.follower.profile?.lastName}
+                </p>
+                <p className=" text-xs text-tib-primary2 w-24 text-center">
+                  {follow.follower.profile?.interests.map((interest, idx) => (
+                    <>
+                      {idx !== 0 && ", "}
+                      <Link href={"#"} className="">
+                        {interest}
+                      </Link>
+                    </>
+                  ))}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className=" text-center">
+          <p className=" text-tib-primary py-3"> No Followers Found</p>
+        </div>
+      )}
     </div>
   );
 };

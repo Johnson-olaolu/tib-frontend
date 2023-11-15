@@ -45,6 +45,7 @@ export interface IProfile {
   firstName: string;
   lastName: string;
   profilePicture: string;
+  backgroundPicture: string;
   phoneNumber: string;
   interests: string[];
   bio: string;

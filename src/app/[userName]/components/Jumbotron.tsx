@@ -1,20 +1,22 @@
 "use client";
 import LightBulbIcon from "@/app/assets/icons/LightBulbIcon";
 import FollowButton from "@/app/dashboard/components/user/FollowButton";
+import useToast from "@/context/toast";
 import { FollowStatusEnum, IFollow, IUser } from "@/services/types";
 import userService from "@/services/user.service";
 import walletService from "@/services/wallet.service";
 import { formatAmount } from "@/utils/misc";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { BiSolidUser } from "react-icons/bi";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { FiEdit, FiEdit2, FiPenTool } from "react-icons/fi";
 import { IoIosThumbsUp } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
+import { useDispatch } from "react-redux";
 
 interface IProfilePageJumbotron {
   userName: string;
@@ -22,7 +24,8 @@ interface IProfilePageJumbotron {
 
 const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
   const { userName } = props;
-
+  const { openToast } = useToast();
+  const queryClient = useQueryClient();
   const { data: user } = useQuery({
     queryKey: ["user", "userName", userName],
     queryFn: async () => {
@@ -62,19 +65,59 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
     return user?.id === currentUser?.id;
   }, [user, currentUser]);
 
+  const [isChangingProfileImage, setIsChangingProfileImage] = useState(false);
+
+  const selectImage = () => {
+    setIsChangingProfileImage(true);
+    const fileInput = document?.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.addEventListener("change", (e: any) => {
+      const selectedFile: File = e.target?.files[0] || null;
+      if (selectedFile) {
+        userService
+          .updateBackgroundPicture(user!.id, selectedFile)
+          .then(() => {
+            openToast({
+              type: "success",
+              text: "Profile Banner updated",
+            });
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+    fileInput.click();
+  };
   return (
     <div className=" pb-48">
-      <div className=" h-[500px] relative" style={{ background: `url('images/ProfileBg1.png')` }}>
+      <div
+        className=" h-[500px] relative bg-cover bg-no-repeat bg-center"
+        style={{
+          backgroundImage: `url("${user?.profile?.backgroundPicture || " /images/ProfileBg1.png"}")`,
+        }}
+      >
         {isCurrentUser && (
-          <div className=" h-12 w-12 rounded-lg bg-white flex items-center justify-center absolute right-20 top-20 text-tib-blue">
+          <button
+            onClick={() => selectImage()}
+            className=" h-12 w-12 rounded-lg bg-white flex items-center justify-center absolute right-20 top-20 text-tib-blue"
+          >
             <MdEdit size={24} />
-          </div>
+          </button>
         )}
         <div className="absolute right-20 bottom-0 transform  translate-y-1/2 bg-white max-w-[1112px] min-h-80 rounded-lg w-full flex overflow-hidden gap-14 shadow-xl">
-          <Image src={user?.profile?.profilePicture || ""} height={320} width={280} alt="profile picture" className=" bg-gray-200 rounded-lg" />
+          <Image
+            src={user?.profile?.profilePicture || ""}
+            height={320}
+            width={280}
+            alt="profile picture"
+            className=" bg-gray-200 rounded-lg object-cover"
+          />
           <div className=" py-10 pr-10 flex-grow relative justify-between">
-            <div className="flex flex-col h-full">
-              <div className=" shrink-0 flex justify-between items-start">
+            <div className=" flex flex-col justify-between gap-3 ">
+              <div className="  flex justify-between items-start">
                 <div className="">
                   <p className=" text-tib-purple  text-2xl font-bold flex items-center">
                     {user?.profile?.firstName} {user?.profile?.lastName}
@@ -108,7 +151,7 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
               </div>
               <div className=" flex-grow flex flex-col justify-center">
                 <p className="text-sm text-tib-primary2">{user?.userName}</p>
-                <p className=" w-[460px] mt-3 text-tib-primary ">{user?.profile?.bio}</p>
+                <p className=" w-[460px] mt-3 text-tib-primary line-clamp-3">{user?.profile?.bio}</p>
               </div>
               <div className=" flex gap-10  shrink-0">
                 <div className=" flex flex-col gap-1">

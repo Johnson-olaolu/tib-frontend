@@ -16,6 +16,7 @@ import FormTextInput from "@/components/form/FormTextInput";
 import InterestSelector from "./component/interest-selector";
 import { ICategory } from "@/services/types";
 import categoryService from "@/services/category.service";
+import Avatar from "@/components/extras/Avatar";
 
 const DashboardProfile = () => {
   const router = useRouter();
@@ -102,24 +103,17 @@ const DashboardProfile = () => {
         </div>
         <div className="mt-12">
           <div className="relative max-w-max mx-auto">
-            {user?.profile?.profilePicture ? (
-              <div
-                className="h-[152px] w-[152px] rounded-full"
-                style={{ backgroundImage: `url(${user.profile.profilePicture})`, backgroundSize: "100% 100%", backgroundPosition: "center" }}
-              ></div>
-            ) : (
-              <div className=" rounded-full bg-tib-light-blue h-[152px] w-[152px] overflow-hidden flex items-center justify-center">
-                {isChangingProfileImage ? (
-                  <div className="lds-ring transform scale-150">
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                  </div>
-                ) : (
-                  <span className="text-5xl font-bold text-tib-purple uppercase">{getInitials(user)}</span>
-                )}
+            {isChangingProfileImage ? (
+              <div className="h-[152px] w-[152px] rounded-full bg-tib-light-blue flex items-center justify-center">
+                <div className="lds-ring transform scale-150">
+                  <div />
+                  <div />
+                  <div />
+                  <div />
+                </div>
               </div>
+            ) : (
+              <Avatar user={user} size="xxl" />
             )}
 
             <div className="absolute bottom-0 right-0 profile-image-button">

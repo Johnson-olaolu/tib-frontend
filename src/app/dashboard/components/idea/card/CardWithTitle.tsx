@@ -30,7 +30,16 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
             <Link href={`/${idea.user.userName}`} className=" font-bold text-tib-purple capitalize ">
               {idea.user.profile?.firstName ? `${idea.user.profile?.firstName} ${idea.user.profile?.lastName}` : `${idea.user.userName}`}
             </Link>
-            <span className=" text-sm text-tib-primary w-40">{idea.categories.map((c) => c.name).join(", ")}</span>
+            <p className=" text-sm text-tib-primary w-40">
+              {idea.categories.map((interest, idx) => (
+                <>
+                  {idx !== 0 && ", "}
+                  <Link href={"#"} className="">
+                    {interest.name}
+                  </Link>
+                </>
+              ))}
+            </p>
           </div>
         </div>
         <FollowButton externalUser={idea.user} />
@@ -63,21 +72,33 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
       </div>
     </Link>
   ) : (
-    <div className="px-16 py-8 rounded-lg border border-[#E8E5E5] bg-tib-white flex justify-between gap-36 items-start">
-      <div className="flex items-start gap-10 flex-shrink-0">
-        {/* <Image src="" height={100} width={100} className=" h-[100px] w-[100px] rounded-full flex-shrink-0" alt="profile picture" /> */}
-        <div className=" h-[100px] w-[100px] rounded-full bg-gray-600 flex-shrink-0" />
+    <Link
+      href={`/${idea.user.userName}/${encodeURIComponent(idea.title)}`}
+      className="px-16 py-8 rounded-lg border border-[#E8E5E5] bg-tib-white flex justify-between gap-36 items-start"
+    >
+      <div className="flex items-start gap-10 flex-grow">
+        <Link href={`/${idea.user.userName}`}>
+          <Avatar size="xl" user={idea.user} />
+        </Link>
         <div className="max-w-[540px]">
-          <div className=" flex flex-col mb-8">
-            <p className=" font-bold text-tib-purple ">Don Yepe</p>
-            <span className=" text-sm text-tib-primary">Arts</span>
-          </div>
-          <div className=" mb-10">
-            <p className="line-clamp-3 overflow-hidden overflow-ellipsis text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet orci leo hendrerit justo, ut lorem eget at blandit. Dolor velit vivamus
-              eget commodo, elit. Commodo, nibh ultricies nunc at venenatis sed. Egestas ut volutpat integer bibendum a. Tincidunt velit nunc velit
-              imperdiet massa feugiat quis etiam.
+          <div className=" flex flex-col mb-6">
+            <Link href={`/${idea.user.userName}`} className=" font-bold text-tib-purple capitalize ">
+              {idea.user.profile?.firstName ? `${idea.user.profile?.firstName} ${idea.user.profile?.lastName}` : `${idea.user.userName}`}
+            </Link>
+            <p className=" text-sm text-tib-primary">
+              {idea.categories.map((interest, idx) => (
+                <>
+                  {idx !== 0 && ", "}
+                  <Link href={"#"} className="">
+                    {interest.name}
+                  </Link>
+                </>
+              ))}
             </p>
+          </div>
+          <div className=" mb-8">
+            <h4 className=" text-lg text-tib-primary font-bold mb-2">{idea.title}</h4>
+            <p className="line-clamp-3 text-sm">{getInnertext(idea.description)}</p>
           </div>
           <div className="mt-8 flex items-center gap-12">
             <button className=" flex items-center gap-1 text-tib-primary opacity-70">
@@ -99,11 +120,11 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
           </div>
         </div>
       </div>
-      <div className=" flex flex-grow justify-between items-center">
-        <span className=" text-sm text-tib-primary opacity-70">2 Hours Ago</span>
-        <button className=" text-tib-blue">Follow</button>
+      <div className=" flex justify-between items-center gap-32 shrink-0">
+        <span className=" text-sm text-tib-primary opacity-70">{moment(idea.createdAt).fromNow()}</span>
+        <FollowButton externalUser={idea.user} />
       </div>
-    </div>
+    </Link>
   );
 };
 

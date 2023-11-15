@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ViewIdeas from "@/app/dashboard/components/idea";
 import { IIdeaQuery } from "@/services/types";
 
@@ -9,29 +9,28 @@ const ViewAllIdeas = () => {
   const [activeMenu, setActiveMenu] = useState<(typeof viewIdeaMenu)[number]>("Spotlight");
   const [query, setQuery] = useState<IIdeaQuery>({});
 
-  const onClickMenu = (menu: (typeof viewIdeaMenu)[number]) => {
-    if (menu == "Spotlight") {
+  useEffect(() => {
+    if (activeMenu == "Spotlight") {
       setQuery({ spotlight: true });
-    } else if (menu == "More") {
+    } else if (activeMenu == "More") {
       setQuery({});
     } else {
-      setQuery({ category: menu });
+      setQuery({ category: activeMenu });
     }
-    setActiveMenu(menu);
-  };
+  }, [activeMenu]);
 
   return (
     <div className="">
       <div className="">
         <ul className=" px-7 flex items-center gap-11 pb-5 border-b border-[#E8E3E3] max-w-max mx-auto">
-          {viewIdeaMenu.map((ideaCategory) => (
+          {viewIdeaMenu.map((menu) => (
             <li
               role="button"
-              key={ideaCategory}
-              className={` text-lg font-bold  ${activeMenu == ideaCategory ? "text-tib-blue" : "text-[#696868]"} uppercase`}
-              onClick={() => onClickMenu(ideaCategory)}
+              key={menu}
+              className={` text-lg font-bold  ${activeMenu == menu ? "text-tib-blue" : "text-[#696868]"} uppercase`}
+              onClick={() => setActiveMenu(menu)}
             >
-              {ideaCategory}
+              {menu}
             </li>
           ))}
         </ul>

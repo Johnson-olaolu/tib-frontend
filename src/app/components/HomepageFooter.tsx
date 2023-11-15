@@ -5,7 +5,7 @@ const HomepageFooter = () => {
   return (
     <div className=" flex items-center py-7 px-14 justify-between bg-tib-purple">
       <Image src="/images/logo2.png" height={54} width={200} alt="TIB Logo" />
-      <p className=" text-tib-white font-bold">Contact Us @ emailneeded@gmail.com</p>
+      <p className=" text-tib-white font-bold">Contact Us @hello@xelatib.com</p>
       <p className="inline-flex text-tib-white font-bold">
         <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path

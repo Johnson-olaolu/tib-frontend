@@ -29,7 +29,6 @@ const Profile = () => {
       return res.data;
     },
   });
-  const dispatch = useDispatch();
   const [isChangingProfileImage, setIsChangingProfileImage] = useState(false);
   const [isSubmitting, setisSubmitting] = useState(false);
   const selectImage = () => {
@@ -47,13 +46,8 @@ const Profile = () => {
               type: "success",
               text: "Profile picture updated",
             });
-            userService.getUserDetails().then((data2) => {
-              dispatch(
-                saveUser({
-                  user: data2!.data!,
-                })
-              );
-            });
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+            setIsChangingProfileImage(false);
           })
           .catch((error) => {
             console.log(error);
@@ -82,10 +76,19 @@ const Profile = () => {
       <div className="mt-12">
         <div className="relative max-w-max mx-auto">
           {user?.profile?.profilePicture ? (
-            <div
-              className="h-[152px] w-[152px] rounded-full"
-              style={{ backgroundImage: `url(${user.profile.profilePicture})`, backgroundSize: "100% 100%", backgroundPosition: "center" }}
-            ></div>
+            isChangingProfileImage ? (
+              <div className="lds-ring transform scale-150">
+                <div />
+                <div />
+                <div />
+                <div />
+              </div>
+            ) : (
+              <div
+                className="h-[152px] w-[152px] rounded-full"
+                style={{ backgroundImage: `url(${user.profile.profilePicture})`, backgroundSize: "cover", backgroundPosition: "center" }}
+              ></div>
+            )
           ) : (
             <div className=" rounded-full bg-tib-light-blue h-[152px] w-[152px] overflow-hidden flex items-center justify-center">
               {isChangingProfileImage ? (

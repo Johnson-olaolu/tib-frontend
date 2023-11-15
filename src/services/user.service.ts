@@ -31,6 +31,15 @@ const updateProfilePicture = async (userId: string, file: File): Promise<IRespon
   });
 };
 
+const updateBackgroundPicture = async (userId: string, file: File): Promise<IResponse<IProfile>> => {
+  var formData = new FormData();
+  formData.append("file", file);
+  return await https.patchForm({
+    url: `/user/${userId}/backgroundPicture`,
+    body: formData,
+  });
+};
+
 const updateProfile = async (
   userId: string,
   data: {
@@ -110,6 +119,7 @@ const userService = {
   getUserFollows,
   unFollowUser,
   handleFollowRequest,
+  updateBackgroundPicture,
 };
 
 export default userService;

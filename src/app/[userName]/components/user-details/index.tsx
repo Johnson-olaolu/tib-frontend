@@ -39,7 +39,6 @@ const UserDetails: React.FC<IUserDetails> = (props) => {
 
   useEffect(() => {
     if (currentUser?.id == user?.id) {
-      console.log("true");
       setUserDetailsMenu2([...userDetailsMenu.slice(1)] as any);
       setActiveMenu("FOLLOWERS");
     } else {
@@ -66,7 +65,7 @@ const UserDetails: React.FC<IUserDetails> = (props) => {
       </nav>
       <div className="">
         {activeMenu == "SIMILAR FOLLOWERS" ? (
-          <ViewSimilarFollowers />
+          <ViewSimilarFollowers user={user} />
         ) : activeMenu == "FOLLOWERS" ? (
           <ViewFollowers user={user} />
         ) : activeMenu == "FOLLOWING" ? (
