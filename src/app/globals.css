@@ -112,3 +112,17 @@ body {
   @apply rounded-t h-32;
   border: 1px solid #ccc !important;
 }
+
+/* Comment form */
+.quill.comment-form {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.quill.comment-form .ql-toolbar {
+  @apply rounded-b rounded-t-none border-t-0;
+}
+
+.quill.comment-form .ql-container.ql-snow {
+  @apply rounded-t rounded-b-none border-b-0;
+  border-top: 1px solid #ccc !important;
+}

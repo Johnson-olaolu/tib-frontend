@@ -156,7 +156,7 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
               <div className=" flex gap-10  shrink-0">
                 <div className=" flex flex-col gap-1">
                   <LightBulbIcon />
-                  <span className="text-tib-purple text-2xl">20</span>
+                  <span className="text-tib-purple text-2xl">0</span>
                   <span className="text-sm">Shared Ideas</span>
                 </div>
                 <div className=" flex flex-col gap-1">
@@ -171,12 +171,12 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
                 </div>
                 <div className=" flex flex-col gap-1">
                   <FaShareFromSquare size={10} className=" text-tib-purple" />
-                  <span className="text-tib-purple text-2xl">30</span>
+                  <span className="text-tib-purple text-2xl">0</span>
                   <span className="text-sm">Shares</span>
                 </div>
                 <div className=" flex flex-col gap-1">
                   <IoIosThumbsUp size={10} className=" text-tib-purple" />
-                  <span className="text-tib-purple text-2xl">52</span>
+                  <span className="text-tib-purple text-2xl">0</span>
                   <span className="text-sm">Likes</span>
                 </div>
               </div>

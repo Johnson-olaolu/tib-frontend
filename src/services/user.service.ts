@@ -8,6 +8,12 @@ const getUserDetails = async (): Promise<IResponse<IUser>> => {
   });
 };
 
+const findOneUser = async (id: string): Promise<IResponse<IUser>> => {
+  return await https.get({
+    url: `/user/${id}`,
+  });
+};
+
 const queryUsers = async (query: {
   role?: string;
   plan?: string;
@@ -120,6 +126,7 @@ const userService = {
   unFollowUser,
   handleFollowRequest,
   updateBackgroundPicture,
+  findOneUser,
 };
 
 export default userService;

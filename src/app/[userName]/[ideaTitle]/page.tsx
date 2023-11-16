@@ -11,12 +11,13 @@ import Avatar from "@/components/extras/Avatar";
 import { BsDot } from "react-icons/bs";
 import moment from "moment";
 import ViewFormattedContent from "@/components/extras/ViewFormattedContent";
+import IdeaActions from "./components/idea-actions";
+import Collaborators from "./components/Collaborators";
+import { IdeaPageProvider } from "./context";
 
 const IdeaPage: NextPage<any> = (props) => {
   const ideaTitle = decodeURIComponent(props.params.ideaTitle);
   const userName = decodeURIComponent(props.params.userName);
-  const descriptionRef = useRef<HTMLIFrameElement>(null);
-  const [showSidebar, setShowSidebar] = useState(true);
 
   const { data: user } = useQuery({
     queryKey: ["user", "userName", userName],
@@ -35,50 +36,56 @@ const IdeaPage: NextPage<any> = (props) => {
   });
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className=" flex gap-20">
-        <div className=" flex-grow py-32">
-          <div className="">
-            <div className="  flex justify-between items-start">
-              <div className=" flex gap-4 items-center">
-                <Avatar size="lg" user={idea?.user} />
-                <div className="">
-                  <p className=" text-tib-purple  text-2xl font-bold flex items-center">
-                    {user?.profile?.firstName} {user?.profile?.lastName}
-                  </p>
-                  <p className=" text-tib-primary2 text-xl">
-                    {user?.profile?.interests.map((i, idx) => (
-                      <>
-                        {idx !== 0 && ", "}
-                        <Link href={"#"} className="" key={i}>
-                          {i}
-                        </Link>
-                      </>
-                    ))}
-                  </p>
+    <IdeaPageProvider>
+      <div className="max-w-7xl mx-auto">
+        <div className=" flex gap-20">
+          <div className=" flex-grow py-32">
+            <div className="">
+              <div className="  flex justify-between items-start">
+                <div className=" flex gap-4 items-center">
+                  <Avatar size="lg" user={idea?.user} />
+                  <div className="">
+                    <p className=" text-tib-purple  text-2xl font-bold flex items-center">
+                      {user?.profile?.firstName} {user?.profile?.lastName}
+                    </p>
+                    <p className=" text-tib-primary2 text-xl">
+                      {user?.profile?.interests.map((i, idx) => (
+                        <>
+                          {idx !== 0 && ", "}
+                          <Link href={"#"} className="" key={i}>
+                            {i}
+                          </Link>
+                        </>
+                      ))}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <FollowButton externalUser={idea?.user} variant="button" />
+                <FollowButton externalUser={idea?.user} variant="button" />
+              </div>
+              <div className="mt-12 pl-20">
+                <p className=" flex items-center gap-1 text-tib-primary2">
+                  <span>{moment(idea?.createdAt).fromNow()}</span>
+                  <BsDot />
+                  <span>{moment(idea?.createdAt).format("Do MMMM YYYY")}</span>
+                </p>
+              </div>
             </div>
-            <div className="mt-12 pl-20">
-              <p className=" flex items-center gap-1 text-tib-primary2">
-                <span>{moment(idea?.createdAt).fromNow()}</span>
-                <BsDot />
-                <span>{moment(idea?.createdAt).format("Do MMMM YYYY")}</span>
-              </p>
+            <div className="mt-16">
+              <h2 className=" font-bold text-4xl text-black">{idea?.title}</h2>
+              <div className="mt-10">
+                <ViewFormattedContent content={idea?.description || ""} />
+              </div>
+            </div>
+            <div className=" mt-4 px-10">
+              <IdeaActions />
             </div>
           </div>
-          <div className="mt-16">
-            <h2 className=" font-bold text-4xl text-black">{idea?.title}</h2>
-            <div className="mt-10">
-              <ViewFormattedContent content={idea?.description || ""} />
-            </div>
-          </div>
+          <IdeaSidebar />
         </div>
-        {showSidebar && <IdeaSidebar />}
       </div>
-    </div>
+      <Collaborators collaborators={idea?.collaborators} />
+    </IdeaPageProvider>
   );
 };
 

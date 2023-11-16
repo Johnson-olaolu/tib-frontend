@@ -1,25 +1,27 @@
 import Image from "next/image";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 
 interface IViewFormattedContent {
   content: string;
 }
 const ViewFormattedContent: React.FC<IViewFormattedContent> = (props) => {
   const { content } = props;
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useLayoutEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `
         @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-        body {   margin: 0;  font-family : "Figtree" }
+        body {   margin: 0;  font-family : "Figtree" ; color : #403E3E}
     `;
     window.frames[0]?.document.querySelector("head")?.append(style);
     window.frames[0]!.document.querySelector("body")!.innerHTML = content || "";
+    const height = window.frames[0]!.document.querySelector("body")?.scrollHeight || 0;
+    iframeRef.current!.height = height + 50 + "px";
   }, [content]);
   return (
     <div className="">
-      <Image src={"http://67.205.168.95:6100/public/profile/kastroud_profile_pic.jpeg"} alt="" height={40} width={40} />
-      <iframe src="" className=""></iframe>
+      <iframe ref={iframeRef} src="" className=" w-full"></iframe>
     </div>
   );
 };
