@@ -3,8 +3,8 @@ import ideaService from "@/services/idea.service";
 import userService from "@/services/user.service";
 import { useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import IdeaSidebar from "./components/Sidebar";
+import React from "react";
+import IdeaSidebar from "./components/sidebar";
 import FollowButton from "@/app/dashboard/components/user/FollowButton";
 import Link from "next/link";
 import Avatar from "@/components/extras/Avatar";
@@ -36,7 +36,7 @@ const IdeaPage: NextPage<any> = (props) => {
   });
 
   return (
-    <IdeaPageProvider>
+    <IdeaPageProvider idea={idea}>
       <div className="max-w-7xl mx-auto">
         <div className=" flex gap-20">
           <div className=" flex-grow py-32">

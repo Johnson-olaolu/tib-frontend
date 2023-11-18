@@ -245,6 +245,8 @@ export interface IIdea {
 
   likes: ILike[];
 
+  shares: IShare[];
+
   createdAt: Date;
 
   updatedAt: Date;
@@ -261,9 +263,54 @@ export enum IdeaNeedEnum {
   NEW_CONCEPT = "NEW_CONCEPT",
 }
 
-export interface ILike {}
-export interface IComment {}
-export interface IShare {}
+export enum LIkeTypeEnum {
+  IDEA = "IDEA",
+  COMMENT = "COMMENT",
+}
+
+export interface ILike {
+  id: string;
+
+  userId: string;
+
+  type: LIkeTypeEnum;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+export interface IComment {
+  id: string;
+
+  userId: string;
+
+  comment: string;
+
+  type: LIkeTypeEnum;
+
+  children?: Comment[];
+
+  comments: IComment[];
+
+  likes: ILike[];
+
+  shares: IShare[];
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+export interface IShare {
+  id: string;
+
+  userId: string;
+
+  type: LIkeTypeEnum;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
 
 export type NotificationEventTypes = "follow-request" | "follow-request-accepted";
 export interface INotification<T> {

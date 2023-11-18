@@ -1,5 +1,5 @@
 import https from "@/utils/https";
-import { IIdea, IIdeaQuery, IResponse } from "./types";
+import { IIdea, IIdeaQuery, ILike, IResponse, IShare, LIkeTypeEnum } from "./types";
 
 const createIdeaSimple = async (data: {
   userId: string;
@@ -36,7 +36,37 @@ const queryIdeaSimple = async (query: IIdeaQuery): Promise<IResponse<IIdea[]>> =
   });
 };
 
+const like = async (ideaId: string, userId: string, type: LIkeTypeEnum): Promise<IResponse<ILike>> => {
+  return await https.post({
+    url: `/idea/${ideaId}/like`,
+    body: { userId, type },
+  });
+};
+
+const unLike = async (ideaId: string, likeId: string): Promise<IResponse<boolean>> => {
+  return await https.delete({
+    url: `/idea/${ideaId}/like/${likeId}`,
+  });
+};
+
+const share = async (ideaId: string, userId: string, type: LIkeTypeEnum): Promise<IResponse<IShare>> => {
+  return await https.post({
+    url: `/idea/${ideaId}/share`,
+    body: { userId, type },
+  });
+};
+
+const unShare = async (ideaId: string, shareId: string): Promise<IResponse<boolean>> => {
+  return await https.delete({
+    url: `/idea/${ideaId}/share/${shareId}`,
+  });
+};
+
 const ideaService = {
+  like,
+  unLike,
+  share,
+  unShare,
   createIdeaSimple,
   queryIdeaSimple,
 };

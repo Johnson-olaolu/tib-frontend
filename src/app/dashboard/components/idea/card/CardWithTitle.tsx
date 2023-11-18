@@ -10,6 +10,7 @@ import { getInnertext } from "@/utils/misc";
 import Link from "next/link";
 import FollowButton from "../../user/FollowButton";
 import useDashboardViewIdeas from "../context";
+import CardActions from "./components/CardActions";
 
 const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
   const { viewType } = useDashboardViewIdeas();
@@ -48,27 +49,12 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
         <span className=" text-sm text-tib-primary opacity-70 capitalize">{moment(idea.createdAt).fromNow()}</span>
         <div className="mt-5 space-y-5">
           <h4 className=" text-lg text-tib-primary font-bold">{idea.title}</h4>
-          <p className=" text-sm text-tib-primary2">{getInnertext(idea.description)}</p>
+          <p className=" text-sm text-tib-primary2 line-clamp-6">{getInnertext(idea.description)}</p>
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between shrink-0">
-        <button className=" flex items-center gap-1 text-tib-primary opacity-70">
-          <BiMessageAltDetail size={16} />
-          <span className="text-xs">Message</span>
-        </button>
-        <button className=" flex items-center gap-1 text-tib-primary opacity-70">
-          <SlLike size={16} />
-          <span className="text-xs">Likes</span>
-        </button>
-        <button className=" flex items-center gap-1 text-tib-primary opacity-70">
-          <ShareIcon />
-          <span className="text-xs">Shares</span>
-        </button>
-        <button className=" flex items-center gap-1 text-tib-primary opacity-70">
-          <FaRegComment size={16} />
-          <span className="text-xs">Comments</span>
-        </button>
+      <div className="mt-8 w-full shrink-0">
+        <CardActions idea={idea} />
       </div>
     </Link>
   ) : (
@@ -98,25 +84,10 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
           </div>
           <div className=" mb-8">
             <h4 className=" text-lg text-tib-primary font-bold mb-2">{idea.title}</h4>
-            <p className="line-clamp-3 text-sm">{getInnertext(idea.description)}</p>
+            <p className="line-clamp-3 text-sm ">{getInnertext(idea.description)}</p>
           </div>
-          <div className="mt-8 flex items-center gap-12">
-            <button className=" flex items-center gap-1 text-tib-primary opacity-70">
-              <BiMessageAltDetail size={16} />
-              <span className="text-xs">Message</span>
-            </button>
-            <button className=" flex items-center gap-1 text-tib-primary opacity-70">
-              <SlLike size={16} />
-              <span className="text-xs">Likes</span>
-            </button>
-            <button className=" flex items-center gap-1 text-tib-primary opacity-70">
-              <ShareIcon />
-              <span className="text-xs">Shares</span>
-            </button>
-            <button className=" flex items-center gap-1 text-tib-primary opacity-70">
-              <FaRegComment size={16} />
-              <span className="text-xs">Comments</span>
-            </button>
+          <div className="mt-8">
+            <CardActions idea={idea} />
           </div>
         </div>
       </div>

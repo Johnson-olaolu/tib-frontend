@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ViewIdeas from "@/app/dashboard/components/idea";
 import { IIdeaQuery } from "@/services/types";
 
-const viewIdeaMenu = ["Spotlight", "Arts", "Technology", "Entertainment", "Finance", "Business", "Music", "More"] as const;
+const viewIdeaMenu = ["Spotlight", "Art", "Technology", "Entertainment", "Finance", "Business", "Music", "More"] as const;
 
 const ViewAllIdeas = () => {
   const [activeMenu, setActiveMenu] = useState<(typeof viewIdeaMenu)[number]>("Spotlight");

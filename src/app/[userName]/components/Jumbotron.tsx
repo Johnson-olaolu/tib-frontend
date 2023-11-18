@@ -5,7 +5,7 @@ import useToast from "@/context/toast";
 import { FollowStatusEnum, IFollow, IUser } from "@/services/types";
 import userService from "@/services/user.service";
 import walletService from "@/services/wallet.service";
-import { formatAmount } from "@/utils/misc";
+import { formatAmount, getInitials } from "@/utils/misc";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -108,13 +108,20 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
           </button>
         )}
         <div className="absolute right-20 bottom-0 transform  translate-y-1/2 bg-white max-w-[1112px] min-h-80 rounded-lg w-full flex overflow-hidden gap-14 shadow-xl">
-          <Image
-            src={user?.profile?.profilePicture || ""}
-            height={320}
-            width={280}
-            alt="profile picture"
-            className=" bg-gray-200 rounded-lg object-cover"
-          />
+          {user?.profile?.profilePicture ? (
+            <Image
+              src={user?.profile?.profilePicture || ""}
+              height={320}
+              width={280}
+              alt="profile picture"
+              className=" bg-gray-200 rounded-lg object-cover"
+            />
+          ) : (
+            <div className=" h-auto w-[280px] flex items-center justify-center text-9xl capitalize bg-tib-purple text-white font-bold ">
+              {getInitials(user)}
+            </div>
+          )}
+
           <div className=" py-10 pr-10 flex-grow relative justify-between">
             <div className=" flex flex-col justify-between gap-3 ">
               <div className="  flex justify-between items-start">

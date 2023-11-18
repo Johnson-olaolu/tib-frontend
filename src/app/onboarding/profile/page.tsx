@@ -140,7 +140,7 @@ const Profile = () => {
             />
             <FormTextInput placeholder="E.g emailneeded@gmail.com" name="email" label="Email" disabled value={user?.email} />
             <FormPhoneNumberInput
-              handleChange={(e) => {
+              handlechange={(e) => {
                 updateProfileFormik.setFieldValue("phoneNumber", e);
               }}
               onBlur={updateProfileFormik.handleBlur}

@@ -4,11 +4,11 @@ import "react-phone-number-input/style.css";
 import { IFormText } from "./FormTextInput";
 
 interface IFormPhoneNumberInput extends IFormText {
-  handleChange: (e: string) => void;
+  handlechange: (e: string) => void;
 }
 
 const FormPhoneNumberInput: React.FC<IFormPhoneNumberInput> = (props) => {
-  const { error, name, label, required, optional, disabled, value, handleChange } = props;
+  const { error, name, label, required, optional, disabled, value, handlechange } = props;
   return (
     <div className={`${disabled ? "opacity-50" : ""} px-3`}>
       <label htmlFor={name} className="text-xs mb-2 block">
@@ -18,7 +18,7 @@ const FormPhoneNumberInput: React.FC<IFormPhoneNumberInput> = (props) => {
         international
         defaultCountry="NG"
         value={value as any}
-        onChange={(e) => handleChange(e || "")}
+        onChange={(e) => handlechange(e || "")}
         numberInputProps={{
           className: "focus-visible:outline-none",
           ...props,
