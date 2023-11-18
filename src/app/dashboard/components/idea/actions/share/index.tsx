@@ -34,7 +34,7 @@ const IdeaShare: React.FC<IIdeaShare> = (props) => {
       return res.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["idea", idea?.user?.id, idea?.title] });
+      queryClient.invalidateQueries({ queryKey: ["idea", idea?.user?.userName, idea?.title] });
     },
   });
 
@@ -44,7 +44,7 @@ const IdeaShare: React.FC<IIdeaShare> = (props) => {
       return res.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["idea", idea?.user?.id, idea?.title] });
+      queryClient.invalidateQueries({ queryKey: ["idea", idea?.user?.userName, idea?.title] });
     },
   });
 

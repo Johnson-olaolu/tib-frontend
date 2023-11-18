@@ -28,7 +28,7 @@ const IdeaPage: NextPage<any> = (props) => {
   });
 
   const { data: idea } = useQuery({
-    queryKey: ["Idea", user?.id, ideaTitle],
+    queryKey: ["idea", user?.userName, ideaTitle],
     queryFn: async () => {
       const res = await ideaService.queryIdeaSimple({ title: ideaTitle, user: user?.id });
       return res.data![0];
