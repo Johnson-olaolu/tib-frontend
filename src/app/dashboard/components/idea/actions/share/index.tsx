@@ -49,12 +49,24 @@ const IdeaShare: React.FC<IIdeaShare> = (props) => {
   });
 
   const isShared = useMemo(() => {
-    return idea?.shares.findIndex((l) => l.userId === currentUser?.id) !== -1;
-  }, [currentUser?.id, idea?.shares]);
+    if (type === LIkeTypeEnum.IDEA) {
+      return idea?.shares.findIndex((l) => l.userId === currentUser?.id) !== -1;
+    }
+
+    if (type === LIkeTypeEnum.COMMENT) {
+      return comment?.shares.findIndex((l) => l.userId === currentUser?.id) !== -1;
+    }
+  }, [comment?.shares, currentUser?.id, idea?.shares, type]);
 
   const isUserAuthor = useMemo(() => {
-    return idea?.user.id == currentUser?.id;
-  }, [currentUser?.id, idea?.user.id]);
+    if (type === LIkeTypeEnum.IDEA) {
+      return idea?.user.id == currentUser?.id;
+    }
+
+    if (type === LIkeTypeEnum.COMMENT) {
+      return comment?.userId == currentUser?.id;
+    }
+  }, [comment?.userId, currentUser?.id, idea?.user.id, type]);
 
   const handleClick = () => {
     if (isShared) {

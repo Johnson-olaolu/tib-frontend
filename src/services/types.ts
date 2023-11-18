@@ -290,8 +290,6 @@ export interface IComment {
 
   children?: Comment[];
 
-  comments: IComment[];
-
   likes: ILike[];
 
   shares: IShare[];

@@ -1,4 +1,4 @@
-import SimpleAvatarWithName from "@/components/extras/SimpleAvatarWIthName";
+import SimpleAvatarWithName from "@/components/extras/SimpleAvatarWithName";
 import { IShare } from "@/services/types";
 import React from "react";
 

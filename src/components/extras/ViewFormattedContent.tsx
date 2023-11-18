@@ -16,8 +16,15 @@ const ViewFormattedContent: React.FC<IViewFormattedContent> = (props) => {
     `;
     window.frames[0]?.document.querySelector("head")?.append(style);
     window.frames[0]!.document.querySelector("body")!.innerHTML = content || "";
+    const resizeIframe = () => {};
     const height = window.frames[0]!.document.querySelector("body")?.scrollHeight || 0;
     iframeRef.current!.height = height + 50 + "px";
+
+    iframeRef.current?.addEventListener("", () => {
+      console.log("Hello ");
+      const height = window.frames[0]!.document.querySelector("body")?.scrollHeight || 0;
+      iframeRef.current!.height = height + 50 + "px";
+    });
   }, [content]);
   return (
     <div className="">

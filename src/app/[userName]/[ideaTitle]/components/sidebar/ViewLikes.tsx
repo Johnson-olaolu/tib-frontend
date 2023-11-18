@@ -1,8 +1,5 @@
-import Avatar from "@/components/extras/Avatar";
-import SimpleAvatarWithName from "@/components/extras/SimpleAvatarWIthName";
+import SimpleAvatarWithName from "@/components/extras/SimpleAvatarWithName";
 import { ILike } from "@/services/types";
-import userService from "@/services/user.service";
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const ViewLikes: React.FC<{ likes: ILike[] }> = (props) => {

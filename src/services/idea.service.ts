@@ -1,5 +1,5 @@
 import https from "@/utils/https";
-import { IIdea, IIdeaQuery, ILike, IResponse, IShare, LIkeTypeEnum } from "./types";
+import { IComment, IIdea, IIdeaQuery, ILike, IResponse, IShare, LIkeTypeEnum } from "./types";
 
 const createIdeaSimple = async (data: {
   userId: string;
@@ -62,6 +62,20 @@ const unShare = async (ideaId: string, shareId: string): Promise<IResponse<boole
   });
 };
 
+const comment = async (ideaId: string, userId: string, type: LIkeTypeEnum, comment: string): Promise<IResponse<IComment>> => {
+  return await https.post({
+    url: `/idea/${ideaId}/comment`,
+    body: { userId, type, comment },
+  });
+};
+
+const getComments = async (ideaId: string, id: string, type: LIkeTypeEnum): Promise<IResponse<IComment[]>> => {
+  return await https.get({
+    url: `/idea/${ideaId}/comment`,
+    query: { type, id },
+  });
+};
+
 const ideaService = {
   like,
   unLike,
@@ -69,5 +83,7 @@ const ideaService = {
   unShare,
   createIdeaSimple,
   queryIdeaSimple,
+  comment,
+  getComments,
 };
 export default ideaService;

@@ -42,7 +42,6 @@ const ViewSimilarFollowers: React.FC<IViewFollowers> = (props) => {
   });
 
   const similarFollowers = useMemo(() => {
-    console.log({ currentUserfollowData, followData });
     return followData?.followers.filter(
       (follower) => currentUserfollowData?.followers.findIndex((f) => f.follower.id == follower.follower.id) !== -1
     );

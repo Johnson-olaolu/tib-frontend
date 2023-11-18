@@ -48,12 +48,23 @@ const IdeaLike: React.FC<IIdeaLike> = (props) => {
   });
 
   const isLiked = useMemo(() => {
-    return idea?.likes.findIndex((l) => l.userId === currentUser?.id) !== -1;
-  }, [currentUser?.id, idea?.likes]);
+    if (type === LIkeTypeEnum.IDEA) {
+      return idea?.likes.findIndex((l) => l.userId === currentUser?.id) !== -1;
+    }
+    if (type === LIkeTypeEnum.COMMENT) {
+      return comment?.likes.findIndex((l) => l.userId === currentUser?.id) !== -1;
+    }
+  }, [comment?.likes, currentUser?.id, idea?.likes, type]);
 
   const isUserAuthor = useMemo(() => {
-    return idea?.user.id == currentUser?.id;
-  }, [currentUser?.id, idea?.user.id]);
+    if (type === LIkeTypeEnum.IDEA) {
+      return idea?.user.id == currentUser?.id;
+    }
+
+    if (type === LIkeTypeEnum.COMMENT) {
+      return comment?.userId == currentUser?.id;
+    }
+  }, [comment?.userId, currentUser?.id, idea?.user.id, type]);
 
   const handleClick = () => {
     if (isLiked) {

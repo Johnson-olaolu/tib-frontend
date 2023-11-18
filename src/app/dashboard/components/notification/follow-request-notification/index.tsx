@@ -46,7 +46,6 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
       userService.handleFollowRequest({ userId: user?.id || "", followRequestId: notification?.data.id || "", status }),
     onSuccess: (data) => {
       if (data.data?.status === FollowStatusEnum.ACCEPTED) {
-        console.log(data);
         openToast({
           text: `${notification?.data.follower.profile?.firstName} ${notification?.data.follower.profile?.lastName} is now a follower`,
           title: "Follow Request accepted",

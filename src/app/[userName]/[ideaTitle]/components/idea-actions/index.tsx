@@ -1,6 +1,5 @@
 import ShareIcon from "@/app/assets/icons/ShareIcon";
 import IdeaComment from "@/app/dashboard/components/idea/actions/comment";
-import CommentForm from "@/app/dashboard/components/idea/actions/comment/CommentForm";
 import IdeaLike from "@/app/dashboard/components/idea/actions/like";
 import IdeaShare from "@/app/dashboard/components/idea/actions/share";
 import { IIdea } from "@/services/types";
@@ -9,6 +8,7 @@ import { BiMessageAltDetail } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa6";
 import useIdeaPage from "../../context";
 import IdeaMessage from "@/app/dashboard/components/idea/actions/message";
+import IdeaPageCommentForm from "./IdeaPageCommentForm";
 
 const IdeaActions = () => {
   const { idea, setShowSidebar } = useIdeaPage();
@@ -36,7 +36,7 @@ const IdeaActions = () => {
         />
       </div>
       <div className="mt-14">
-        <CommentForm />
+        <IdeaPageCommentForm idea={idea} />
       </div>
     </div>
   );

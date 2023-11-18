@@ -36,7 +36,7 @@ const IdeaComment: React.FC<IIdeaComment> = (props) => {
     <div className={`flex items-center text-tib-primary  ${isCard ? " gap-1 " : " gap-2"} `}>
       {!isUserAuthor && <FaRegComment onClick={() => handleClick} size={isCard ? 1 : 24} role="button" className={``} />}
       <button onClick={() => viewComments()} className={`${isCard ? "text-xs" : "text-lg"}`}>
-        {type == LIkeTypeEnum.IDEA ? idea?.comments.length : comment?.comments?.length}{" "}
+        {type == LIkeTypeEnum.IDEA ? idea?.comments.length : comment?.children?.length}{" "}
         {type == LIkeTypeEnum.IDEA && idea?.comments.length === 1
           ? "Comment"
           : type == LIkeTypeEnum.COMMENT && comment?.comment.length === 1
