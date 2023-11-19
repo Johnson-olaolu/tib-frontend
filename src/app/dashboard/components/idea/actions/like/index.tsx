@@ -39,7 +39,12 @@ const IdeaLike: React.FC<IIdeaLike> = (props) => {
 
   const unLikeIdeaMutation = useMutation({
     mutationFn: async () => {
-      const res = await ideaService.unLike(idea?.id || "", idea?.likes.find((l) => l.userId === currentUser?.id)?.id || "");
+      const res = await ideaService.unLike(
+        idea?.id || "",
+        type == LIkeTypeEnum.IDEA
+          ? idea?.likes.find((l) => l.userId === currentUser?.id)?.id || ""
+          : comment?.likes.find((l) => l.userId === currentUser?.id)?.id || ""
+      );
       return res.data;
     },
     onSuccess: () => {

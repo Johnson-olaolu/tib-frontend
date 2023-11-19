@@ -1,6 +1,6 @@
 import Avatar from "@/components/extras/Avatar";
 import ViewFormattedContent from "@/components/extras/ViewFormattedContent";
-import { IComment, LIkeTypeEnum } from "@/services/types";
+import { IComment, IIdea, LIkeTypeEnum } from "@/services/types";
 import userService from "@/services/user.service";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
@@ -13,9 +13,10 @@ import IdeaComment from "../actions/comment";
 
 interface IViewComment {
   comment?: IComment;
+  idea?: IIdea;
 }
 const ViewSingleComment: React.FC<IViewComment> = (props) => {
-  const { comment } = props;
+  const { comment, idea } = props;
   const { data: user } = useQuery({
     queryKey: ["user", comment?.userId],
     queryFn: async () => {
@@ -54,11 +55,11 @@ const ViewSingleComment: React.FC<IViewComment> = (props) => {
         {/* <ViewFormattedContent content={comment?.comment || ""} /> */}
         {/* {comment?.comment} */}
       </div>
-      <div className="mt-10 flex justify-between">
+      <div className="mt-10 flex justify-between relative">
         <IdeaMessage isCard />
-        <IdeaLike isCard comment={comment} viewLikes={() => {}} type={LIkeTypeEnum.COMMENT} />
-        <IdeaShare isCard comment={comment} viewShares={() => {}} type={LIkeTypeEnum.COMMENT} />
-        <IdeaComment isCard comment={comment} viewComments={() => {}} type={LIkeTypeEnum.COMMENT} />
+        <IdeaLike isCard idea={idea} comment={comment} viewLikes={() => {}} type={LIkeTypeEnum.COMMENT} />
+        <IdeaShare isCard idea={idea} comment={comment} viewShares={() => {}} type={LIkeTypeEnum.COMMENT} />
+        <IdeaComment isCard idea={idea} comment={comment} viewComments={() => {}} type={LIkeTypeEnum.COMMENT} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-"usel client";
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
@@ -74,7 +74,7 @@ const IdeaPageCommentForm: React.FC<ICommentForm> = (props) => {
       <button
         onClick={() => submitCommentMutation.mutate()}
         disabled={commentText == ""}
-        className=" absolute bottom-2 right-2 text-tib-primary2 disabled:opacity-30"
+        className=" absolute bottom-3 right-4 text-tib-primary2 disabled:opacity-30"
       >
         <VscSend size={24} />
       </button>

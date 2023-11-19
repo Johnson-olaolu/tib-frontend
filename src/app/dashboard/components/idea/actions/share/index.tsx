@@ -6,7 +6,6 @@ import { IComment, IIdea, LIkeTypeEnum } from "@/services/types";
 import userService from "@/services/user.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useMemo } from "react";
-import { SlLike } from "react-icons/sl";
 
 interface IIdeaShare {
   isCard?: boolean;
@@ -40,7 +39,12 @@ const IdeaShare: React.FC<IIdeaShare> = (props) => {
 
   const unShareIdeaMutation = useMutation({
     mutationFn: async () => {
-      const res = await ideaService.unShare(idea?.id || "", idea?.shares.find((l) => l.userId === currentUser?.id)?.id || "");
+      const res = await ideaService.unShare(
+        idea?.id || "",
+        type == LIkeTypeEnum.IDEA
+          ? idea?.shares.find((l) => l.userId === currentUser?.id)?.id || ""
+          : comment?.shares.find((l) => l.userId === currentUser?.id)?.id || ""
+      );
       return res.data;
     },
     onSuccess: () => {

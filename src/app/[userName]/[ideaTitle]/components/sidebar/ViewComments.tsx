@@ -2,7 +2,7 @@ import ViewSingleComment from "@/app/dashboard/components/idea/comment";
 import ideaService from "@/services/idea.service";
 import { IComment, IIdea, LIkeTypeEnum } from "@/services/types";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useMemo } from "react";
 
 const ViewComments: React.FC<{ idea?: IIdea }> = (props) => {
   const { idea } = props;
@@ -13,11 +13,15 @@ const ViewComments: React.FC<{ idea?: IIdea }> = (props) => {
       return res.data;
     },
   });
+
+  const parentsComments = useMemo(() => {
+    return comments?.filter((c) => !c.parent);
+  }, [comments]);
   return (
     <div className=" px-6">
       <div className=" space-y-8">
-        {comments?.map((comment) => (
-          <ViewSingleComment comment={comment} key={comment.id} />
+        {parentsComments?.map((comment) => (
+          <ViewSingleComment idea={idea} comment={comment} key={comment.id} />
         ))}
       </div>
     </div>

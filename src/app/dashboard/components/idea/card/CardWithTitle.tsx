@@ -10,7 +10,7 @@ import { getInnertext } from "@/utils/misc";
 import Link from "next/link";
 import FollowButton from "../../user/FollowButton";
 import useDashboardViewIdeas from "../context";
-import CardActions from "./components/CardActions";
+import CardActions from "../actions";
 
 const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
   const { viewType } = useDashboardViewIdeas();

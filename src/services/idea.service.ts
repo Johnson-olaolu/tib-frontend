@@ -62,10 +62,10 @@ const unShare = async (ideaId: string, shareId: string): Promise<IResponse<boole
   });
 };
 
-const comment = async (ideaId: string, userId: string, type: LIkeTypeEnum, comment: string): Promise<IResponse<IComment>> => {
+const comment = async (ideaId: string, userId: string, type: LIkeTypeEnum, comment: string, commentId?: string): Promise<IResponse<IComment>> => {
   return await https.post({
     url: `/idea/${ideaId}/comment`,
-    body: { userId, type, comment },
+    body: { userId, type, comment, commentId },
   });
 };
 

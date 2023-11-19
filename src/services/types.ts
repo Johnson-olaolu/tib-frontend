@@ -288,6 +288,7 @@ export interface IComment {
 
   type: LIkeTypeEnum;
 
+  parent?: Comment;
   children?: Comment[];
 
   likes: ILike[];

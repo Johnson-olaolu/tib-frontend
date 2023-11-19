@@ -126,3 +126,27 @@ body {
   @apply rounded-t rounded-b-none border-b-0;
   border-top: 1px solid #ccc !important;
 }
+
+.quill.comment-form .ql-container.ql-snow .ql-editor {
+  @apply text-base;
+}
+
+/* Comment form2 */
+.quill.comment-form2 {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.quill.comment-form2 .ql-toolbar {
+  @apply border-none p-0;
+}
+
+.quill.comment-form2 .ql-container.ql-snow {
+  @apply border-none;
+}
+.quill.comment-form2 .ql-container.ql-snow .ql-editor {
+  @apply pl-10 py-2;
+}
+
+.quill.comment-form2 .ql-container.ql-snow .ql-editor::before {
+  @apply pl-6;
+}
