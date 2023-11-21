@@ -5,21 +5,22 @@ import { saveNotification } from "@/store/notificationSlice";
 
 const baseURL = process.env.NEXT_PUBLIC_NOTIFICATION_URL;
 export const listenForUserNotifications = (userId: string) => {
-  // const notificationSocket = io(`${baseURL}/notification`, { transports: ["websocket"] });
-  // const notificationSocket = connect(`${baseURL}/notification`, {
-  //   query: {
-  //     userId,
-  //   },
-  //   transports: ["websocket", "polling"],
-  // });
-  // notificationSocket.on("connect", () => {
-  //   notificationSocket.on(userId, (data: INotification<any>[]) => {
-  //     store.dispatch(saveNotification({ notifications: data }));
-  //   });
-  // });
+  console.log({ baseURL });
+
+  const notificationSocket = connect(`${baseURL}/notification`, {
+    query: {
+      userId,
+    },
+    transports: ["websocket", "polling"],
+  });
+  notificationSocket.on("connect", () => {
+    notificationSocket.on(userId, (data: INotification<any>[]) => {
+      store.dispatch(saveNotification({ notifications: data }));
+    });
+  });
 
   return () => {
-    // notificationSocket.off();
+    notificationSocket.off();
   };
 };
 
