@@ -110,7 +110,10 @@ const IdeaShare: React.FC<IIdeaShare> = (props) => {
           {showShareButton && (
             <button
               ref={containerRef}
-              onClick={() => shareIdeaMutation.mutate()}
+              onClick={() => {
+                shareIdeaMutation.mutate();
+                setShowShareButton(false);
+              }}
               className="absolute -bottom-2 shadow border rounded  flex items-center gap-2 bg-white min-w-max p-2 translate-y-full z-10"
             >
               <ShareIcon className=" text-tib-purple scale-125" />
