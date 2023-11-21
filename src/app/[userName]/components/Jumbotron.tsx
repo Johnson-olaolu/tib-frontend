@@ -105,7 +105,7 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
       <div
         className=" h-[500px] relative bg-cover bg-no-repeat bg-center"
         style={{
-          backgroundImage: !isLoading ? "" : `url("${user?.profile?.backgroundPicture || " /images/ProfileBg1.png"}")`,
+          backgroundImage: isLoading ? "" : `url("${user?.profile?.backgroundPicture || " /images/ProfileBg1.png"}")`,
         }}
       >
         {isCurrentUser && (
