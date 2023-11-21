@@ -1,10 +1,26 @@
 import https from "@/utils/https";
 import qs from "qs";
-import { FollowStatusEnum, IFollow, IProfile, IResponse, IUser } from "./types";
+import { FollowStatusEnum, IFollow, IIdea, ILike, IProfile, IResponse, IShare, IUser } from "./types";
 
 const getUserDetails = async (): Promise<IResponse<IUser>> => {
   return await https.get({
     url: "/user/me",
+  });
+};
+
+const getUserIdeaDetails = async (
+  userId: string
+): Promise<
+  IResponse<{
+    ideas: IIdea[];
+    likes: ILike[];
+    shares: IShare[];
+    sharedIdeas: IIdea[];
+    likedIdeas: IIdea[];
+  }>
+> => {
+  return await https.get({
+    url: `/user/${userId}/idea-details`,
   });
 };
 
@@ -117,6 +133,7 @@ const handleFollowRequest = async ({
 
 const userService = {
   getUserDetails,
+  getUserIdeaDetails,
   updateProfilePicture,
   updateProfile,
   queryUsers,

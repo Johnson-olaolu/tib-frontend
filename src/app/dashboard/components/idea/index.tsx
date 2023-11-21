@@ -11,13 +11,15 @@ const ViewIdeas: React.FC<{
     category?: string;
     categories?: string[];
     user?: string;
+    userName?: string;
   };
+  type?: "query" | "user";
   count?: number;
   title?: string;
 }> = (props) => {
-  const { query, count, title } = props;
+  const { query, count, title, type } = props;
   return (
-    <DashboardViewIdeaContextProvider query={query} count={count}>
+    <DashboardViewIdeaContextProvider query={query} count={count} type={type}>
       <>
         <div className=" flex justify-between gap-4 mb-8">
           <h4 className=" text-2xl text-tib-purple font-bold">{title}</h4>

@@ -86,12 +86,12 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
           <div className=" flex  items-start justify-between">
             <div className="">
               <div className="flex items-center gap-2">
-                <Avatar user={notification?.data.user} size="xs" />
+                <Avatar user={notification?.data.follower} size="xs" />
                 <div className=" space-y-1">
                   <p className=" text-lg font-bold text-tib-purple">
-                    {(notification?.data as IFollow).user.profile?.firstName
-                      ? `${(notification?.data as IFollow).user.profile?.firstName} ${(notification?.data as IFollow).user.profile?.lastName}`
-                      : `${(notification?.data as IFollow).user.userName}`}
+                    {(notification?.data as IFollow).follower.profile?.firstName
+                      ? `${(notification?.data as IFollow).follower.profile?.firstName} ${(notification?.data as IFollow).follower.profile?.lastName}`
+                      : `${(notification?.data as IFollow).follower.userName}`}
                   </p>
                   <p className=" font-bold text-tib-primary2">{(notification?.data as IFollow).user.profile?.interests.join(", ")}</p>
                 </div>

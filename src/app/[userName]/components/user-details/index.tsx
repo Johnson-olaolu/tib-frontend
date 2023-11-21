@@ -69,11 +69,11 @@ const UserDetails: React.FC<IUserDetails> = (props) => {
         ) : activeMenu == "FOLLOWERS" ? (
           <ViewFollowers user={user} />
         ) : activeMenu == "FOLLOWING" ? (
-          <ViewFollowing />
+          <ViewFollowing user={user} />
         ) : activeMenu == "SHARES" ? (
-          <ViewShares />
+          <ViewShares user={user} />
         ) : (
-          <ViewLikes />
+          <ViewLikes user={user} />
         )}
       </div>
     </div>

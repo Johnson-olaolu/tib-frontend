@@ -96,7 +96,7 @@ const DashboardProfile = () => {
   });
   return (
     <main className="">
-      <BackButton />
+      <BackButton goBack />
       <div className="max-w-2xl mx-auto">
         <div className="text-center space-y-4">
           <h1 className=" font-bold text-3xl text-tib-purple">Edit Profile</h1>

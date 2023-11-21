@@ -26,11 +26,20 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
   const { userName } = props;
   const { openToast } = useToast();
   const queryClient = useQueryClient();
-  const { data: user } = useQuery({
+
+  const { data: user, isLoading } = useQuery({
     queryKey: ["user", "userName", userName],
     queryFn: async () => {
       const res = await userService.queryUsers({ userName });
       return res.data![0];
+    },
+  });
+
+  const { data: ideaDetails } = useQuery({
+    queryKey: ["user", "userName", userName, "ideaDetails"],
+    queryFn: async () => {
+      const res = await userService.getUserIdeaDetails(user?.id || "");
+      return res.data;
     },
   });
 
@@ -96,7 +105,7 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
       <div
         className=" h-[500px] relative bg-cover bg-no-repeat bg-center"
         style={{
-          backgroundImage: `url("${user?.profile?.backgroundPicture || " /images/ProfileBg1.png"}")`,
+          backgroundImage: !isLoading ? "" : `url("${user?.profile?.backgroundPicture || " /images/ProfileBg1.png"}")`,
         }}
       >
         {isCurrentUser && (
@@ -118,7 +127,7 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
             />
           ) : (
             <div className=" h-auto w-[280px] flex items-center justify-center text-9xl capitalize bg-tib-purple text-white font-bold ">
-              {getInitials(user)}
+              {isLoading ? "" : getInitials(user)}
             </div>
           )}
 
@@ -163,7 +172,7 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
               <div className=" flex gap-10  shrink-0">
                 <div className=" flex flex-col gap-1">
                   <LightBulbIcon />
-                  <span className="text-tib-purple text-2xl">0</span>
+                  <span className="text-tib-purple text-2xl">{ideaDetails?.sharedIdeas.length}</span>
                   <span className="text-sm">Shared Ideas</span>
                 </div>
                 <div className=" flex flex-col gap-1">
@@ -178,12 +187,12 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
                 </div>
                 <div className=" flex flex-col gap-1">
                   <FaShareFromSquare size={10} className=" text-tib-purple" />
-                  <span className="text-tib-purple text-2xl">0</span>
+                  <span className="text-tib-purple text-2xl">{ideaDetails?.shares.length}</span>
                   <span className="text-sm">Shares</span>
                 </div>
                 <div className=" flex flex-col gap-1">
                   <IoIosThumbsUp size={10} className=" text-tib-purple" />
-                  <span className="text-tib-purple text-2xl">0</span>
+                  <span className="text-tib-purple text-2xl">{ideaDetails?.likes.length}</span>
                   <span className="text-sm">Likes</span>
                 </div>
               </div>

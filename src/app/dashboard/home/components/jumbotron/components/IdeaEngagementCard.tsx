@@ -1,6 +1,22 @@
+import userService from "@/services/user.service";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const IdeaEngagementCard = () => {
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
+  const { data: ideaDetails } = useQuery({
+    queryKey: ["user", "userName", user?.userName, "ideaDetails"],
+    queryFn: async () => {
+      const res = await userService.getUserIdeaDetails(user?.id || "");
+      return res.data;
+    },
+  });
   return (
     <div
       className=" h-60 w-[262px] rounded p-6 flex flex-col justify-between items-center bg-tib-white"
@@ -27,9 +43,9 @@ const IdeaEngagementCard = () => {
             fill="#260060"
           />
         </svg>
-        <div className="text-tib-purple flex flex-col gap-3 items-center pt-8  ">
+        <div className="text-tib-purple flex flex-col gap-3 items-center pt-8 relative z-10 ">
           <div className=" text-center">
-            <p className=" text-4xl font-bold ">21</p>
+            <p className=" text-4xl font-bold ">{ideaDetails?.ideas.length || 0}</p>
             <p className=" text-xs">Ideas</p>
           </div>
           <div className="text-center">

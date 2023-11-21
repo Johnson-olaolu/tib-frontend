@@ -20,7 +20,7 @@ const UserIdeas: React.FC<IUserDetails> = (props) => {
   });
   return (
     <div className="max-w-7xl mx-auto mt-32">
-      <ViewIdeas title={`Ideas shared by ${user?.profile?.firstName} ${user?.profile?.lastName}`} query={{ user: user?.id }} />
+      <ViewIdeas title={`Ideas shared by ${user?.profile?.firstName} ${user?.profile?.lastName}`} type="user" query={{ userName }} />
     </div>
   );
 };

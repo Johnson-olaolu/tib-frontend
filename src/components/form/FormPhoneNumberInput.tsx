@@ -10,7 +10,7 @@ interface IFormPhoneNumberInput extends IFormText {
 const FormPhoneNumberInput: React.FC<IFormPhoneNumberInput> = (props) => {
   const { error, name, label, required, optional, disabled, value, handlechange } = props;
   return (
-    <div className={`${disabled ? "opacity-50" : ""} px-3`}>
+    <div className={`${disabled ? "opacity-50" : ""} `}>
       <label htmlFor={name} className="text-xs mb-2 block">
         {label} {required && "(Required)"} {optional && "(Optional)"}
       </label>

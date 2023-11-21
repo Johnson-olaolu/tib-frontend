@@ -5,7 +5,8 @@ import ideaService from "@/services/idea.service";
 import { IComment, IIdea, LIkeTypeEnum } from "@/services/types";
 import userService from "@/services/user.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { BiRepost } from "react-icons/bi";
 
 interface IIdeaShare {
   isCard?: boolean;
@@ -17,6 +18,7 @@ interface IIdeaShare {
 
 const IdeaShare: React.FC<IIdeaShare> = (props) => {
   const { isCard = false, idea, comment, type = LIkeTypeEnum.IDEA, viewShares } = props;
+  const [showShareButton, setShowShareButton] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: currentUser } = useQuery({
@@ -80,10 +82,45 @@ const IdeaShare: React.FC<IIdeaShare> = (props) => {
     }
   };
 
+  const containerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const clickOutside = (e: MouseEvent) => {
+      if (e.target !== containerRef.current && containerRef.current?.contains(e.target as Node) === false) {
+        setShowShareButton(false);
+      }
+    };
+    document?.querySelector("body")?.addEventListener("click", clickOutside);
+    return () => {
+      document?.querySelector("body")?.removeEventListener("click", clickOutside);
+    };
+  }, []);
+
   return (
     <div className={`flex items-center text-tib-primary  ${isCard ? " gap-1 " : " gap-2"} `}>
       {!isUserAuthor && (
-        <ShareIcon onClick={() => handleClick()} role="button" className={`${isCard ? "" : "scale-125"}   ${isShared ? "text-tib-blue" : ""}`} />
+        <div className=" relative">
+          <ShareIcon
+            onClick={() => {
+              isShared ? unShareIdeaMutation.mutate() : setShowShareButton(true);
+            }}
+            role="button"
+            className={`${isCard ? "" : "scale-125"}   ${isShared ? "text-tib-blue" : ""}`}
+          />
+          {showShareButton && (
+            <button
+              ref={containerRef}
+              onClick={() => shareIdeaMutation.mutate()}
+              className="absolute -bottom-2 shadow border rounded  flex items-center gap-2 bg-white min-w-max p-2 translate-y-full z-10"
+            >
+              <ShareIcon className=" text-tib-purple scale-125" />
+              <div className="">
+                <p className=" text-sm text-tib-primary text-left">Share</p>
+                <p className=" text-xs text-tib-primary2 text-left">Instantly bring {idea?.user.profile?.firstName}'s post to your feed</p>
+              </div>
+            </button>
+          )}
+        </div>
       )}
       <button onClick={() => viewShares()} className={`${isCard ? "text-xs" : "text-lg"}`}>
         {type == LIkeTypeEnum.IDEA ? idea?.shares.length : comment?.shares?.length}{" "}

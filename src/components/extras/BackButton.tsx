@@ -14,6 +14,7 @@ const BackButton: React.FC<IBackButton> = (props) => {
   const router = useRouter();
   const pathname = usePathname();
   const defaultRoute = pathname.includes("vault") ? "/dashboard/vault/home" : "/dashboard/home";
+
   return (
     <button onClick={() => (goBack ? router.back() : router.push(route ? route : defaultRoute))} className="flex items-center gap-2">
       <BiArrowBack />
