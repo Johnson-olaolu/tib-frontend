@@ -119,7 +119,7 @@ const IdeaShare: React.FC<IIdeaShare> = (props) => {
               <ShareIcon className=" text-tib-purple scale-125" />
               <div className="">
                 <p className=" text-sm text-tib-primary text-left">Share</p>
-                <p className=" text-xs text-tib-primary2 text-left">Instantly bring {idea?.user.profile?.firstName}'s post to your feed</p>
+                <p className=" text-xs text-tib-primary2 text-left">Instantly bring {idea?.user.profile?.firstName}&apos;s post to your feed</p>
               </div>
             </button>
           )}
