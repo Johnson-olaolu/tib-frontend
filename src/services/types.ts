@@ -58,6 +58,12 @@ export interface ICategory {
 
   name: string;
 
+  description: string;
+
+  profilePicture: string;
+
+  backgroundPicture: string;
+
   createdAt: Date;
 
   updatedAt: Date;
@@ -354,4 +360,12 @@ export interface IIdeaQuery {
   category?: string;
   categories?: string[];
   user?: string;
+}
+
+export interface IIdeaConstant {
+  createdAt: Date;
+  id: string;
+  name: string;
+  updatedAt: Date;
+  value: string[];
 }

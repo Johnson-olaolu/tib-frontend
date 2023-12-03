@@ -98,3 +98,23 @@ export const createIdeaSimpleValidationSchema = yup.object({
   category: yup.array().of(yup.string()),
   collaborators: yup.array().of(yup.string()),
 });
+
+export const vaultCreateIdeaFundingNeededForm1ValidationSchema = yup.object({
+  title: yup.string().required(),
+  description: yup.string().min(150).required(),
+  category: yup.array().of(yup.string()),
+  role: yup.string().required(),
+  collaborators: yup.array().of(yup.string()),
+});
+
+export const vaultCreateIdeaFundingNeededForm2ValidationSchema = yup.object({
+  location: yup.string().required(),
+  website: yup.string().min(150).required(),
+  socialMedia: yup.array().of(
+    yup.object({
+      name: yup.string(),
+      url: yup.string(),
+    })
+  ),
+  competitors: yup.array().of(yup.string()),
+});

@@ -33,7 +33,7 @@ const ModalWrapper: React.FC<IModalWrapper> = (props) => {
     showModal && (
       <section
         ref={wrapperRef}
-        style={{ background: "rgba(0, 0, 0, 0.3)" }}
+        style={{ background: "rgba(0, 0, 0, 0.8)" }}
         className=" fixed h-screen w-screen left-0 top-0 flex items-center justify-center z-50"
       >
         <div ref={modalRef} {...bodyStyle}>

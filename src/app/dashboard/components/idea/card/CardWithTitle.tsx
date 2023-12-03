@@ -11,15 +11,22 @@ import Link from "next/link";
 import FollowButton from "../../user/FollowButton";
 import useDashboardViewIdeas from "../context";
 import CardActions from "../actions";
+import { useRouter } from "next13-progressbar";
 
 const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
   const { viewType } = useDashboardViewIdeas();
+  const router = useRouter();
   const { idea } = props;
 
+  const onClickIdea = () => {
+    router.push(`/${idea.user.userName}/${encodeURIComponent(idea.title)}`);
+  };
+
   return viewType === "grid" ? (
-    <Link
-      href={`/${idea.user.userName}/${encodeURIComponent(idea.title)}`}
-      className=" p-6 rounded-lg border border-[#E8E5E5] bg-tib-white flex flex-col h-[400px]"
+    <div
+      role="link"
+      onClick={() => onClickIdea()}
+      className=" p-6 rounded-lg border border-[#E8E5E5] bg-tib-white flex flex-col h-[400px] cursor-pointer"
     >
       <div className=" flex items-center justify-between shrink-0">
         <div className=" flex items-center gap-2">
@@ -35,7 +42,7 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
               {idea.categories.map((interest, idx) => (
                 <>
                   {idx !== 0 && ", "}
-                  <Link href={"#"} className="">
+                  <Link href={`/category/${interest.name}`} className="">
                     {interest.name}
                   </Link>
                 </>
@@ -56,11 +63,12 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
       <div className="mt-8 w-full shrink-0">
         <CardActions idea={idea} />
       </div>
-    </Link>
+    </div>
   ) : (
-    <Link
-      href={`/${idea.user.userName}/${encodeURIComponent(idea.title)}`}
-      className="px-16 py-8 rounded-lg border border-[#E8E5E5] bg-tib-white flex justify-between gap-36 items-start"
+    <div
+      role="link"
+      onClick={() => onClickIdea()}
+      className="px-16 py-8 rounded-lg border border-[#E8E5E5] bg-tib-white flex justify-between gap-36 items-start cursor-pointer"
     >
       <div className="flex items-start gap-10 flex-grow">
         <Link href={`/${idea.user.userName}`}>
@@ -75,7 +83,7 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
               {idea.categories.map((interest, idx) => (
                 <>
                   {idx !== 0 && ", "}
-                  <Link href={"#"} className="">
+                  <Link href={`/category/${interest.name}`} className="">
                     {interest.name}
                   </Link>
                 </>
@@ -95,7 +103,7 @@ const CardWithTitle: React.FC<IDashboardIdeaCard> = (props) => {
         <span className=" text-sm text-tib-primary opacity-70">{moment(idea.createdAt).fromNow()}</span>
         <FollowButton externalUser={idea.user} />
       </div>
-    </Link>
+    </div>
   );
 };
 

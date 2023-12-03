@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { IModalContext, ModalTypes } from "./types";
 import ConfirmTransactionModal from "@/components/modal/extra/ConfirmTransactionModal";
+import VaultCreateIdeaModal from "@/components/modal/vault-create-idea";
 
 const ModalContext = createContext({});
 
@@ -26,6 +27,8 @@ export const ModalContextProvider: React.FC<{
     switch (activeModal) {
       case "confirm-transaction":
         return <ConfirmTransactionModal onClose={closeModal} showModal={showModal} data={data} />;
+      case "vault-create-idea":
+        return <VaultCreateIdeaModal onClose={closeModal} showModal={showModal} data={data} />;
       default:
         return null;
     }

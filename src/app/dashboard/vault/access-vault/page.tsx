@@ -18,7 +18,7 @@ const DashboardVaultAccessVault = () => {
   const router = useRouter();
   return (
     <main className="">
-      <BackButton />
+      <BackButton goBack />
       <div className="mt-36 flex justify-between">
         <div className=" max-w-[472px]">
           <Image src={"/images/rafiki.svg"} height={200} width={268} alt="access vault" />

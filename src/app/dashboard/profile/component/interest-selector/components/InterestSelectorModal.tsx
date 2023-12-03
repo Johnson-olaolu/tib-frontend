@@ -32,7 +32,7 @@ const InterestSelectorModal: React.FC<IInterestSelectorModal> = (props) => {
         <FiX className=" absolute right-8 top-8 " role="button" onClick={() => closeModal()} />
         <div className="">
           <div className="">
-            <p className=" text-tib-purple font-bold text-4xl text-center">Select Area of Interest</p>
+            <p className=" text-tib-purple font-bold text-2xl text-center">Select Area of Interest</p>
             <div className="mt-10 flex flex-wrap gap-x-3 gap-y-4 justify-center">
               {interests?.map((i) => (
                 <InterestBadge2 handleInterestBadgeClick={handleInterestBadgeClick} name={i.name} selected={values.includes(i.name)} key={i.id} />

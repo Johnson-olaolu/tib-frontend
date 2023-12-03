@@ -142,7 +142,7 @@ const ProfilePageJumbotron: React.FC<IProfilePageJumbotron> = (props) => {
                     {user?.profile?.interests.map((i, idx) => (
                       <>
                         {idx !== 0 && ", "}
-                        <Link href={"#"} className="" key={i}>
+                        <Link href={`/category/${i}`} className="" key={i}>
                           {i}
                         </Link>
                       </>
