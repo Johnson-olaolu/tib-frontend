@@ -4,7 +4,7 @@ import { OnboardingContextProvider } from "./context";
 export default function OnboardingLayout({ children }: { children: React.ReactNode }) {
   return (
     <main
-      className={`font-circularStd text-tib-primary h-screen overflow-hidden pt-20 pb-2`}
+      className={`font-circularStd text-tib-primary h-screen overflow-hidden pb-2`}
       style={{
         background: `#ffffff url("/images/onboarding-bg.png")`,
         backgroundBlendMode: "multiply",
@@ -13,8 +13,10 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="max-w-[672px] mx-auto h-full overflow-auto">
-        <OnboardingContextProvider>{children}</OnboardingContextProvider>
+      <div className=" h-full overflow-auto">
+        <div className="max-w-[672px] mx-auto pt-20">
+          <OnboardingContextProvider>{children}</OnboardingContextProvider>
+        </div>
       </div>
     </main>
   );

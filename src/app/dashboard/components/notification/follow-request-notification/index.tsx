@@ -6,6 +6,7 @@ import { FollowStatusEnum, IFollow, INotification } from "@/services/types";
 import userService from "@/services/user.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
+import Link from "next/link";
 import React, { useState } from "react";
 import { FiTrash } from "react-icons/fi";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
@@ -86,13 +87,15 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
           <div className=" flex  items-start justify-between">
             <div className="">
               <div className="flex items-center gap-2">
-                <Avatar user={notification?.data.follower} size="xs" />
+                <Link href={`/${(notification?.data as IFollow).follower.userName}`}>
+                  <Avatar user={notification?.data.follower} size="xs" />
+                </Link>
                 <div className=" space-y-1">
-                  <p className=" text-lg font-bold text-tib-purple">
+                  <Link href={`/${(notification?.data as IFollow).follower.userName}`} className=" text-lg font-bold text-tib-purple">
                     {(notification?.data as IFollow).follower.profile?.firstName
                       ? `${(notification?.data as IFollow).follower.profile?.firstName} ${(notification?.data as IFollow).follower.profile?.lastName}`
                       : `${(notification?.data as IFollow).follower.userName}`}
-                  </p>
+                  </Link>
                   <p className=" font-bold text-tib-primary2">{(notification?.data as IFollow).user.profile?.interests.join(", ")}</p>
                 </div>
               </div>
@@ -153,14 +156,17 @@ const FollowRequestNotification: React.FC<INotificationDispatcher> = (props) => 
         <div className=" flex  items-start justify-between">
           <div className="">
             <div className="flex items-center gap-2">
-              <Avatar user={(notification?.data as IFollow).user} />
+              <Link href={`/${(notification?.data as IFollow).follower.userName}`}>
+                <Avatar user={(notification?.data as IFollow).follower} />
+              </Link>
+
               <div className=" space-y-1">
-                <p className=" text-lg font-bold text-tib-purple">
-                  {(notification?.data as IFollow).user.profile?.firstName
-                    ? `${(notification?.data as IFollow).user.profile?.firstName} ${(notification?.data as IFollow).user.profile?.lastName}`
-                    : `${(notification?.data as IFollow).user.userName}`}
-                </p>
-                <p className=" font-bold text-tib-primary2">{(notification?.data as IFollow).user.profile?.interests.join(", ")}</p>
+                <Link href={`/${(notification?.data as IFollow).follower.userName}`} className=" text-lg font-bold text-tib-purple">
+                  {(notification?.data as IFollow).follower.profile?.firstName
+                    ? `${(notification?.data as IFollow).follower.profile?.firstName} ${(notification?.data as IFollow).follower.profile?.lastName}`
+                    : `${(notification?.data as IFollow).follower.userName}`}
+                </Link>
+                <p className=" font-bold text-tib-primary2">{(notification?.data as IFollow).follower.profile?.interests.join(", ")}</p>
               </div>
             </div>
             <div className="mt-3 pl-14">

@@ -20,7 +20,10 @@ const DashboardHomeJumbotron = () => {
 
   useEffect(() => {}, []);
   return (
-    <div className=" px-24 py-12 h-[632px]" style={{ background: `url("/images/DashboardJumbotronBg.png")`, backgroundSize: "100 100" }}>
+    <div
+      className=" px-24 py-12 h-[632px]"
+      style={{ background: `url("/images/DashboardJumbotronBg.png")`, backgroundSize: "cover", backgroundPosition: "center" }}
+    >
       <div className=" max-w-md space-y-1">
         <h2 className="font-black text-tib-white text-6xl capitalize">Hello {user?.profile?.firstName || user?.userName}</h2>
         <p className=" text-tib-white text-xl">Ready to bring your idea to the world? Let’s get started!</p>

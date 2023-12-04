@@ -13,7 +13,7 @@ const ToastBadge: React.FC<{ data: IToastData; closeToast: (id: string) => void 
   const handleClose = () => {
     setTimeout(() => {
       ctx.close();
-    }, 10000);
+    }, 4000);
   };
 
   useLayoutEffect(() => {
