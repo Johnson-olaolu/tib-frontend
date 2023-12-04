@@ -1,7 +1,7 @@
 import React from "react";
-import { VaultCreateIdeaFundingNeededProvider } from "./context";
+import { VaultCreateIdeaNewConceptProvider } from "./context";
 
-const VaultCreateIdeaFundingNeededLayout = ({ children }: { children: React.ReactNode }) => {
+const VaultCreateIdeaNewConceptLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main
       className={`font-circularStd text-tib-primary h-screen overflow-hidden   `}
@@ -13,11 +13,11 @@ const VaultCreateIdeaFundingNeededLayout = ({ children }: { children: React.Reac
         backgroundRepeat: "no-repeat",
       }}
     >
-      <VaultCreateIdeaFundingNeededProvider>
+      <VaultCreateIdeaNewConceptProvider>
         <div className=" py-20 px-16 h-screen  overflow-auto">{children}</div>
-      </VaultCreateIdeaFundingNeededProvider>
+      </VaultCreateIdeaNewConceptProvider>
     </main>
   );
 };
 
-export default VaultCreateIdeaFundingNeededLayout;
+export default VaultCreateIdeaNewConceptLayout;

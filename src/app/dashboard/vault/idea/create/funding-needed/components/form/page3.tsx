@@ -1,5 +1,5 @@
-import React from "react";
-import useVaultCreateIdeaDepositIdea from "../../context";
+import React, { useState } from "react";
+import useVaultCreateFundingNeededIdea from "../../context";
 import { useFormik } from "formik";
 import { vaultCreateIdeaFundingNeededForm3ValidationSchema } from "@/utils/validation";
 import FormAmountInput from "@/components/form/FormAmountInput";
@@ -9,18 +9,19 @@ import FormSubmit from "@/components/form/FormSubmit";
 import { isObjectEmpty } from "@/utils/misc";
 
 const VaultCreateIdeaFundingNeededFormPage3 = () => {
-  const { setFormFields, formFields, setActiveStep } = useVaultCreateIdeaDepositIdea();
+  const { setFormFields, formFields, setActiveStep, isPending, createIdeaFundingNeededMutation } = useVaultCreateFundingNeededIdea();
+  const [confirmTerms, setConfirmTerms] = useState(false);
   const vaultCreateIdeaFundingNeededForm3Formik = useFormik({
     initialValues: {
       valuation: formFields.valuation || {
         currency: "NGN",
         value: 0,
       },
-      costOfExecution: formFields.costOfExecution || {
+      executionCost: formFields.executionCost || {
         currency: "NGN",
         value: 0,
       },
-      estimatedRoiTimeline: formFields.estimatedRoiTimeline || "",
+      ROITimeline: formFields.ROITimeline || "",
       projectedRevenue: formFields.projectedRevenue || {
         currency: "NGN",
         value: 0,
@@ -34,6 +35,7 @@ const VaultCreateIdeaFundingNeededFormPage3 = () => {
     validationSchema: vaultCreateIdeaFundingNeededForm3ValidationSchema,
     onSubmit: (values) => {
       setFormFields({ ...formFields, ...values });
+      createIdeaFundingNeededMutation.mutate();
     },
   });
   return (
@@ -61,37 +63,36 @@ const VaultCreateIdeaFundingNeededFormPage3 = () => {
         />
         <FormAmountInput
           onChangeValue={(value) => {
-            vaultCreateIdeaFundingNeededForm3Formik.setFieldValue("costOfExecution", {
-              ...vaultCreateIdeaFundingNeededForm3Formik.values.costOfExecution,
+            vaultCreateIdeaFundingNeededForm3Formik.setFieldValue("executionCost", {
+              ...vaultCreateIdeaFundingNeededForm3Formik.values.executionCost,
               value,
             });
           }}
           showCurrencySelector
           onBlur={vaultCreateIdeaFundingNeededForm3Formik.handleBlur}
-          amount={vaultCreateIdeaFundingNeededForm3Formik.values.costOfExecution}
+          amount={vaultCreateIdeaFundingNeededForm3Formik.values.executionCost}
           placeholder="E.g 10,000"
           type="number"
-          name="costOfExecution"
+          name="executionCost"
           label="Cost of Execution"
           error={
-            vaultCreateIdeaFundingNeededForm3Formik.errors.costOfExecution?.value &&
-            vaultCreateIdeaFundingNeededForm3Formik.touched.costOfExecution?.value
-              ? vaultCreateIdeaFundingNeededForm3Formik.errors.costOfExecution.value
+            vaultCreateIdeaFundingNeededForm3Formik.errors.executionCost?.value &&
+            vaultCreateIdeaFundingNeededForm3Formik.touched.executionCost?.value
+              ? vaultCreateIdeaFundingNeededForm3Formik.errors.executionCost.value
               : undefined
           }
         />
         <FormMultipleSelect
-          name="estimatedRoiTimeline"
+          name="ROITimeline"
           label="Estimated ROI Timeline"
           constant="Estimated ROI Timeline"
           onChange={vaultCreateIdeaFundingNeededForm3Formik.handleChange}
-          value={vaultCreateIdeaFundingNeededForm3Formik.values.estimatedRoiTimeline}
-          setValue={(value) => vaultCreateIdeaFundingNeededForm3Formik.setFieldValue("estimatedRoiTimeline", value)}
+          value={vaultCreateIdeaFundingNeededForm3Formik.values.ROITimeline}
+          setValue={(value) => vaultCreateIdeaFundingNeededForm3Formik.setFieldValue("ROITimeline", value)}
           onBlur={vaultCreateIdeaFundingNeededForm3Formik.handleBlur}
           error={
-            vaultCreateIdeaFundingNeededForm3Formik.errors.estimatedRoiTimeline &&
-            vaultCreateIdeaFundingNeededForm3Formik.touched.estimatedRoiTimeline
-              ? vaultCreateIdeaFundingNeededForm3Formik.errors.estimatedRoiTimeline
+            vaultCreateIdeaFundingNeededForm3Formik.errors.ROITimeline && vaultCreateIdeaFundingNeededForm3Formik.touched.ROITimeline
+              ? vaultCreateIdeaFundingNeededForm3Formik.errors.ROITimeline
               : undefined
           }
         />
@@ -155,7 +156,7 @@ const VaultCreateIdeaFundingNeededFormPage3 = () => {
       </div>
       <div className="">
         <label htmlFor="" className=" flex gap-2 items-center">
-          <input type="checkbox" />
+          <input type="checkbox" checked={confirmTerms} onChange={() => setConfirmTerms(!confirmTerms)} />
           <p className=" leading-tight ">
             I accept the{" "}
             <Link href={"#"} className=" text-tib-blue font-bold">
@@ -173,15 +174,10 @@ const VaultCreateIdeaFundingNeededFormPage3 = () => {
         >
           Previous
         </button>
-        {/* <button
-          type="submit"
-          className="h-16 w-full rounded border-tib-blue border bg-tib-blue text-tib-white font-bold flex items-center justify-center"
-        >
-          Deposit Idea
-        </button> */}
         <FormSubmit
+          loading={isPending}
           text="Create Idea"
-          disabled={!isObjectEmpty(vaultCreateIdeaFundingNeededForm3Formik.errors) || isObjectEmpty(vaultCreateIdeaFundingNeededForm3Formik.touched)}
+          disabled={!isObjectEmpty(vaultCreateIdeaFundingNeededForm3Formik.errors) || !confirmTerms}
         />
       </div>
     </form>

@@ -7,48 +7,36 @@ import { UseMutationResult, useMutation, useQuery, useQueryClient } from "@tanst
 import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useMemo, useState } from "react";
 
-interface IVaultCreateIdeaFundingNeededContext {
+interface IVaultCreateIdeaForSaleContext {
   activeStep: "Idea" | "Additional Information" | "Cost";
   setActiveStep: React.Dispatch<React.SetStateAction<"Idea" | "Additional Information" | "Cost">>;
   steps: readonly ["Idea", "Additional Information", "Cost"];
-  formFields: IFundingNeededFields;
-  setFormFields: React.Dispatch<React.SetStateAction<IFundingNeededFields>>;
-  createIdeaFundingNeededMutation: UseMutationResult<IResponse<IIdea>, any, void, unknown>;
+  formFields: IForSaleFields;
+  setFormFields: React.Dispatch<React.SetStateAction<IForSaleFields>>;
+  createIdeaForSaleMutation: UseMutationResult<IResponse<IIdea>, any, void, unknown>;
   isPending: boolean;
 }
 
-export interface IFundingNeededFields {
+export interface IForSaleFields {
   title?: string;
   description?: string;
   categories?: string[];
   media?: File[];
+  additionalAttachments?: File[];
   role?: string;
   collaborators?: string[];
   location?: string;
   website?: string;
   socialMediaLinks?: { name: string; url: string }[];
   competitors?: string[];
-  valuation?: {
+  ideaCost?: {
     currency: string;
     value: number;
   };
-  executionCost?: {
-    currency: string;
-    value: number;
-  };
-  ROITimeline?: string;
-  projectedRevenue?: {
-    currency: string;
-    value: number;
-  };
-  fundingStage?: string;
-  totalMoneyRaised?: {
-    currency: string;
-    value: number;
-  };
+  sellingReason?: string;
 }
 
-export const VaultCreateIdeaFundingNeededContext = createContext({});
+export const VaultCreateIdeaForSaleContext = createContext({});
 
 export const VaultCreateIdeaFundingNeededProvider: React.FC<{
   children: React.ReactNode;
@@ -60,7 +48,7 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
   const steps = ["Idea", "Additional Information", "Cost"] as const;
   const [activeStep, setActiveStep] = useState<(typeof steps)[number]>("Idea");
 
-  const [formFields, setFormFields] = useState<IFundingNeededFields>({});
+  const [formFields, setFormFields] = useState<IForSaleFields>({});
 
   const { data: user } = useQuery({
     queryKey: ["user"],
@@ -69,9 +57,9 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
       return res.data;
     },
   });
-  const createIdeaFundingNeededMutation = useMutation({
+  const createIdeaForSaleMutation = useMutation({
     mutationFn: async () => {
-      const res = await ideaService.createIdeaFundingNeeded(user?.id || "", formFields);
+      const res = await ideaService.createIdeaForSale(user?.id || "", formFields);
       return res;
     },
     onSuccess: (data) => {
@@ -103,15 +91,14 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
       steps,
       formFields,
       setFormFields,
-      createIdeaFundingNeededMutation,
-      isPending: createIdeaFundingNeededMutation.isPending,
+      createIdeaForSaleMutation,
+      isPending: createIdeaForSaleMutation.isPending,
     }),
-    [activeStep, createIdeaFundingNeededMutation, formFields, steps]
+    [activeStep, createIdeaForSaleMutation, formFields, steps]
   );
-  return <VaultCreateIdeaFundingNeededContext.Provider value={value}>{children}</VaultCreateIdeaFundingNeededContext.Provider>;
+  return <VaultCreateIdeaForSaleContext.Provider value={value}>{children}</VaultCreateIdeaForSaleContext.Provider>;
 };
 
-const useVaultCreateFundingNeededIdea = (): IVaultCreateIdeaFundingNeededContext =>
-  useContext(VaultCreateIdeaFundingNeededContext) as IVaultCreateIdeaFundingNeededContext;
+const useVaultCreateForSaleIdea = (): IVaultCreateIdeaForSaleContext => useContext(VaultCreateIdeaForSaleContext) as IVaultCreateIdeaForSaleContext;
 
-export default useVaultCreateFundingNeededIdea;
+export default useVaultCreateForSaleIdea;

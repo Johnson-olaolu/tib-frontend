@@ -1,24 +1,25 @@
 import FormSelectSocialMedia from "@/components/form/form-select-social-media";
 import FormMultipleTextInput from "@/components/form/FormMultipleTextInput";
 import FormTextInput from "@/components/form/FormTextInput";
-import { vaultCreateIdeaFundingNeededForm2ValidationSchema } from "@/utils/validation";
+import { vaultCreateIdeaForSaleForm2ValidationSchema, vaultCreateIdeaFundingNeededForm2ValidationSchema } from "@/utils/validation";
 import { useFormik } from "formik";
 import React from "react";
 import FormSubmit from "@/components/form/FormSubmit";
 import { isObjectEmpty } from "@/utils/misc";
+import useVaultCreateForSaleIdea from "../../context";
 import FormMediaSelect from "@/components/form/form-media-select";
-import useVaultCreateFundingNeededIdea from "../../context";
 
-const VaultCreateIdeaFundingNeededFormPage2 = () => {
-  const { setActiveStep, formFields, setFormFields } = useVaultCreateFundingNeededIdea();
+const VaultCreateIdeaForSaleFormPage2 = () => {
+  const { setActiveStep, formFields, setFormFields } = useVaultCreateForSaleIdea();
   const vaultCreateIdeaFundingNeededForm2Formik = useFormik({
     initialValues: {
       location: formFields.location || "",
       website: formFields.website || "",
       socialMediaLinks: formFields.socialMediaLinks || ([] as { name: string; url: string }[]),
       competitors: formFields.competitors || ([] as string[]),
+      additionalAttachments: formFields.additionalAttachments || ([] as File[]),
     },
-    validationSchema: vaultCreateIdeaFundingNeededForm2ValidationSchema,
+    validationSchema: vaultCreateIdeaForSaleForm2ValidationSchema,
     onSubmit: (values) => {
       setFormFields({ ...formFields, ...values });
       setActiveStep("Cost");
@@ -67,6 +68,14 @@ const VaultCreateIdeaFundingNeededFormPage2 = () => {
           value={vaultCreateIdeaFundingNeededForm2Formik.values.competitors}
           placeholder="Add more competitors (Optional)"
         />
+        <FormMediaSelect
+          values={vaultCreateIdeaFundingNeededForm2Formik.values.additionalAttachments}
+          onChangeFiles={(files) => vaultCreateIdeaFundingNeededForm2Formik.setFieldValue("additionalAttachments", files)}
+          name="additionalAttachments"
+          label="Upload Media"
+          optional
+          dropLabel="Please attch anything else you would like to share with us. You can Drag or"
+        />
       </div>
       <div className=" mt-14 flex gap-9">
         <button
@@ -82,4 +91,4 @@ const VaultCreateIdeaFundingNeededFormPage2 = () => {
   );
 };
 
-export default VaultCreateIdeaFundingNeededFormPage2;
+export default VaultCreateIdeaForSaleFormPage2;

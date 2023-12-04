@@ -1,7 +1,7 @@
 import React from "react";
 import { VaultCreateIdeaFundingNeededProvider } from "./context";
 
-const VaultCreateIdeaFundingNeededLayout = ({ children }: { children: React.ReactNode }) => {
+const VaultCreateIdeaForSaleLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main
       className={`font-circularStd text-tib-primary h-screen overflow-hidden   `}
@@ -20,4 +20,4 @@ const VaultCreateIdeaFundingNeededLayout = ({ children }: { children: React.Reac
   );
 };
 
-export default VaultCreateIdeaFundingNeededLayout;
+export default VaultCreateIdeaForSaleLayout;

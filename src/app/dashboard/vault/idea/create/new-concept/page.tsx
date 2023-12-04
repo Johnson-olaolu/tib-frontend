@@ -3,11 +3,11 @@ import BackButton from "@/components/extras/BackButton";
 import React from "react";
 import PageTracker from "@/components/extras/PageTracker";
 import useVaultCreateForSaleIdea from "./context";
-import VaultCreateIdeaFundingNeededFormPage1 from "./components/form/page1";
+import VaultCreateIdeaNewConceptFormPage1 from "./components/form/page1";
 import VaultCreateIdeaFundingNeededFormPage2 from "./components/form/page2";
 import VaultCreateIdeaFundingNeededFormPage3 from "./components/form/page3";
 
-const VaultCreateIdeaFundingNeededPage = () => {
+const VaultCreateIdeaNewConceptPage = () => {
   const { steps, activeStep } = useVaultCreateForSaleIdea();
   return (
     <main className="">
@@ -22,7 +22,7 @@ const VaultCreateIdeaFundingNeededPage = () => {
         </div>
         <div className=" mt-12">
           {activeStep === "Idea" ? (
-            <VaultCreateIdeaFundingNeededFormPage1 />
+            <VaultCreateIdeaNewConceptFormPage1 />
           ) : activeStep === "Additional Information" ? (
             <VaultCreateIdeaFundingNeededFormPage2 />
           ) : activeStep === "Cost" ? (
@@ -37,4 +37,4 @@ const VaultCreateIdeaFundingNeededPage = () => {
   );
 };
 
-export default VaultCreateIdeaFundingNeededPage;
+export default VaultCreateIdeaNewConceptPage;

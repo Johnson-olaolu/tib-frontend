@@ -1,13 +1,14 @@
 import FormSelectSocialMedia from "@/components/form/form-select-social-media";
 import FormMultipleTextInput from "@/components/form/FormMultipleTextInput";
 import FormTextInput from "@/components/form/FormTextInput";
-import { vaultCreateIdeaFundingNeededForm2ValidationSchema } from "@/utils/validation";
+import { vaultCreateIdeaFundingNeededForm2ValidationSchema, vaultCreateIdeaNewConceptForm2ValidationSchema } from "@/utils/validation";
 import { useFormik } from "formik";
 import React from "react";
 import FormSubmit from "@/components/form/FormSubmit";
 import { isObjectEmpty } from "@/utils/misc";
 import FormMediaSelect from "@/components/form/form-media-select";
 import useVaultCreateFundingNeededIdea from "../../context";
+import FormMultipleSelect from "@/components/form/FormMultipleSelect";
 
 const VaultCreateIdeaFundingNeededFormPage2 = () => {
   const { setActiveStep, formFields, setFormFields } = useVaultCreateFundingNeededIdea();
@@ -17,8 +18,9 @@ const VaultCreateIdeaFundingNeededFormPage2 = () => {
       website: formFields.website || "",
       socialMediaLinks: formFields.socialMediaLinks || ([] as { name: string; url: string }[]),
       competitors: formFields.competitors || ([] as string[]),
+      need: formFields.need || "",
     },
-    validationSchema: vaultCreateIdeaFundingNeededForm2ValidationSchema,
+    validationSchema: vaultCreateIdeaNewConceptForm2ValidationSchema,
     onSubmit: (values) => {
       setFormFields({ ...formFields, ...values });
       setActiveStep("Cost");
@@ -66,6 +68,20 @@ const VaultCreateIdeaFundingNeededFormPage2 = () => {
           setValue={(data) => vaultCreateIdeaFundingNeededForm2Formik.setFieldValue("competitors", data)}
           value={vaultCreateIdeaFundingNeededForm2Formik.values.competitors}
           placeholder="Add more competitors (Optional)"
+        />
+        <FormMultipleSelect
+          name="need"
+          label="I’m Seeking"
+          constant="Need"
+          onChange={vaultCreateIdeaFundingNeededForm2Formik.handleChange}
+          value={vaultCreateIdeaFundingNeededForm2Formik.values.need}
+          setValue={(value) => vaultCreateIdeaFundingNeededForm2Formik.setFieldValue("need", value)}
+          onBlur={vaultCreateIdeaFundingNeededForm2Formik.handleBlur}
+          error={
+            vaultCreateIdeaFundingNeededForm2Formik.errors.need && vaultCreateIdeaFundingNeededForm2Formik.touched.need
+              ? vaultCreateIdeaFundingNeededForm2Formik.errors.need
+              : undefined
+          }
         />
       </div>
       <div className=" mt-14 flex gap-9">

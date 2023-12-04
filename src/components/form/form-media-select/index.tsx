@@ -13,10 +13,11 @@ export interface IFormText extends ComponentProps<"input"> {
   allowMultiple?: boolean;
   values?: File[];
   onChangeFiles: (files: File[]) => void;
+  dropLabel?: string;
 }
 
 const FormMediaSelect: React.FC<IFormText> = (props) => {
-  const { error, name, label, required, optional, disabled, allowMultiple = false, onChangeFiles, values } = props;
+  const { error, name, label, required, optional, disabled, allowMultiple = false, onChangeFiles, values, dropLabel } = props;
   const dragDropLayer = useRef<HTMLDivElement>(null);
   const [dragOver, setDragOver] = useState(false);
 
@@ -89,7 +90,10 @@ const FormMediaSelect: React.FC<IFormText> = (props) => {
             {!dragOver ? (
               <div className="flex flex-col gap-4 items-center w-56">
                 <IoFolderOpenSharp size={32} className=" text-tib-purple" />
-                <p className="text-center text-xs text-tib-primary opacity-70">Drag your videos, pictures and documents here to start uploading or</p>
+                <p className="text-center text-xs text-tib-primary opacity-70">
+                  {" "}
+                  {dropLabel || "Drag your videos, pictures and documents here to start uploading or"}
+                </p>
                 <button
                   className="rounded py-2 px-3 border bg-white border-tib-blue text-tib-blue text-sm"
                   onClick={(e) => {

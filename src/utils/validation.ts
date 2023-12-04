@@ -99,6 +99,7 @@ export const createIdeaSimpleValidationSchema = yup.object({
   collaborators: yup.array().of(yup.string()),
 });
 
+//funding needed
 export const vaultCreateIdeaFundingNeededForm1ValidationSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().min(150).required(),
@@ -109,7 +110,7 @@ export const vaultCreateIdeaFundingNeededForm1ValidationSchema = yup.object({
 
 export const vaultCreateIdeaFundingNeededForm2ValidationSchema = yup.object({
   location: yup.string().required(),
-  website: yup.string().required(),
+  website: yup.string(),
   socialMedia: yup.array().of(
     yup.object({
       name: yup.string(),
@@ -121,9 +122,61 @@ export const vaultCreateIdeaFundingNeededForm2ValidationSchema = yup.object({
 
 export const vaultCreateIdeaFundingNeededForm3ValidationSchema = yup.object({
   valuation: amountWithCurrencySchema,
-  costOfExecution: amountWithCurrencySchema,
-  estimatedTimeline: yup.string().required(),
+  executionCost: amountWithCurrencySchema,
+  ROITimeline: yup.string().required(),
   projectedRevenue: amountWithCurrencySchema,
   fundingStage: yup.string().required(),
   totalMoneyRaised: amountWithCurrencySchema,
+});
+
+//for sale
+export const vaultCreateIdeaForSaleForm1ValidationSchema = yup.object({
+  title: yup.string().required(),
+  description: yup.string().min(150).required(),
+  category: yup.array().of(yup.string()),
+  role: yup.string().required(),
+  collaborators: yup.array().of(yup.string()),
+});
+
+export const vaultCreateIdeaForSaleForm2ValidationSchema = yup.object({
+  location: yup.string().required(),
+  website: yup.string(),
+  socialMedia: yup.array().of(
+    yup.object({
+      name: yup.string(),
+      url: yup.string(),
+    })
+  ),
+  competitors: yup.array().of(yup.string()),
+});
+
+export const vaultCreateIdeaForSaleForm3ValidationSchema = yup.object({
+  ideaCost: amountWithCurrencySchema,
+  sellingReason: yup.string().required(),
+});
+
+//for sale
+export const vaultCreateIdeaNewConceptForm1ValidationSchema = yup.object({
+  title: yup.string().required(),
+  description: yup.string().min(150).required(),
+  category: yup.array().of(yup.string()),
+  role: yup.string().required(),
+  collaborators: yup.array().of(yup.string()),
+});
+
+export const vaultCreateIdeaNewConceptForm2ValidationSchema = yup.object({
+  location: yup.string().required(),
+  website: yup.string(),
+  socialMedia: yup.array().of(
+    yup.object({
+      name: yup.string(),
+      url: yup.string(),
+    })
+  ),
+  competitors: yup.array().of(yup.string()),
+  need: yup.string().required(),
+});
+
+export const vaultCreateIdeaNewConceptForm3ValidationSchema = yup.object({
+  executionCost: amountWithCurrencySchema,
 });

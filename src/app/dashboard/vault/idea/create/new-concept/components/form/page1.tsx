@@ -5,12 +5,12 @@ import FormTextInput from "@/components/form/FormTextInput";
 import FormWYSIWYGInput from "@/components/form/FormWYSIWYGInput";
 import FormMediaSelect from "@/components/form/form-media-select";
 import { isObjectEmpty } from "@/utils/misc";
-import { vaultCreateIdeaFundingNeededForm1ValidationSchema } from "@/utils/validation";
+import { vaultCreateIdeaFundingNeededForm1ValidationSchema, vaultCreateIdeaNewConceptForm1ValidationSchema } from "@/utils/validation";
 import { useFormik } from "formik";
 import React from "react";
 import useVaultCreateFundingNeededIdea from "../../context";
 
-const VaultCreateIdeaFundingNeededFormPage1 = () => {
+const VaultCreateIdeaNewConceptFormPage1 = () => {
   const { setActiveStep, formFields, setFormFields } = useVaultCreateFundingNeededIdea();
   const vaultCreateIdeaFundingNeededForm1Formik = useFormik({
     initialValues: {
@@ -21,7 +21,7 @@ const VaultCreateIdeaFundingNeededFormPage1 = () => {
       collaborators: formFields.collaborators || ([] as string[]),
       media: formFields.media || ([] as File[]),
     },
-    validationSchema: vaultCreateIdeaFundingNeededForm1ValidationSchema,
+    validationSchema: vaultCreateIdeaNewConceptForm1ValidationSchema,
     onSubmit: (values) => {
       setFormFields({ ...formFields, ...values });
       setActiveStep("Additional Information");
@@ -124,4 +124,4 @@ const VaultCreateIdeaFundingNeededFormPage1 = () => {
   );
 };
 
-export default VaultCreateIdeaFundingNeededFormPage1;
+export default VaultCreateIdeaNewConceptFormPage1;
