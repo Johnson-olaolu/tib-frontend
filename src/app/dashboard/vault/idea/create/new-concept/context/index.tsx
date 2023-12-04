@@ -5,7 +5,7 @@ import { IIdea, IResponse } from "@/services/types";
 import userService from "@/services/user.service";
 import { UseMutationResult, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 interface IVaultCreateIdeaNewConceptContext {
   activeStep: "Idea" | "Additional Information" | "Cost";
@@ -15,6 +15,7 @@ interface IVaultCreateIdeaNewConceptContext {
   setFormFields: React.Dispatch<React.SetStateAction<INewConceptFields>>;
   createIdeaNewConceptMutation: UseMutationResult<IResponse<IIdea>, any, void, unknown>;
   isPending: boolean;
+  saveForLater: () => void;
 }
 
 export interface INewConceptFields {
@@ -49,6 +50,33 @@ export const VaultCreateIdeaNewConceptProvider: React.FC<{
 
   const [formFields, setFormFields] = useState<INewConceptFields>({});
 
+  const saveForLater = () => {
+    localStorage.setItem(
+      "savedIdeaFundingNeeded",
+      JSON.stringify({
+        step: activeStep,
+        fields: formFields,
+      })
+    );
+    openToast({
+      type: "info",
+      text: "Idea Saved for later",
+    });
+    router.push(`/dashboard/vault/home`);
+  };
+
+  useEffect(() => {
+    const savedData: {
+      step: "Idea" | "Additional Information" | "Cost";
+      fields: INewConceptFields;
+    } = JSON.parse(localStorage.getItem("savedIdeaNewConcept") || "0");
+    if (savedData) {
+      setFormFields({ ...savedData.fields });
+      setActiveStep(savedData.step);
+      localStorage.removeItem("savedIdeaNewConcept");
+    }
+  }, []);
+
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -58,7 +86,7 @@ export const VaultCreateIdeaNewConceptProvider: React.FC<{
   });
   const createIdeaNewConceptMutation = useMutation({
     mutationFn: async () => {
-      const res = await ideaService.createIdeaFundingNeeded(user?.id || "", formFields);
+      const res = await ideaService.createIdeaNewConcept(user?.id || "", formFields);
       return res;
     },
     onSuccess: (data) => {
@@ -92,6 +120,7 @@ export const VaultCreateIdeaNewConceptProvider: React.FC<{
       setFormFields,
       createIdeaNewConceptMutation,
       isPending: createIdeaNewConceptMutation.isPending,
+      saveForLater,
     }),
     [activeStep, createIdeaNewConceptMutation, formFields, steps]
   );

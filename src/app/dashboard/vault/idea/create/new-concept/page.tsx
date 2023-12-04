@@ -8,7 +8,7 @@ import VaultCreateIdeaFundingNeededFormPage2 from "./components/form/page2";
 import VaultCreateIdeaFundingNeededFormPage3 from "./components/form/page3";
 
 const VaultCreateIdeaNewConceptPage = () => {
-  const { steps, activeStep } = useVaultCreateForSaleIdea();
+  const { steps, activeStep, formFields, saveForLater } = useVaultCreateForSaleIdea();
   return (
     <main className="">
       <BackButton />
@@ -30,7 +30,9 @@ const VaultCreateIdeaNewConceptPage = () => {
           ) : null}
         </div>
         <div className=" flex  justify-center mt-12">
-          <button className=" text-tib-blue font-bold text-xl">Save for Later</button>
+          <button className=" text-tib-blue font-bold text-xl" onClick={() => saveForLater()}>
+            Save for Later
+          </button>
         </div>
       </div>
     </main>

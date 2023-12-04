@@ -6,9 +6,10 @@ import useVaultCreateForSaleIdea from "./context";
 import VaultCreateIdeaFundingNeededFormPage1 from "./components/form/page1";
 import VaultCreateIdeaFundingNeededFormPage2 from "./components/form/page2";
 import VaultCreateIdeaFundingNeededFormPage3 from "./components/form/page3";
+import { isObjectEmpty } from "@/utils/misc";
 
 const VaultCreateIdeaFundingNeededPage = () => {
-  const { steps, activeStep } = useVaultCreateForSaleIdea();
+  const { steps, activeStep, saveForLater, formFields } = useVaultCreateForSaleIdea();
   return (
     <main className="">
       <BackButton />
@@ -30,7 +31,13 @@ const VaultCreateIdeaFundingNeededPage = () => {
           ) : null}
         </div>
         <div className=" flex  justify-center mt-12">
-          <button className=" text-tib-blue font-bold text-xl">Save for Later</button>
+          <button
+            disabled={isObjectEmpty(formFields)}
+            onClick={() => saveForLater()}
+            className=" text-tib-blue font-bold text-xl disabled:opacity-50"
+          >
+            Save for Later
+          </button>
         </div>
       </div>
     </main>

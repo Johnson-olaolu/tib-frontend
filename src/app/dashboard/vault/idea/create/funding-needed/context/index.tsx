@@ -5,7 +5,7 @@ import { IIdea, IResponse } from "@/services/types";
 import userService from "@/services/user.service";
 import { UseMutationResult, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 interface IVaultCreateIdeaFundingNeededContext {
   activeStep: "Idea" | "Additional Information" | "Cost";
@@ -15,6 +15,7 @@ interface IVaultCreateIdeaFundingNeededContext {
   setFormFields: React.Dispatch<React.SetStateAction<IFundingNeededFields>>;
   createIdeaFundingNeededMutation: UseMutationResult<IResponse<IIdea>, any, void, unknown>;
   isPending: boolean;
+  saveForLater: () => void;
 }
 
 export interface IFundingNeededFields {
@@ -62,6 +63,33 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
 
   const [formFields, setFormFields] = useState<IFundingNeededFields>({});
 
+  const saveForLater = () => {
+    localStorage.setItem(
+      "savedIdeaFundingNeeded",
+      JSON.stringify({
+        step: activeStep,
+        fields: formFields,
+      })
+    );
+    openToast({
+      type: "info",
+      text: "Idea Saved for later",
+    });
+    router.push(`/dashboard/vault/home`);
+  };
+
+  useEffect(() => {
+    const savedData: {
+      step: "Idea" | "Additional Information" | "Cost";
+      fields: IFundingNeededFields;
+    } = JSON.parse(localStorage.getItem("savedIdeaFundingNeeded") || "0");
+    if (savedData) {
+      setFormFields({ ...savedData.fields });
+      setActiveStep(savedData.step);
+      localStorage.removeItem("savedIdeaFundingNeeded");
+    }
+  }, []);
+
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -105,6 +133,7 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
       setFormFields,
       createIdeaFundingNeededMutation,
       isPending: createIdeaFundingNeededMutation.isPending,
+      saveForLater,
     }),
     [activeStep, createIdeaFundingNeededMutation, formFields, steps]
   );

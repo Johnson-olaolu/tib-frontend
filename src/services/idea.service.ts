@@ -2,6 +2,7 @@ import https from "@/utils/https";
 import { IComment, IIdea, IIdeaConstant, IIdeaQuery, ILike, IResponse, IShare, LIkeTypeEnum } from "./types";
 import { IFundingNeededFields } from "@/app/dashboard/vault/idea/create/funding-needed/context";
 import { IForSaleFields } from "@/app/dashboard/vault/idea/create/for-sale/context";
+import { INewConceptFields } from "@/app/dashboard/vault/idea/create/new-concept/context";
 
 const createIdeaSimple = async (data: {
   userId: string;
@@ -109,6 +110,43 @@ const createIdeaForSale = async (userId: string, data: IForSaleFields): Promise<
   });
 };
 
+const createIdeaNewConcept = async (userId: string, data: INewConceptFields): Promise<IResponse<IIdea>> => {
+  var formData = new FormData();
+
+  formData.append("userId", userId);
+  formData.append("title", data?.title || "");
+  formData.append("description", data?.description || "");
+  for (let i = 0; i < data.categories!.length; i++) {
+    formData.append("categories[]", data.categories![i]);
+  }
+  for (let i = 0; i < data.media!.length; i++) {
+    formData.append("media[]", data.media![i]);
+  }
+  formData.append("role", data?.role || "");
+  for (let i = 0; i < data.collaborators!.length; i++) {
+    formData.append("collaborators[]", data.collaborators![i]);
+  }
+  data.location && formData.append("location", data.location);
+  data.website && formData.append("website", data.website);
+
+  for (let i = 0; i < data.socialMediaLinks!.length; i++) {
+    formData.append("socialMediaLinks[][name]", data.socialMediaLinks![i].name);
+    formData.append("socialMediaLinks[][url]", data.socialMediaLinks![i].url);
+  }
+  for (let i = 0; i < data.competitors!.length; i++) {
+    formData.append("competitors[]", data.competitors![i]);
+  }
+  formData.append("executionCost[currency]", data?.executionCost?.currency || "");
+  formData.append("executionCost[value]", data?.executionCost?.value.toString() || "");
+
+  formData.append("seeking[value]", data?.need || "");
+
+  return await https.postForm({
+    url: `/idea/new-concept`,
+    body: formData,
+  });
+};
+
 const queryIdeaSimple = async (query: IIdeaQuery): Promise<IResponse<IIdea[]>> => {
   return await https.get({
     url: "/idea/simple/query",
@@ -170,6 +208,7 @@ const ideaService = {
   unShare,
   createIdeaSimple,
   createIdeaFundingNeeded,
+  createIdeaNewConcept,
   createIdeaForSale,
   queryIdeaSimple,
   comment,

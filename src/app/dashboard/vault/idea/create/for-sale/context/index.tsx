@@ -5,7 +5,7 @@ import { IIdea, IResponse } from "@/services/types";
 import userService from "@/services/user.service";
 import { UseMutationResult, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 interface IVaultCreateIdeaForSaleContext {
   activeStep: "Idea" | "Additional Information" | "Cost";
@@ -15,6 +15,7 @@ interface IVaultCreateIdeaForSaleContext {
   setFormFields: React.Dispatch<React.SetStateAction<IForSaleFields>>;
   createIdeaForSaleMutation: UseMutationResult<IResponse<IIdea>, any, void, unknown>;
   isPending: boolean;
+  saveForLater: () => void;
 }
 
 export interface IForSaleFields {
@@ -50,6 +51,34 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
 
   const [formFields, setFormFields] = useState<IForSaleFields>({});
 
+  const saveForLater = () => {
+    localStorage.setItem(
+      "savedIdeaForSale",
+      JSON.stringify({
+        step: activeStep,
+        fields: formFields,
+      })
+    );
+    openToast({
+      type: "info",
+      text: "Idea Saved for later",
+    });
+    router.push(`/dashboard/vault/home`);
+  };
+
+  useEffect(() => {
+    const savedData: {
+      step: "Idea" | "Additional Information" | "Cost";
+      fields: IForSaleFields;
+    } = JSON.parse(localStorage.getItem("savedIdeaForSale") || "0");
+    console.log(savedData);
+    if (savedData) {
+      setFormFields({ ...savedData.fields });
+      setActiveStep(savedData.step);
+      localStorage.removeItem("savedIdeaForSale");
+    }
+  }, []);
+
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -57,6 +86,7 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
       return res.data;
     },
   });
+
   const createIdeaForSaleMutation = useMutation({
     mutationFn: async () => {
       const res = await ideaService.createIdeaForSale(user?.id || "", formFields);
@@ -93,6 +123,7 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
       setFormFields,
       createIdeaForSaleMutation,
       isPending: createIdeaForSaleMutation.isPending,
+      saveForLater,
     }),
     [activeStep, createIdeaForSaleMutation, formFields, steps]
   );
