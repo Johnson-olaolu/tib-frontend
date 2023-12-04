@@ -10,22 +10,34 @@ interface IVaultCreateIdeaFundingNeededContext {
 }
 
 export interface IFundingNeededFields {
-  title: string;
-  description: string;
-  category: never[];
-  media: never[];
-  role: string;
-  collaborators: never[];
-  location: string;
-  website: string;
-  socialMediaLinks: never[];
-  competitors: never[];
-  valuation: null;
-  costOfExecution: null;
-  estimatedRoiTimeline: string;
-  projectedRevenue: null;
-  fundingStage: string;
-  totalMoneyRaised: string;
+  title?: string;
+  description?: string;
+  categories?: string[];
+  media?: File[];
+  role?: string;
+  collaborators?: string[];
+  location?: string;
+  website?: string;
+  socialMediaLinks?: { name: string; url: string }[];
+  competitors?: string[];
+  valuation?: {
+    currency: string;
+    value: number;
+  };
+  costOfExecution?: {
+    currency: string;
+    value: number;
+  };
+  estimatedRoiTimeline?: string;
+  projectedRevenue?: {
+    currency: string;
+    value: number;
+  };
+  fundingStage?: string;
+  totalMoneyRaised?: {
+    currency: string;
+    value: number;
+  };
 }
 
 export const VaultCreateIdeaFundingNeededContext = createContext({});
@@ -37,24 +49,7 @@ export const VaultCreateIdeaFundingNeededProvider: React.FC<{
   const steps = ["Idea", "Additional Information", "Cost"] as const;
   const [activeStep, setActiveStep] = useState<(typeof steps)[number]>("Idea");
 
-  const [formFields, setFormFields] = useState<IFundingNeededFields>({
-    title: "",
-    description: "",
-    category: [],
-    media: [],
-    role: "",
-    collaborators: [],
-    location: "",
-    website: "",
-    socialMediaLinks: [],
-    competitors: [],
-    valuation: null,
-    costOfExecution: null,
-    estimatedRoiTimeline: "",
-    projectedRevenue: null,
-    fundingStage: "",
-    totalMoneyRaised: "",
-  });
+  const [formFields, setFormFields] = useState<IFundingNeededFields>({});
 
   const value = useMemo(
     () => ({

@@ -105,7 +105,7 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
           {type == "interest" &&
             values?.map((value) => (
               <div key={value} className="rounded p-2 flex items-center gap-2 bg-tib-blue text-tib-white flex-shrink-0">
-                <span className=" text-xs">{data.find((i) => i.name === value)?.name}</span>
+                <span className=" text-xs">{(queriedData as ICategory[])?.find((i) => i.name === value)?.name}</span>
                 <FiX role="button" onClick={() => handleRemove(value)} />
               </div>
             ))}
@@ -113,9 +113,9 @@ const FormSelectWithSearch: React.FC<IFormSelectWithSearch> = (props) => {
             values?.map((value) => (
               <div key={value} className="rounded p-2 flex items-center gap-2 bg-tib-blue text-tib-white flex-shrink-0">
                 <span className=" text-xs">
-                  {(data as IUser[]).find((i) => i.id === value)?.profile?.firstName +
+                  {(queriedData as IUser[]).find((i) => i.id === value)?.profile?.firstName +
                     " " +
-                    (data as IUser[]).find((i) => i.id === value)?.profile?.lastName}{" "}
+                    (queriedData as IUser[]).find((i) => i.id === value)?.profile?.lastName}{" "}
                 </span>
                 <FiX role="button" onClick={() => handleRemove(value)} />
               </div>

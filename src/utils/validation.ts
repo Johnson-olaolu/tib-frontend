@@ -109,7 +109,7 @@ export const vaultCreateIdeaFundingNeededForm1ValidationSchema = yup.object({
 
 export const vaultCreateIdeaFundingNeededForm2ValidationSchema = yup.object({
   location: yup.string().required(),
-  website: yup.string().min(150).required(),
+  website: yup.string().required(),
   socialMedia: yup.array().of(
     yup.object({
       name: yup.string(),
@@ -117,4 +117,13 @@ export const vaultCreateIdeaFundingNeededForm2ValidationSchema = yup.object({
     })
   ),
   competitors: yup.array().of(yup.string()),
+});
+
+export const vaultCreateIdeaFundingNeededForm3ValidationSchema = yup.object({
+  valuation: amountWithCurrencySchema,
+  costOfExecution: amountWithCurrencySchema,
+  estimatedTimeline: yup.string().required(),
+  projectedRevenue: amountWithCurrencySchema,
+  fundingStage: yup.string().required(),
+  totalMoneyRaised: amountWithCurrencySchema,
 });

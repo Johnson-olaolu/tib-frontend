@@ -11,19 +11,19 @@ import React from "react";
 import useVaultCreateIdeaDepositIdea from "../../context";
 
 const VaultCreateIdeaFundingNeededFormPage1 = () => {
-  const { setActiveStep } = useVaultCreateIdeaDepositIdea();
+  const { setActiveStep, formFields, setFormFields } = useVaultCreateIdeaDepositIdea();
   const vaultCreateIdeaFundingNeededForm1Formik = useFormik({
     initialValues: {
-      title: "",
-      description: "",
-      role: "",
-      categories: [] as string[],
-      collaborators: [] as string[],
-      media: [] as File[],
+      title: formFields.title || "",
+      description: formFields.description || "",
+      role: formFields.role || "",
+      categories: formFields.categories || ([] as string[]),
+      collaborators: formFields.collaborators || ([] as string[]),
+      media: formFields.media || ([] as File[]),
     },
     validationSchema: vaultCreateIdeaFundingNeededForm1ValidationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      setFormFields({ ...formFields, ...values });
       setActiveStep("Additional Information");
     },
   });
@@ -117,8 +117,8 @@ const VaultCreateIdeaFundingNeededFormPage1 = () => {
       </div>
       <FormSubmit
         //   loading={createIdeaSimpleMutation.isPending}
-        text="Share Idea"
-        disabled={!isObjectEmpty(vaultCreateIdeaFundingNeededForm1Formik.errors) || isObjectEmpty(vaultCreateIdeaFundingNeededForm1Formik.touched)}
+        text="Next"
+        disabled={!isObjectEmpty(vaultCreateIdeaFundingNeededForm1Formik.errors)}
       />
     </form>
   );

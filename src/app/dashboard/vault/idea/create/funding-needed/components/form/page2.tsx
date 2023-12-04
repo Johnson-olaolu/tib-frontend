@@ -4,18 +4,23 @@ import FormTextInput from "@/components/form/FormTextInput";
 import { vaultCreateIdeaFundingNeededForm2ValidationSchema } from "@/utils/validation";
 import { useFormik } from "formik";
 import React from "react";
+import useVaultCreateIdeaDepositIdea from "../../context";
+import FormSubmit from "@/components/form/FormSubmit";
+import { isObjectEmpty } from "@/utils/misc";
 
 const VaultCreateIdeaFundingNeededFormPage2 = () => {
+  const { setActiveStep, formFields, setFormFields } = useVaultCreateIdeaDepositIdea();
   const vaultCreateIdeaFundingNeededForm2Formik = useFormik({
     initialValues: {
-      location: "",
-      website: "",
-      socialMediaLinks: [] as { name: string; url: string }[],
-      competitors: [] as string[],
+      location: formFields.location || "",
+      website: formFields.website || "",
+      socialMediaLinks: formFields.socialMediaLinks || ([] as { name: string; url: string }[]),
+      competitors: formFields.competitors || ([] as string[]),
     },
     validationSchema: vaultCreateIdeaFundingNeededForm2ValidationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      setFormFields({ ...formFields, ...values });
+      setActiveStep("Cost");
     },
   });
   return (
@@ -38,7 +43,7 @@ const VaultCreateIdeaFundingNeededFormPage2 = () => {
         <FormTextInput
           onChange={vaultCreateIdeaFundingNeededForm2Formik.handleChange}
           onBlur={vaultCreateIdeaFundingNeededForm2Formik.handleBlur}
-          value={vaultCreateIdeaFundingNeededForm2Formik.values.location}
+          value={vaultCreateIdeaFundingNeededForm2Formik.values.website}
           placeholder="Give a website"
           name="website"
           label="Website"
@@ -64,17 +69,13 @@ const VaultCreateIdeaFundingNeededFormPage2 = () => {
       </div>
       <div className=" mt-14 flex gap-9">
         <button
+          onClick={() => setActiveStep("Idea")}
           type="button"
           className=" h-16 w-full rounded border-tib-blue border bg-tib-white text-tib-blue font-bold flex items-center justify-center"
         >
           Previous
         </button>
-        <button
-          type="submit"
-          className="h-16 w-full rounded border-tib-blue border bg-tib-blue text-tib-white font-bold flex items-center justify-center"
-        >
-          Next
-        </button>
+        <FormSubmit text="Next" disabled={!isObjectEmpty(vaultCreateIdeaFundingNeededForm2Formik.errors)} />
       </div>
     </form>
   );
