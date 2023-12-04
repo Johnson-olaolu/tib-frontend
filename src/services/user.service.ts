@@ -1,5 +1,4 @@
 import https from "@/utils/https";
-import qs from "qs";
 import { FollowStatusEnum, IFollow, IIdea, ILike, IProfile, IResponse, IShare, IUser } from "./types";
 
 const getUserDetails = async (): Promise<IResponse<IUser>> => {

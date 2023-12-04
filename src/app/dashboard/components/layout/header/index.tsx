@@ -22,13 +22,13 @@ const DashbaordHeader = () => {
   });
 
   const onClickAccessVault = () => {
-    router.push(`/dashboard/vault/home`);
+    // router.push(`/dashboard/vault/home`);
 
-    // if (user?.planName === "Free") {
-    //   router.push(`/dashboard/vault/access-vault`);
-    // } else {
-    //   router.push(`/dashboard/vault/home`);
-    // }
+    if (user?.planName === "Free") {
+      router.push(`/dashboard/vault/access-vault`);
+    } else {
+      router.push(`/dashboard/vault/home`);
+    }
   };
   return (
     <header className="  py-7 px-12 bg-white">

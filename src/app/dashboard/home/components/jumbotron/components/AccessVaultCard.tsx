@@ -1,7 +1,25 @@
-import Link from "next/link";
+import userService from "@/services/user.service";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const AccessVaultCard = () => {
+  const router = useRouter();
+
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await userService.getUserDetails();
+      return res.data;
+    },
+  });
+  const onClickAccessVault = () => {
+    if (user?.planName === "Free") {
+      router.push(`/dashboard/vault/access-vault`);
+    } else {
+      router.push(`/dashboard/vault/home`);
+    }
+  };
   return (
     <div
       className=" h-60 w-[262px] rounded p-6 flex flex-col justify-between items-center"
@@ -29,9 +47,12 @@ const AccessVaultCard = () => {
         </defs>
       </svg>
 
-      <Link href={"#"} className=" py-[10px] px-4 w-32 bg-tib-blue text-tib-white rounded text-sm text-center inline-block">
+      <button
+        onClick={() => onClickAccessVault()}
+        className=" py-[10px] px-4 w-32 bg-tib-blue text-tib-white rounded text-sm text-center inline-block"
+      >
         Access
-      </Link>
+      </button>
     </div>
   );
 };

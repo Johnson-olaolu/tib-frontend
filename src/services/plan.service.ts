@@ -7,7 +7,14 @@ const getPlans = async (): Promise<IResponse<IPlan[]>> => {
   });
 };
 
+const getSinglePlan = async (planId: string): Promise<IResponse<IPlan>> => {
+  return await https.get({
+    url: `/plan/${planId}`,
+  });
+};
+
 const planService = {
   getPlans,
+  getSinglePlan,
 };
 export default planService;
