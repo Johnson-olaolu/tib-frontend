@@ -13,7 +13,7 @@ const ViewMediaBadge: React.FC<IViewMediaBadge> = (props) => {
   return (
     <div className=" p-3  rounded flex items-start shadow border border-[#FCF9F9] w-40">
       <FileIconDispatcher file={file} size={20} className=" text-tib-blue shrink-0" />
-      <div className="ml-2 mr-2 flex flex-col  grow">
+      <div className="ml-2 mr-2 flex flex-col  grow" style={{ maxWidth: "calc(100% - 50px)" }}>
         <p className=" text-xs line-clamp-2 break-words" title={file.name}>
           {file.name}
         </p>
