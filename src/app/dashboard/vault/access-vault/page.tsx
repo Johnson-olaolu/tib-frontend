@@ -5,17 +5,17 @@ import { BiArrowBack } from "react-icons/bi";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useQueryClient, useQuery } from "@tanstack/react-query";
 import planService from "@/services/plan.service";
-import { useRouter } from "next13-progressbar";
 import BackButton from "@/components/extras/BackButton";
+import useModal from "@/context/modal";
 
 const DashboardVaultAccessVault = () => {
   const queryClient = useQueryClient();
-
+  const { openModal } = useModal();
   const { data } = useQuery({
     queryKey: ["plan"],
     queryFn: planService.getPlans,
   });
-  const router = useRouter();
+
   return (
     <main className="">
       <BackButton goBack />
@@ -61,7 +61,14 @@ const DashboardVaultAccessVault = () => {
                       ))}
                     </ul>
                     {plan.active ? (
-                      <button className=" h-16 w-full text-tib-white bg-tib-blue rounded">Select</button>
+                      <button
+                        onClick={() => {
+                          openModal("upgrade-plan", plan.id);
+                        }}
+                        className=" h-16 w-full text-tib-white bg-tib-blue rounded"
+                      >
+                        Select
+                      </button>
                     ) : (
                       <button disabled className=" h-16 w-full text-tib-white bg-tib-blue rounded disabled:opacity-50">
                         Not Available

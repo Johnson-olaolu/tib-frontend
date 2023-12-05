@@ -1,4 +1,4 @@
-export type ModalTypes = "confirm-transaction" | "vault-create-idea";
+export type ModalTypes = "confirm-transaction" | "vault-create-idea" | "upgrade-plan" | "upgrade-plan-success";
 
 export interface IModalContext {
   openModal: (type: ModalTypes, payload?: any) => void;

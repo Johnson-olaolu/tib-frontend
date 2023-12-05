@@ -1,5 +1,5 @@
 import https from "@/utils/https";
-import { FollowStatusEnum, IFollow, IIdea, ILike, IProfile, IResponse, IShare, IUser } from "./types";
+import { FollowStatusEnum, IFollow, IIdea, ILike, IPlan, IProfile, IResponse, IShare, IUser } from "./types";
 
 const getUserDetails = async (): Promise<IResponse<IUser>> => {
   return await https.get({
@@ -130,6 +130,18 @@ const handleFollowRequest = async ({
   });
 };
 
+const upgradeUserPlan = async (
+  userId: string,
+  data: {
+    plan: string;
+  }
+): Promise<IResponse<IUser>> => {
+  return await https.patch({
+    url: `/user/${userId}/upgrade-plan`,
+    body: { ...data, userId },
+  });
+};
+
 const userService = {
   getUserDetails,
   getUserIdeaDetails,
@@ -142,6 +154,7 @@ const userService = {
   unFollowUser,
   handleFollowRequest,
   updateBackgroundPicture,
+  upgradeUserPlan,
   findOneUser,
 };
 

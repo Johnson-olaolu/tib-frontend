@@ -2,6 +2,8 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 import { IModalContext, ModalTypes } from "./types";
 import ConfirmTransactionModal from "@/components/modal/extra/ConfirmTransactionModal";
 import VaultCreateIdeaModal from "@/components/modal/vault-create-idea";
+import UpgradePlanModal from "@/components/modal/upgrade-plan";
+import UpgradePlanSuccessModal from "@/components/modal/upgrade-plan-success";
 
 const ModalContext = createContext({});
 
@@ -29,6 +31,10 @@ export const ModalContextProvider: React.FC<{
         return <ConfirmTransactionModal onClose={closeModal} showModal={showModal} data={data} />;
       case "vault-create-idea":
         return <VaultCreateIdeaModal onClose={closeModal} showModal={showModal} data={data} />;
+      case "upgrade-plan-success":
+        return <UpgradePlanSuccessModal onClose={closeModal} showModal={showModal} data={data} />;
+      case "upgrade-plan":
+        return <UpgradePlanModal onClose={closeModal} showModal={showModal} data={data} />;
       default:
         return null;
     }
