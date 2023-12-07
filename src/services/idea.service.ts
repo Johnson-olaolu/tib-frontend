@@ -139,7 +139,7 @@ const createIdeaNewConcept = async (userId: string, data: INewConceptFields): Pr
   formData.append("executionCost[currency]", data?.executionCost?.currency || "");
   formData.append("executionCost[value]", data?.executionCost?.value.toString() || "");
 
-  formData.append("seeking[value]", data?.need || "");
+  formData.append("seeking", data?.seeking || "");
 
   return await https.postForm({
     url: `/idea/new-concept`,
@@ -150,6 +150,13 @@ const createIdeaNewConcept = async (userId: string, data: INewConceptFields): Pr
 const queryIdeaSimple = async (query: IIdeaQuery): Promise<IResponse<IIdea[]>> => {
   return await https.get({
     url: "/idea/simple/query",
+    query: query,
+  });
+};
+
+const queryIdeaVault = async (query: IIdeaQuery): Promise<IResponse<IIdea[]>> => {
+  return await https.get({
+    url: "/idea/vault/query",
     query: query,
   });
 };
@@ -211,6 +218,7 @@ const ideaService = {
   createIdeaNewConcept,
   createIdeaForSale,
   queryIdeaSimple,
+  queryIdeaVault,
   comment,
   getComments,
   getIdeaConstant,

@@ -174,7 +174,7 @@ export const vaultCreateIdeaNewConceptForm2ValidationSchema = yup.object({
     })
   ),
   competitors: yup.array().of(yup.string()),
-  need: yup.string().required(),
+  seeking: yup.string().required(),
 });
 
 export const vaultCreateIdeaNewConceptForm3ValidationSchema = yup.object({

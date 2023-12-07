@@ -35,9 +35,9 @@ const VaultCreateIdeaModal: React.FC<IModal<string>> = (props) => {
                   xmlns="http://www.w3.org/2000/svg"
                   xmlnsXlink="http://www.w3.org/1999/xlink"
                 >
-                  <rect width="124" height="124" fill="url(#pattern0)" />
+                  <rect width="124" height="124" fill="url(#pattern101)" />
                   <defs>
-                    <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <pattern id="pattern101" patternContentUnits="objectBoundingBox" width="1" height="1">
                       <use xlinkHref="#image0_457_8426" transform="scale(0.00195312)" />
                     </pattern>
                     <image
@@ -65,9 +65,9 @@ const VaultCreateIdeaModal: React.FC<IModal<string>> = (props) => {
                   xmlns="http://www.w3.org/2000/svg"
                   xmlnsXlink="http://www.w3.org/1999/xlink"
                 >
-                  <rect width="124" height="124" fill="url(#pattern0)" />
+                  <rect width="124" height="124" fill="url(#pattern102)" />
                   <defs>
-                    <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <pattern id="pattern102" patternContentUnits="objectBoundingBox" width="1" height="1">
                       <use xlinkHref="#image0_457_8436" transform="scale(0.00195312)" />
                     </pattern>
                     <image
@@ -95,9 +95,9 @@ const VaultCreateIdeaModal: React.FC<IModal<string>> = (props) => {
                   xmlns="http://www.w3.org/2000/svg"
                   xmlnsXlink="http://www.w3.org/1999/xlink"
                 >
-                  <rect width="130" height="130" fill="url(#pattern0)" />
+                  <rect width="130" height="130" fill="url(#pattern103)" />
                   <defs>
-                    <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                    <pattern id="pattern103" patternContentUnits="objectBoundingBox" width="1" height="1">
                       <use xlinkHref="#image0_457_8417" transform="scale(0.00195312)" />
                     </pattern>
                     <image

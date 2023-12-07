@@ -27,7 +27,7 @@ export interface INewConceptFields {
   collaborators?: string[];
   location?: string;
   website?: string;
-  need?: string;
+  seeking?: string;
   socialMediaLinks?: { name: string; url: string }[];
   competitors?: string[];
   executionCost?: {

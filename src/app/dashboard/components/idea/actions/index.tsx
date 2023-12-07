@@ -7,9 +7,10 @@ import IdeaComment from "./comment";
 
 interface ICardActions {
   idea?: IIdea;
+  vault?: boolean;
 }
 const CardActions: React.FC<ICardActions> = (props) => {
-  const { idea } = props;
+  const { idea, vault = false } = props;
 
   const handleButtonClick = (e: any) => {
     // Prevent the button click from triggering the link
@@ -22,7 +23,7 @@ const CardActions: React.FC<ICardActions> = (props) => {
     <div onClick={handleButtonClick} className="flex items-center justify-between relative">
       <IdeaMessage isCard />
       <IdeaLike isCard idea={idea} viewLikes={() => {}} />
-      <IdeaShare isCard idea={idea} viewShares={() => {}} />
+      {!vault && <IdeaShare isCard idea={idea} viewShares={() => {}} />}
       <IdeaComment isCard idea={idea} viewComments={() => {}} />
     </div>
   );

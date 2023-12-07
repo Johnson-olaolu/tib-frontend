@@ -1,10 +1,11 @@
 import ideaService from "@/services/idea.service";
-import { IIdea } from "@/services/types";
+import { IIdea, IdeaNeedEnum } from "@/services/types";
 import userService from "@/services/user.service";
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 interface IDashboardViewIdeaContext {
+  vault: boolean;
   viewType: "list" | "grid";
   setViewType: React.Dispatch<React.SetStateAction<"list" | "grid">>;
   ideas: IIdea[];
@@ -22,10 +23,12 @@ export const DashboardViewIdeaContextProvider: React.FC<{
     categories?: string[];
     user?: string;
     userName?: string;
+    need?: IdeaNeedEnum;
   };
+  vault?: boolean;
   type?: "query" | "user";
   count?: number;
-}> = ({ children, query = {}, count = 9, type = "query" }) => {
+}> = ({ children, query = {}, count = 9, type = "query", vault = false }) => {
   const [viewType, setViewType] = useState<"list" | "grid">("grid");
   const [ideas, setIdeas] = useState<IIdea[]>([]);
   const [sort, setSort] = useState("");
@@ -34,6 +37,14 @@ export const DashboardViewIdeaContextProvider: React.FC<{
     queryKey: ["Idea", query],
     queryFn: async () => {
       const res = await ideaService.queryIdeaSimple(query);
+      return res.data;
+    },
+  });
+
+  const { data: queryVaultIdeas, isFetching: isVaultFetching } = useQuery({
+    queryKey: ["Idea", "vault", query],
+    queryFn: async () => {
+      const res = await ideaService.queryIdeaVault(query);
       return res.data;
     },
   });
@@ -48,20 +59,21 @@ export const DashboardViewIdeaContextProvider: React.FC<{
 
   useEffect(() => {
     if (type == "query") {
-      setIdeas(queryIdeas || []);
+      setIdeas(vault ? queryVaultIdeas || [] : queryIdeas || []);
     } else {
       setIdeas(ideaDetails?.ideas || []);
     }
-  }, [ideaDetails?.ideas, queryIdeas, type]);
+  }, [ideaDetails?.ideas, queryIdeas, queryVaultIdeas, type, vault]);
 
   const value = useMemo(
     () => ({
+      vault,
       viewType,
       setViewType,
       ideas,
-      isFetching,
+      isFetching: vault ? isVaultFetching : isFetching,
     }),
-    [viewType, ideas, isFetching]
+    [viewType, ideas, vault, isVaultFetching, isFetching]
   );
   return <DashboardViewIdeasContext.Provider value={value}>{children}</DashboardViewIdeasContext.Provider>;
 };

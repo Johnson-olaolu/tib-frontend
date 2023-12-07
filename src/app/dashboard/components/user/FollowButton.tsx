@@ -8,11 +8,12 @@ import React, { useState } from "react";
 interface IFollowButton {
   externalUser?: IUser;
   variant?: "text" | "button";
+  size?: "sm" | "md";
 }
 
 const FollowButton: React.FC<IFollowButton> = (props) => {
   const { openToast } = useToast();
-  const { externalUser, variant = "text" } = props;
+  const { externalUser, variant = "text", size = "md" } = props;
   const queryClient = useQueryClient();
   const { data: user } = useQuery({
     queryKey: ["user"],
@@ -62,7 +63,7 @@ const FollowButton: React.FC<IFollowButton> = (props) => {
       <span className=" text-tib-blue">Pending</span>
     ) : variant == "text" ? (
       <button
-        className=" text-tib-blue"
+        className={` text-tib-blue ${size === "sm" ? "text-sm" : "text-base"} `}
         onClick={(e) => {
           e.preventDefault();
           unfollowUserMutation.mutate({ followerId: user?.id || "", userId: externalUser?.id || "" });
@@ -76,7 +77,7 @@ const FollowButton: React.FC<IFollowButton> = (props) => {
           e.preventDefault();
           unfollowUserMutation.mutate({ followerId: user?.id || "", userId: externalUser?.id || "" });
         }}
-        className=" px-4 py-3 rounded border border-tib-blue text-tib-blue"
+        className={` px-4 py-3 rounded border border-tib-blue text-tib-blue ${size == "sm" ? " text-sm" : "text-base"}`}
       >
         Unfollow
       </button>
@@ -84,7 +85,7 @@ const FollowButton: React.FC<IFollowButton> = (props) => {
   } else {
     return variant == "text" ? (
       <button
-        className=" text-tib-blue"
+        className={` text-tib-blue ${size === "sm" ? "text-sm" : "text-base"} `}
         onClick={(e) => {
           e.preventDefault();
           followUserMutation.mutate({ followerId: user?.id || "", userId: externalUser?.id || "" });
@@ -98,7 +99,7 @@ const FollowButton: React.FC<IFollowButton> = (props) => {
           e.preventDefault();
           followUserMutation.mutate({ followerId: user?.id || "", userId: externalUser?.id || "" });
         }}
-        className="px-4 py-3 rounded bg-tib-blue text-tib-white"
+        className={` px-4 py-3 rounded border border-tib-blue text-tib-blue ${size == "sm" ? " text-sm" : "text-base"}`}
       >
         Follow
       </button>

@@ -18,7 +18,7 @@ const VaultCreateIdeaFundingNeededFormPage2 = () => {
       website: formFields.website || "",
       socialMediaLinks: formFields.socialMediaLinks || ([] as { name: string; url: string }[]),
       competitors: formFields.competitors || ([] as string[]),
-      need: formFields.need || "",
+      seeking: formFields.seeking || "",
     },
     validationSchema: vaultCreateIdeaNewConceptForm2ValidationSchema,
     onSubmit: (values) => {
@@ -70,16 +70,16 @@ const VaultCreateIdeaFundingNeededFormPage2 = () => {
           placeholder="Add more competitors (Optional)"
         />
         <FormMultipleSelect
-          name="need"
+          name="seeking"
           label="I’m Seeking"
           constant="Need"
           onChange={vaultCreateIdeaFundingNeededForm2Formik.handleChange}
-          value={vaultCreateIdeaFundingNeededForm2Formik.values.need}
-          setValue={(value) => vaultCreateIdeaFundingNeededForm2Formik.setFieldValue("need", value)}
+          value={vaultCreateIdeaFundingNeededForm2Formik.values.seeking}
+          setValue={(value) => vaultCreateIdeaFundingNeededForm2Formik.setFieldValue("seeking", value)}
           onBlur={vaultCreateIdeaFundingNeededForm2Formik.handleBlur}
           error={
-            vaultCreateIdeaFundingNeededForm2Formik.errors.need && vaultCreateIdeaFundingNeededForm2Formik.touched.need
-              ? vaultCreateIdeaFundingNeededForm2Formik.errors.need
+            vaultCreateIdeaFundingNeededForm2Formik.errors.seeking && vaultCreateIdeaFundingNeededForm2Formik.touched.seeking
+              ? vaultCreateIdeaFundingNeededForm2Formik.errors.seeking
               : undefined
           }
         />

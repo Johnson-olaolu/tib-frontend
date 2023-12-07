@@ -150,3 +150,39 @@ body {
 .quill.comment-form2 .ql-container.ql-snow .ql-editor::before {
   @apply pl-6;
 }
+
+/* View social media  link*/
+.view-social-media {
+  position: relative;
+  display: inline-block;
+}
+
+.view-social-media:hover .social-media-hover {
+  display: flex;
+}
+
+.social-media-hover {
+  position: absolute;
+  left: 0%;
+  bottom: -10px;
+  z-index: 10;
+  transform: translateY(100%);
+  border-radius: 8px;
+  background-color: #260060;
+  color: #fff;
+  padding: 12px;
+  justify-content: space-between;
+  gap: 40px;
+  display: none;
+}
+
+.social-media-hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16px;
+  transform: translateY(-100%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #260060 transparent;
+}

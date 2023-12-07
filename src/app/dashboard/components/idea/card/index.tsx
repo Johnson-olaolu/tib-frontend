@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import BasicCard from "./BasicCard";
-import { IIdea } from "@/services/types";
+import { IIdea, IdeaTypeEnum } from "@/services/types";
 import CardWithTitle from "./CardWithTitle";
+import VaultCardWithTitle from "./vault/VaultCardWithTitle";
 
 export interface IDashboardIdeaCard {
   idea: IIdea;
@@ -17,13 +18,24 @@ const DashboardIdeaCard: React.FC<IDashboardIdeaCard> = (props) => {
     return "basic";
   }, [idea]);
 
-  switch (type) {
-    case "cardWithTitle":
-      return <CardWithTitle idea={idea} />;
-    case "basic":
-      return <BasicCard />;
-    default:
-      return <BasicCard />;
+  if (idea.ideaType === IdeaTypeEnum.VAULT) {
+    switch (type) {
+      case "cardWithTitle":
+        return <VaultCardWithTitle idea={idea} />;
+      case "basic":
+        return <BasicCard />;
+      default:
+        return <BasicCard />;
+    }
+  } else {
+    switch (type) {
+      case "cardWithTitle":
+        return <CardWithTitle idea={idea} />;
+      case "basic":
+        return <BasicCard />;
+      default:
+        return <BasicCard />;
+    }
   }
 };
 

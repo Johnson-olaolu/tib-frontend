@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SelectSocialMediaModal from "./components/SelectSocialMediaModal";
-import ViewSocialMedia from "./components/ViewSocialMedia";
+import ViewSocialMedia from "../../extras/ViewSocialMedia";
 
 export interface IFormSelectSocialMedia {
   name: string;

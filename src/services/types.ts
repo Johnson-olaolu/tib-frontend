@@ -205,11 +205,11 @@ export interface IIdea {
 
   description: string;
 
-  categories: ICategory[];
+  categories?: ICategory[];
 
   media: string[];
 
-  collaborators: string[];
+  collaborators?: string[];
 
   ideaType: IdeaTypeEnum;
 
@@ -217,35 +217,37 @@ export interface IIdea {
 
   location: string;
 
-  website: string;
+  website?: string;
 
   role: string;
 
-  competitors: string[];
+  competitors?: string[];
 
   additionalAttachment: string[];
 
-  ideaCost: IAmount;
+  ideaCost?: IAmount;
 
-  sellingReason: string;
+  sellingReason?: string;
 
-  valuation: IAmount;
+  valuation?: IAmount;
 
-  estimationCost: IAmount;
+  estimationCost?: IAmount;
 
-  ROITimeline: string;
+  ROITimeline?: string;
 
-  projectedRevenue: IAmount;
+  projectedRevenue?: IAmount;
 
-  fundingStage: string;
+  fundingStage?: string;
 
-  totalMoneyRaised: IAmount;
+  totalMoneyRaised?: IAmount;
 
-  executionCost: IAmount;
+  executionCost?: IAmount;
 
-  seeking: string;
+  seeking?: string;
 
-  sharesRating: number;
+  socialMediaLinks?: { name: string; url: string }[];
+
+  sharesRating?: number;
 
   comments: IComment[];
 
@@ -360,6 +362,7 @@ export interface IIdeaQuery {
   category?: string;
   categories?: string[];
   user?: string;
+  ideaNeed?: IdeaNeedEnum;
 }
 
 export interface IIdeaConstant {

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ViewIdeas from "@/app/dashboard/components/idea";
-import { IIdeaQuery } from "@/services/types";
+import { IIdeaQuery, IdeaNeedEnum } from "@/services/types";
 
 const viewIdeaMenu = ["Spotlight", "Art", "Technology", "Entertainment", "Finance", "Business", "Music", "More"] as const;
 const IdeaNeedMenu = ["Top Rated", "Funding Needed", "Ideas for Sale", "New Concepts"] as const;
@@ -11,15 +11,26 @@ const VaultViewAllIdeas = () => {
   const [activeIdeaNeed, setactiveIdeaNeed] = useState<(typeof IdeaNeedMenu)[number]>("Top Rated");
   const [query, setQuery] = useState<IIdeaQuery>({});
 
-  //   useEffect(() => {
-  //     if (activeMenu == "Spotlight") {
-  //       setQuery({ spotlight: true });
-  //     } else if (activeMenu == "More") {
-  //       setQuery({});
-  //     } else {
-  //       setQuery({ category: activeMenu });
-  //     }
-  //   }, [activeMenu]);
+  useEffect(() => {
+    let need: IdeaNeedEnum | undefined;
+    if (activeIdeaNeed === "Funding Needed") {
+      need = IdeaNeedEnum.FUNDING;
+    } else if (activeIdeaNeed === "New Concepts") {
+      need = IdeaNeedEnum.NEW_CONCEPT;
+    } else if (activeIdeaNeed === "Ideas for Sale") {
+      need = IdeaNeedEnum.SALE;
+    } else {
+      need = undefined;
+    }
+
+    if (activeMenu == "Spotlight") {
+      setQuery({ spotlight: true, ideaNeed: need });
+    } else if (activeMenu == "More") {
+      setQuery({ ideaNeed: need });
+    } else {
+      setQuery({ category: activeMenu, ideaNeed: need });
+    }
+  }, [activeIdeaNeed, activeMenu]);
 
   return (
     <div className="">
@@ -52,7 +63,7 @@ const VaultViewAllIdeas = () => {
         </ul>
       </nav>
       <div className=" my-10">
-        <ViewIdeas query={query} />
+        <ViewIdeas vault query={query} />
       </div>
     </div>
   );
